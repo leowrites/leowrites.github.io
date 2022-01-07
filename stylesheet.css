@@ -1,0 +1,174 @@
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+    background-color: #355070
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+/* 
+Color palette
+black - 000000
+white - FFFFFF
+silver - C2C2C2
+black coral -5E6472
+cadet - 546A76
+*/
+
+body{
+    background-color: black;
+}
+
+h1, a, p{
+    font-family: 'Playfair Display', serif;
+    color: white;
+}
+
+h1{
+    font-size: 2em;
+    margin: 0.5em 0 0 1.5em;
+    padding: 0.5em 0;
+    color: white;
+    border-bottom: 2px solid #C2C2C2;
+    max-width: 4em;
+}
+
+nav{
+    margin-bottom: 3em;
+}
+
+section{
+    margin: 1em;
+    padding: 5em;
+}
+
+div{
+    display: flex;
+    justify-content: center;
+}
+
+#profilesec{
+    display:flex;
+    justify-content: center;
+}
+
+#profilediv{
+    display: flex;
+    height: 200px;
+    flex-basis: 200px;
+    overflow: hidden;
+    border: 2px solid #C2C2C2;
+    border-radius: 50%;
+    transition: 0.5s;
+}
+
+#profilediv img{
+    justify-content: center;
+    width: 600px;
+    height: 900px;
+    margin: -50px 0 0 0;
+}
+
+#profilediv:hover{
+    transform: scale(1.1);
+}
+
+#welcomesec{
+    padding: 0em;
+}
+
+#welcomediv p{
+    color: white;
+    font-size: 2em;
+    background: linear-gradient(to left, black 50%, white 50%) right;
+    background-size: 300%;
+    transition: 0.5s ease-out;
+}
+
+#welcomediv:hover p{
+    background-position: left;
+    color: black;
+}
+
+#linkdiv{
+    display: flex;
+    justify-content: space-evenly;
+}
+
+#linkdiv span{
+    background-color: none;
+    transition: 0.5s;
+}
+
+#linkdiv span a{
+    text-decoration: none;
+    display: flex;
+    flex-basis: 200px;
+    font-weight: bold;
+    font-size: 1.5rem;
+    padding: 0.5rem;
+    transition: 0.5;
+}
+
+#linkdiv span:hover{
+    background-color: white;
+}
+
+#linkdiv span:hover a{
+    color: black;
+}
+
+@media (max-width: 600px){
+    #linkdiv{
+        flex-direction: column;
+    }
+    #linkdiv span a{
+        display: flex;
+        justify-content: center;
+        font-size: 1.5rem;
+        padding: 0.5rem;
+        margin: 5px 0;
+    }
+}
