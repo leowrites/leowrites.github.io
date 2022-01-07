@@ -150,13 +150,13 @@ div{
     font-size: 1.5rem;
     padding: 0.5rem;
     transition: 0.5;
-}
-
-#linkdiv span:hover{
-    background-color: white;
+    background: linear-gradient(to left, black 50%, white 50%) right;
+    background-size: 300%;
+    transition: 0.5s ease-out;
 }
 
 #linkdiv span:hover a{
+    background-position: left;
     color: black;
 }
 
