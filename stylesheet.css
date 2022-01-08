@@ -96,7 +96,6 @@ nav{
 
 nav ul{
     display: flex;
-    align-items: flex-end;
 }
 
 nav ul li{
@@ -234,7 +233,10 @@ div{
     background-size: cover;
 }
 
-@media (max-width: 600px){
+@media (max-width: 425px){
+    nav ul{
+        flex-direction: column;
+    }
     #linkdiv{
         flex-direction: column;
     }
