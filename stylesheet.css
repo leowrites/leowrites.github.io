@@ -113,6 +113,7 @@ footer{
     display: flex;
     flex-flow: row;
     justify-content: center;
+    flex-wrap: wrap;
 }
 
 footer div{
@@ -183,7 +184,6 @@ div{
     text-decoration: none;
     display: flex;
     flex-basis: 200px;
-    font-weight: bold;
     font-size: 1.5rem;
     padding: 0.5rem;
     transition: 0.5;
@@ -193,6 +193,9 @@ div{
     margin: 0;
     padding: 5rem 5rem;
     font-size: 2em;
+}
+.headsection h2{
+    text-align: center;
 }
 
 .infosection{
@@ -257,9 +260,12 @@ div{
     background-size: cover;
 }
 
-@media (max-width: 425px){
+@media (max-width:425px){
     nav ul{
         flex-direction: column;
+    }
+    #welcomediv p{
+        text-align: center;
     }
     #linkdiv{
         flex-direction: column;
@@ -270,5 +276,40 @@ div{
         font-size: 1.5rem;
         padding: 0.5rem;
         margin: 5px 0;
+    }
+    footer{
+        flex-direction: column;
+        align-content: center;
+        margin-bottom: 2em;
+    }
+    footer div{
+        margin: 0;
+        text-align: center;
+    }
+}
+
+@media (max-width: 375px){
+    #profilediv{
+        height: 150px;
+        flex-basis: 150px;
+    }
+    #profilediv img{
+        width: 300px;
+        height: 450px;
+        margin: 40px 0 0 0;
+        transform: scale(1.2);
+    }
+}
+
+@media (max-width: 320px){
+    #profilediv{
+        height: 125px;
+        flex-basis: 125px;
+    }
+    #profilediv img{
+        width: 250px;
+        height: 375px;
+        margin: 40px 0 0 0;
+        transform: scale(1.3);
     }
 }
