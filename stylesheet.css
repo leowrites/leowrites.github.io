@@ -78,7 +78,7 @@ h1, h2, h3, a, p{
     text-decoration: none;
 }
 
-a, #welcomediv p{
+a{
     background: linear-gradient(to left, black 50%, white 50%) right;
     background-size: 300%;
     transition: 0.5s ease-out;
@@ -162,11 +162,6 @@ div{
     margin: -50px 0 0 0;
 }
 
-#profilediv:hover{
-    transform: scale(1.1);
-    border: 0;
-}
-
 #welcomesec{
     padding: 0em;
 }
@@ -174,11 +169,6 @@ div{
 #welcomediv p{
     color: white;
     font-size: 2em;
-}
-
-#welcomediv:hover p{
-    background-position: left;
-    color: black;
 }
 
 #linkdiv{
@@ -253,20 +243,25 @@ div{
     margin-bottom: 1rem;
 }
 
-.infosection:nth-of-type(2){
+#about{
+    background-image: url('https://images.unsplash.com/photo-1609436472305-390a875d3b06?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80');
+    background-size: cover;
+}
+
+#summarybackground{
     background-image: url('pictures/photo-1532708653462-5cb23a5f9f2f.jpeg');
     background-size: cover;
     background-position: left;
 }
-.infosection:nth-of-type(3){
+#edubackground{
     background-image: url('pictures/photo-1519482573985-d3b53a41d313.jpeg');
     background-size: cover;
 }
-.infosection:nth-of-type(4){
+#experiencebackground{
     background-image: url('pictures/photo-1607743386760-88ac62b89b8a.jpeg');
     background-size: cover;
 }
-.infosection:nth-of-type(5){
+#awardbackground{
     background-image: url('pictures/photo-1504966981333-1ac8809be1ca.jpeg');
     background-size: cover;
 }
