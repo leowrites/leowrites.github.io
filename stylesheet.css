@@ -79,9 +79,9 @@ a:hover{
 }
 
 h1{
-    font-size: 2em;
-    margin: 0.5em 0 0 1.5em;
-    padding: 0.5em 0;
+    font-size: 2rem;
+    margin: 0.5rem 0 0 4rem;
+    padding: 0.5rem 0;
     color: white;
     border-bottom: 2px solid #C2C2C2;
     max-width: 4em;
@@ -109,6 +109,21 @@ section{
     padding: 5em;
 }
 
+footer{
+    display: flex;
+    flex-flow: row;
+    justify-content: center;
+}
+
+footer div{
+    flex-flow: column;
+    margin: 2em 5em;
+}
+
+footer div p{
+    margin: 0.5em 0;
+}
+
 div{
     display: flex;
     justify-content: center;
@@ -124,7 +139,7 @@ div{
     height: 200px;
     flex-basis: 200px;
     overflow: hidden;
-    border: 2px solid #C2C2C2;
+    border: 5px solid #505663;
     border-radius: 50%;
     transition: 0.5s;
 }
@@ -174,27 +189,32 @@ div{
     transition: 0.5;
 }
 
+.headsection{
+    margin: 0;
+    padding: 5rem 5rem;
+    font-size: 2em;
+}
+
 .infosection{
     display: flex;
     flex-direction: column;
     max-width: 100%;
     max-height: 100%;
     margin: 0;
-    padding: 10em 5em;
+    padding: 10rem 5rem;
 }
 
 .infosection h2{
-    font-size: 2em;
+    font-size: 2rem;
 }
 
 .infosection h3{
-    font-size: 1.3em;
-    font-weight: bold;
-    margin-top: 1em;
+    font-size: 1.3rem;
+    margin-top: 1rem;
 }
 
 .infosection p{
-    margin: 0.1em 0;
+    margin-top: 0.5rem;
 }
 
 
@@ -206,12 +226,12 @@ div{
 }
 
 .infosection .backfilter{
-    backdrop-filter: blur(8px);
-    
-}
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
+}  
 
 .infosection #seeprojects{
-    margin-top: 2em;
+    margin-top: 2rem;
     width: fit-content
 }
 
@@ -219,17 +239,21 @@ div{
     margin-bottom: 1rem;
 }
 
-.infosection:nth-of-type(1){
+.infosection:nth-of-type(2){
     background-image: url('pictures/photo-1532708653462-5cb23a5f9f2f.jpeg');
     background-size: cover;
     background-position: left;
 }
-.infosection:nth-of-type(2){
+.infosection:nth-of-type(3){
     background-image: url('pictures/photo-1519482573985-d3b53a41d313.jpeg');
     background-size: cover;
 }
-.infosection:nth-of-type(3){
+.infosection:nth-of-type(4){
     background-image: url('pictures/photo-1607743386760-88ac62b89b8a.jpeg');
+    background-size: cover;
+}
+.infosection:nth-of-type(5){
+    background-image: url('pictures/photo-1504966981333-1ac8809be1ca.jpeg');
     background-size: cover;
 }
 
