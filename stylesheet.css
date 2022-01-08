@@ -57,9 +57,20 @@ black coral -5E6472
 cadet - 546A76
 */
 
+html::-webkit-scrollbar{
+    width: 10px;
+    overflow: auto;
+    background-color: black;
+}
+
+html::-webkit-scrollbar-thumb{
+    background-color: #32373d;
+}
+
 body{
     background-color: black;
 }
+
 
 h1, h2, h3, a, p{
     font-family: 'Playfair Display', serif;
@@ -80,10 +91,9 @@ a:hover{
 
 h1{
     font-size: 2rem;
-    margin: 0.5rem 0 0 4rem;
-    padding: 0.5rem 0;
+    margin: 2rem 0 0 2rem;
+    padding: 1rem 1rem;
     color: white;
-    border-bottom: 2px solid #C2C2C2;
     max-width: 4em;
 }
 
@@ -99,9 +109,9 @@ nav ul{
 }
 
 nav ul li{
-    font-size: 1.5em;
-    margin: 1em 1.5em 0 0;
-    padding: 0.5em 0.5em;
+    font-size: 1.5rem;
+    margin: 2rem 2rem 0 0;
+    padding: 1rem 1rem;
 }
 
 section{
@@ -140,7 +150,7 @@ div{
     height: 200px;
     flex-basis: 200px;
     overflow: hidden;
-    border: 5px solid #505663;
+    border: 10px solid #32373d;
     border-radius: 50%;
     transition: 0.5s;
 }
@@ -154,6 +164,7 @@ div{
 
 #profilediv:hover{
     transform: scale(1.1);
+    border: 0;
 }
 
 #welcomesec{
