@@ -61,9 +61,21 @@ body{
     background-color: black;
 }
 
-h1, a, p{
+h1, h2, h3, a, p{
     font-family: 'Playfair Display', serif;
     color: white;
+    text-decoration: none;
+}
+
+a, #welcomediv p{
+    background: linear-gradient(to left, black 50%, white 50%) right;
+    background-size: 300%;
+    transition: 0.5s ease-out;
+}
+
+a:hover{
+    background-position: left;
+    color: black;
 }
 
 h1{
@@ -77,6 +89,20 @@ h1{
 
 nav{
     margin-bottom: 3em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+nav ul{
+    display: flex;
+    align-items: flex-end;
+}
+
+nav ul li{
+    font-size: 1.5em;
+    margin: 1em 1.5em 0 0;
+    padding: 0.5em 0.5em;
 }
 
 section{
@@ -122,9 +148,6 @@ div{
 #welcomediv p{
     color: white;
     font-size: 2em;
-    background: linear-gradient(to left, black 50%, white 50%) right;
-    background-size: 300%;
-    transition: 0.5s ease-out;
 }
 
 #welcomediv:hover p{
@@ -150,14 +173,65 @@ div{
     font-size: 1.5rem;
     padding: 0.5rem;
     transition: 0.5;
-    background: linear-gradient(to left, black 50%, white 50%) right;
-    background-size: 300%;
-    transition: 0.5s ease-out;
 }
 
-#linkdiv span:hover a{
+.infosection{
+    display: flex;
+    flex-direction: column;
+    max-width: 100%;
+    max-height: 100%;
+    margin: 0;
+    padding: 10em 5em;
+}
+
+.infosection h2{
+    font-size: 2em;
+}
+
+.infosection h3{
+    font-size: 1.3em;
+    font-weight: bold;
+    margin-top: 1em;
+}
+
+.infosection p{
+    margin: 0.1em 0;
+}
+
+
+.infosection div{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+}
+
+.infosection .backfilter{
+    backdrop-filter: blur(8px);
+    
+}
+
+.infosection #seeprojects{
+    margin-top: 2em;
+    width: fit-content
+}
+
+.subheading{
+    margin-bottom: 1rem;
+}
+
+.infosection:nth-of-type(1){
+    background-image: url('https://images.unsplash.com/photo-1532708653462-5cb23a5f9f2f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1974&q=80');
+    background-size: cover;
     background-position: left;
-    color: black;
+}
+.infosection:nth-of-type(2){
+    background-image: url('https://images.unsplash.com/photo-1519482573985-d3b53a41d313?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1926&q=80');
+    background-size: cover;
+}
+.infosection:nth-of-type(3){
+    background-image: url('https://images.unsplash.com/photo-1607743386760-88ac62b89b8a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80');
+    background-size: cover;
 }
 
 @media (max-width: 600px){
