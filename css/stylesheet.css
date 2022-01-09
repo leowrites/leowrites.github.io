@@ -82,6 +82,7 @@ a{
     background: linear-gradient(to left, black 50%, white 50%) right;
     background-size: 300%;
     transition: 0.5s ease-out;
+    margin-bottom: 1em;
 }
 
 a:hover{
@@ -98,7 +99,7 @@ a:hover{
 }
 
 .navbar-toggler{
-    margin: 1.5em 1em 0 0;
+    margin: 1em 1em 0 0;
 }
 
 .navbar-dark .navbar-nav .nav-link{
@@ -254,6 +255,38 @@ div{
     margin-bottom: 1rem;
 }
 
+.carousel-inner{
+    justify-content: flex-start;;
+}
+
+.carousel-item img{
+    margin-right: 4rem;
+    width: 100%;
+    transition: 1s ease-in-out;
+}
+
+.carousel-item img:hover{
+    transform: scale(1.1) translateY(1em);
+}
+
+.carousel-item .row #text-content{
+    flex-direction: column;
+    margin-left: 4rem;
+    margin-right: 4rem;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+#text-content h2{
+    font-size: 2rem;
+    padding: 2rem 0 2rem 0;
+}
+
+#text-content p{
+    /* has line spacing */
+    line-height: 1.5rem;
+}
+
 #about{
     background-image: url('https://images.unsplash.com/photo-1609436472305-390a875d3b06?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80');
     background-size: cover;
@@ -282,6 +315,14 @@ div{
         text-align: center;
         justify-content: center;
     }
+
+    .container div{
+        flex-direction: column;
+    }
+
+    .carousel-item .row #text-content p{
+        margin-right: 6rem;
+    }
 }
 
 @media (max-width:425px){
@@ -301,11 +342,15 @@ div{
     footer{
         flex-direction: column;
         align-content: center;
-        margin-bottom: 2em;
+        margin-bottom: 2rem;
     }
     footer div{
         margin: 0;
         text-align: center;
+    }
+
+    .carousel-item .row #text-content p{
+        margin-right: 6rem;
     }
 }
 
@@ -320,6 +365,7 @@ div{
         margin: 40px 0 0 0;
         transform: scale(1.2);
     }
+
 }
 
 @media (max-width: 320px){
