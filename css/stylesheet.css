@@ -1,0 +1,334 @@
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+    background-color: #355070
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+/* 
+Color palette
+black - 000000
+white - FFFFFF
+silver - C2C2C2
+black coral -5E6472
+cadet - 546A76
+*/
+
+html::-webkit-scrollbar{
+    width: 10px;
+    overflow: auto;
+    background-color: black;
+}
+
+html::-webkit-scrollbar-thumb{
+    background-color: #32373d;
+}
+
+body{
+    background-color: black;
+}
+
+
+h1, h2, h3, a, p{
+    font-family: 'Playfair Display', serif;
+    color: white;
+    text-decoration: none;
+}
+
+a{
+    background: linear-gradient(to left, black 50%, white 50%) right;
+    background-size: 300%;
+    transition: 0.5s ease-out;
+}
+
+a:hover{
+    background-position: left;
+    color: black;
+}
+
+.navbar-brand{
+    margin: 1em 0 0 1em;
+    font-size: 2rem;
+    color: white;
+    max-width: 4em;
+}
+
+.navbar-toggler{
+    margin: 1.5em 1em 0 0;
+}
+
+.navbar-dark .navbar-nav .nav-link{
+    margin: 1em 1em 0 1em;
+    font-size: 1.5em;
+    color: white;
+    text-decoration: none;
+    transition: 0.5s ease-out;
+}
+
+.navbar-dark .navbar-nav .nav-link:hover{
+    background-position: left;
+    color: black;
+}
+
+.nav-link:hover{
+    background-position: left;
+    color: black;
+}
+
+#navbarNavAltMarkup{
+    justify-content: flex-end;
+}
+
+section{
+    margin: 1em;
+    padding: 5em;
+}
+
+footer{
+    display: flex;
+    flex-flow: row;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+footer div{
+    flex-flow: column;
+    margin: 2em 5em;
+}
+
+footer div p{
+    margin: 0.5em 0;
+}
+
+div{
+    display: flex;
+    justify-content: center;
+}
+
+#profilesec{
+    display:flex;
+    justify-content: center;
+}
+
+#profilediv{
+    display: flex;
+    height: 200px;
+    flex-basis: 200px;
+    overflow: hidden;
+    border: 10px solid #32373d;
+    border-radius: 50%;
+    transition: 0.5s;
+}
+
+#profilediv img{
+    justify-content: center;
+    width: 600px;
+    height: 900px;
+    margin: -50px 0 0 0;
+}
+
+#welcomesec{
+    padding: 0em;
+}
+
+#welcomediv p{
+    color: white;
+    font-size: 2em;
+}
+
+#linkdiv{
+    display: flex;
+    justify-content: space-evenly;
+}
+
+#linkdiv span{
+    background-color: none;
+    transition: 0.5s;
+}
+
+#linkdiv span a{
+    text-decoration: none;
+    display: flex;
+    flex-basis: 200px;
+    font-size: 1.5rem;
+    padding: 0.5rem;
+    transition: 0.5;
+}
+
+.headsection{
+    margin: 0;
+    padding: 5rem 5rem;
+    font-size: 2em;
+}
+.headsection h2{
+    text-align: center;
+}
+
+.infosection{
+    display: flex;
+    flex-direction: column;
+    max-width: 100%;
+    max-height: 100%;
+    margin: 0;
+    padding: 10rem 5rem;
+}
+
+.infosection h2{
+    font-size: 2rem;
+}
+
+.infosection h3{
+    font-size: 1.3rem;
+    margin-top: 1rem;
+}
+
+.infosection p{
+    margin-top: 0.5rem;
+}
+
+
+.infosection div{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+}
+
+.infosection .backfilter{
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
+}  
+
+.infosection #seeprojects{
+    margin-top: 2rem;
+    font-size: 1.5rem;
+    width: fit-content
+}
+
+.subheading{
+    margin-bottom: 1rem;
+}
+
+#about{
+    background-image: url('https://images.unsplash.com/photo-1609436472305-390a875d3b06?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80');
+    background-size: cover;
+}
+
+#summarybackground{
+    background-image: url('pictures/photo-1532708653462-5cb23a5f9f2f.jpeg');
+    background-size: cover;
+    background-position: left;
+}
+#edubackground{
+    background-image: url('pictures/photo-1519482573985-d3b53a41d313.jpeg');
+    background-size: cover;
+}
+#experiencebackground{
+    background-image: url('pictures/photo-1607743386760-88ac62b89b8a.jpeg');
+    background-size: cover;
+}
+#awardbackground{
+    background-image: url('pictures/photo-1504966981333-1ac8809be1ca.jpeg');
+    background-size: cover;
+}
+
+@media (max-width: 576px){
+    #navbarNavAltMarkup{
+        text-align: center;
+        justify-content: center;
+    }
+}
+
+@media (max-width:425px){
+    #welcomediv p{
+        text-align: center;
+    }
+    #linkdiv{
+        flex-direction: column;
+    }
+    #linkdiv span a{
+        display: flex;
+        justify-content: center;
+        font-size: 1.5rem;
+        padding: 0.5rem;
+        margin: 5px 0;
+    }
+    footer{
+        flex-direction: column;
+        align-content: center;
+        margin-bottom: 2em;
+    }
+    footer div{
+        margin: 0;
+        text-align: center;
+    }
+}
+
+@media (max-width: 375px){
+    #profilediv{
+        height: 150px;
+        flex-basis: 150px;
+    }
+    #profilediv img{
+        width: 300px;
+        height: 450px;
+        margin: 40px 0 0 0;
+        transform: scale(1.2);
+    }
+}
+
+@media (max-width: 320px){
+    #profilediv{
+        height: 125px;
+        flex-basis: 125px;
+    }
+    #profilediv img{
+        width: 250px;
+        height: 375px;
+        margin: 40px 0 0 0;
+        transform: scale(1.3);
+    }
+}
