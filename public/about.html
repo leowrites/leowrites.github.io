@@ -22,7 +22,7 @@
             <div class="container-fluid">
                 <span class="navbar-brand mb-0 h1" >Siqi Liu</span>
                 <button class="navbar-toggler " type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarNavAltMarkup"
+                    data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false"
                     aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -36,24 +36,83 @@
             </div>
         </nav>
     </header>
-    <main id="about">
-        <section id="profilesec">
-            <div id="profilediv">
-                <img id="profilepic" src="css/pictures/professional.jpg">
+    <main>
+        <section class="headsection">
+            <h2>About Me</h2>
+        </section>
+        <section id="summarybackground" class="infosection">
+            <div class="backfilter">
+                <div class="subheading">
+                    <h2>Summary of Skills</h2>
+                </div>
+                <div id="summary">
+                    <p>
+                        Experience with several programming languages including Python, HTML, CSS and Javascript.
+                    </p>
+                    <p>
+                        Experience with Object Oriented Programming, data structures and runtime-analysis.
+                    </p>
+                </div>
             </div>
         </section>
-        <section id="welcomesec">
-            <div id="welcomediv">
-                <p>
-                    Welcome to my portfolio
-                </p>
+        <section id="edubackground" class="infosection">
+            <div class="backfilter">
+                <div class="subheading">
+                    <h2>Education</h2>
+                </div>
+                <div id="uninfo">
+                    <h3>University of Toronto</h3>
+                    <p>
+                        Sep 2021 - Current
+                    </p>
+                    <p>
+                        Honours Bachelor of Science in Computer Science
+                    </p>
+                    <p>1st Year, GPA: 4.0/4.0</p>
+                </div>
             </div>
         </section>
-        <section id="linksec">
-            <div id="linkdiv">
-                <span><a href="projects.html">Projects</a></span>
-                <span><a href="about.html">About</a></span>
+        <section id="experiencebackground" class="infosection">
+            <div class="backfilter">
+                <div class="subheading">
+                    <h2>Software and Web Development Experience</h2>
+                </div>
+                <div>
+                    <ul>
+                        <li>
+                            <h3>Pacman Game</h3>
+                            <p>
+                                Designed, coded and debugged a Pacman game from scratch using Python. Implemented a
+                                neuro network using NEAT.
+                            </p>
+                        </li>
+                        <li>
+                            <h3>Public Sentiment vs. COVID-19</h3>
+                            <p>
+                                Responsible for data visualization using Python library Dash and data processing using a
+                                trained machine learning model.
+                            </p>
+                        </li>
+                        <li>
+                            <h3>Personal Portfolio</h3>
+                            <p>
+                                Used HTML, CSS and Javascript to create my personal portfolio.
+                            </p>
+                        </li>
+                    </ul>
+                </div>
+                <a id="seeprojects" href="https://github.com/leowrites">See more projects</a>
             </div>
+        </section>
+        <section id="awardbackground" class="infosection">
+            <div class="backfilter">
+                <div class="subheading">
+                    <h2>Awards</h2>
+                </div>
+                <div>
+                    <h3>BC 20/21 Achievement Scholarship</h3>
+                    <h3>District Authority Scholarship</h3>
+                </div>
         </section>
     </main>
     <footer>
@@ -85,8 +144,8 @@
         </div>
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-        crossorigin="anonymous"></script>
+    integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+    crossorigin="anonymous"></script>
 </body>
 
 </html>

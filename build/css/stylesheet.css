@@ -48,15 +48,6 @@ table {
 	border-spacing: 0;
 }
 
-/* 
-Color palette
-black - 000000
-white - FFFFFF
-silver - C2C2C2
-black coral -5E6472
-cadet - 546A76
-*/
-
 html::-webkit-scrollbar{
     width: 10px;
     overflow: auto;
@@ -303,6 +294,7 @@ carousel-control-prev{
 #about{
     background-image: url('https://images.unsplash.com/photo-1609436472305-390a875d3b06?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80');
     background-size: cover;
+    height: 70rem;
 }
 
 #summarybackground{
