@@ -1,0 +1,11 @@
+Model Information:
+* title:	Razer Huntsman Mini Keyboard
+* source:	https://sketchfab.com/3d-models/razer-huntsman-mini-keyboard-d5a3d193b5f343e69eaa1a4d061b66f7
+* author:	FoxFX (https://sketchfab.com/FoxFXMD)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Razer Huntsman Mini Keyboard" (https://sketchfab.com/3d-models/razer-huntsman-mini-keyboard-d5a3d193b5f343e69eaa1a4d061b66f7) by FoxFX (https://sketchfab.com/FoxFXMD) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
