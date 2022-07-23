@@ -1,7 +1,6 @@
 /* #title-text {
-    background-image: url(./background.jpg);
-    background-size: cover;
-    background-clip: text;
-    -webkit-background-clip: text;
-    color: transparent
+    position: absolute;
+    top: 50vh;
+    left: 50vw;
+    z-index: 1;
 } */
