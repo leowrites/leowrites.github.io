@@ -1,36 +1,30 @@
 import "App.css";
-import FeedbackForm from "FeedbackForm/FeedbackForm";
-import ThemeContext from "theme";
+// import FeedbackForm from "FeedbackForm/FeedbackForm";
 import TitleText from "TitleText/TitleText";
 import ThreeWorld from "ThreeWorld/ThreeWorld";
 import Navbar from "Navbar/Navbar";
-import { useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 function App() {
   const canvaContainerRef = useRef();
   const titleSectionRef = useRef();
-  useEffect(() => {
-    gsap.registerPlugin(ScrollTrigger);
-    gsap.to(canvaContainerRef.current, {
-      scrollTrigger: {
-        trigger: titleSectionRef.current,
-        start: "bottom 100%",
-        markers: true,
-      },
-      zIndex: 1,
-    });
-  }, []);
+  const canvasRef = useRef();
   return (
-    <ThemeContext>
+    <div className="App">
       <Navbar />
-      <div className="App">
-        <ThreeWorld canvaContainerRef={canvaContainerRef} />
-        <TitleText titleSectionRef={titleSectionRef} />
-        {/* <FeedbackForm /> */}
-      </div>
-    </ThemeContext>
+      <ThreeWorld
+        titleSectionRef={titleSectionRef}
+        canvaContainerRef={canvaContainerRef}
+        canvasRef={canvasRef}
+      />
+      <TitleText
+        canvaContainerRef={canvaContainerRef}
+        titleSectionRef={titleSectionRef}
+      />
+      {/* <FeedbackForm /> */}
+      <div style={{ height: "100vh" }}></div>
+    </div>
   );
 }
 
