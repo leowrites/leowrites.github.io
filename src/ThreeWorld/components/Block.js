@@ -1,5 +1,6 @@
 import { forwardRef } from "react";
 import { RoundedBox } from "@react-three/drei";
+import { MeshReflectorMaterial } from "@react-three/drei";
 
 const Block = forwardRef(
   (
@@ -16,7 +17,7 @@ const Block = forwardRef(
   ) => {
     return (
       <RoundedBox args={args} receiveShadow castShadow ref={ref} {...props}>
-        <meshStandardMaterial
+        <MeshReflectorMaterial
           color={color}
           transparent={transparent}
           opacity={opacity}

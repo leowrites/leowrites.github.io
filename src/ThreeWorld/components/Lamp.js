@@ -12,9 +12,8 @@ import { SpotLightHelper } from "three";
 
 function Light(props) {
   const lightRef = useRef();
-  useHelper(lightRef, SpotLightHelper, "red");
+  // useHelper(lightRef, SpotLightHelper, "red");
   useEffect(() => {
-    console.log(lightRef.current);
     lightRef.current.angle = Math.PI / 3;
     lightRef.current.decay = 2;
   }, []);
@@ -34,7 +33,7 @@ export default function Lamp({ ...props }) {
         castShadow
         position={[-0.7, 3, -2.74]}
         distance={50}
-        intensity={0.4}
+        intensity={0.7}
       />
 
       <group ref={group} {...props} dispose={null}>

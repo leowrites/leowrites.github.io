@@ -1,8 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { useGLTF } from "@react-three/drei";
-import * as THREE from "three";
+import { useCursor } from "@react-three/drei";
+import { useDispatch } from "react-redux";
+import { lookAtFolder } from "./viewSlice";
 
-export default function Folder({ ...props }) {
+function Folder({ folderRef, ...props }) {
+  const [hovered, setHovered] = useState();
+  const dispatch = useDispatch();
+  useCursor(hovered);
   const { nodes, materials } = useGLTF(
     process.env.PUBLIC_URL + "/several_folders/scene.gltf"
   );
@@ -15,7 +20,7 @@ export default function Folder({ ...props }) {
             <>
               <mesh
                 {...props}
-                position={[0, 1.8, i * 0.3 + 2.5]}
+                position={[0, 0, i * 0.3]}
                 geometry={nodes.folder_LP_nolabel_Folder_nolabel_0.geometry}
                 material={materials.Folder_nolabel}
               />
@@ -25,14 +30,26 @@ export default function Folder({ ...props }) {
           return (
             <mesh
               {...props}
-              position={[0, 1.8, i * 0.3 + 2.5]}
+              position={[0, 0, i * 0.3]}
               geometry={nodes.folder_LP_Work_Folder_Work_0.geometry}
               material={materials.Folder_Work}
             />
           );
         }
       });
-  return <Folders />;
+  return (
+    <group
+      ref={folderRef}
+      position={[0, 2, 2.5]}
+      onPointerOver={() => setHovered(true)}
+      onPointerOut={() => setHovered(false)}
+      onClick={() => dispatch(lookAtFolder())}
+    >
+      <Folders />
+    </group>
+  );
 }
 
 useGLTF.preload("/scene.gltf");
+
+export default Folder;
