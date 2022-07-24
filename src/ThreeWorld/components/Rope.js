@@ -1,5 +1,7 @@
 import { useCylinder, useLockConstraint } from "@react-three/cannon";
 import { useEffect } from "react";
+import { Vector3 } from "three";
+import { useBox } from "@react-three/cannon";
 
 function RopeSegment({ segmentProp }) {
   return (
@@ -23,6 +25,9 @@ export default function Rope(props) {
     radiusTop: radiusTop,
     radiusBottom: radiusBottom,
     numSegments: numSegments,
+  };
+  const attachmentConfig = {
+    mass: 10,
   };
   // the highest segment has no mass to fix
   const [segment1] = useCylinder(() => ({
@@ -82,22 +87,25 @@ export default function Rope(props) {
       props.position[2],
     ],
   }));
-  api2.collisionResponse = false;
-  api3.collisionResponse = false;
-  api4.collisionResponse = false;
-  api5.collisionResponse = false;
-  api6.collisionResponse = false;
-  api7.collisionResponse = false;
+  const [attachmentRef, attachmenApi] = useBox(() => ({
+    mass: 0.5,
+    position: [
+      props.position[0],
+      props.position[1] + (numOfRopeSegments - 7) * 1.25,
+      props.position[2],
+    ],
+  }));
+
   useLockConstraint(segment1, segment2);
   useLockConstraint(segment2, segment3);
   useLockConstraint(segment3, segment4);
   useLockConstraint(segment4, segment5);
   useLockConstraint(segment5, segment6);
   useLockConstraint(segment6, segment7);
-
-  // useEffect(() => {
-  //   api7.applyImpulse([10, 10, 10], [0, 0, 0]);
-  // }, [])
+  useLockConstraint(segment7, attachmentRef);
+  useEffect(() => {
+    api7.applyTorque(new Vector3(0, 0, -1));
+  }, []);
   // useFrame((state) => {
   //   // apply force every 2 seconds
   //   if (state.clock.getElapsedTime() % 10 < 0.1) {
@@ -153,10 +161,18 @@ export default function Rope(props) {
       <group
         ref={segment7}
         onClick={() => {
-          api7.applyImpulse([100, 100, 10], [0, 0, 0]);
+          api7.applyImpulse([10, 10, 10], [0, 0, 0]);
         }}
       >
         <RopeSegment segmentProp={segmentProp} />
+      </group>
+      <group
+        ref={attachmentRef}
+        onClick={() => {
+          attachmenApi.applyImpulse([10, 10, 10], [0, 0, 0]);
+        }}
+      >
+        {props.children}
       </group>
     </group>
   );
