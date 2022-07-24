@@ -18,6 +18,7 @@ export default function Model({ ...props }) {
     <group ref={group} {...props} dispose={null}>
       <group rotation={[-Math.PI / 2, 0, 0]}>
         <mesh
+          receiveShadow
           geometry={nodes.Object_2.geometry}
           material={materials.blinn1SG}
         />

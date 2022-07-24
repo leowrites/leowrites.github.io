@@ -17,19 +17,21 @@ function Folder({ folderRef, ...props }) {
       .map((_, i) => {
         if (i === 0) {
           return (
-            <>
-              <mesh
-                {...props}
-                position={[0, 0, i * 0.3]}
-                geometry={nodes.folder_LP_nolabel_Folder_nolabel_0.geometry}
-                material={materials.Folder_nolabel}
-              />
-            </>
+            <mesh
+              {...props}
+              receiveShadow
+              castShadow
+              position={[0, 0, i * 0.3]}
+              geometry={nodes.folder_LP_nolabel_Folder_nolabel_0.geometry}
+              material={materials.Folder_nolabel}
+            />
           );
         } else {
           return (
             <mesh
               {...props}
+              receiveShadow
+              castShadow
               position={[0, 0, i * 0.3]}
               geometry={nodes.folder_LP_Work_Folder_Work_0.geometry}
               material={materials.Folder_Work}
@@ -40,7 +42,7 @@ function Folder({ folderRef, ...props }) {
   return (
     <group
       ref={folderRef}
-      position={[0, 2, 2.5]}
+      position={[0, 1.75, 2.5]}
       onPointerOver={() => setHovered(true)}
       onPointerOut={() => setHovered(false)}
       onClick={() => dispatch(lookAtFolder())}
