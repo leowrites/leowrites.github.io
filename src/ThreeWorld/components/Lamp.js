@@ -8,7 +8,7 @@ title: Desk lamp
 
 import React, { useRef, useEffect } from "react";
 import { useGLTF, useHelper } from "@react-three/drei";
-import { SpotLightHelper } from "three";
+import { SpotLight } from "@react-three/drei";
 
 function Light(props) {
   const lightRef = useRef();
@@ -17,7 +17,7 @@ function Light(props) {
     lightRef.current.angle = Math.PI / 3;
     lightRef.current.decay = 2;
   }, []);
-  return <spotLight ref={lightRef} {...props} />;
+  return <SpotLight ref={lightRef} {...props} angle={10} />;
 }
 
 export default function Lamp({ ...props }) {

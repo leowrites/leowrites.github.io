@@ -1,4 +1,4 @@
-import { Canvas, useFrame, useThree } from "@react-three/fiber";
+import { useFrame, useThree } from "@react-three/fiber";
 import {
   PerspectiveCamera,
   OrbitControls,
@@ -19,7 +19,14 @@ import { selectView } from "./viewSlice";
 import { useSelector } from "react-redux";
 import Rope from "./Rope";
 import Paper from "./Paper";
+import Tims from "./Tims";
 import { Vector3 } from "three";
+import FalconHeavy from "./FalconHeavy";
+import Frame3 from "./Frame3";
+import Toy from "./Toy";
+import Plant from "./Plant";
+import SoccerBall from "./SoccerBall";
+import F1 from "./F1";
 
 // function ConfigScene() {
 //   const state = useThree();
@@ -92,16 +99,16 @@ function OverheadLight(props) {
 function HangingSpotLight(props) {
   const lightRef = useRef();
   useEffect(() => {
-    // lightRef.current.target.position.lerp(new Vector3(-5, 10, 0), 0.1)
-    // lightRef.current.target.updateMatrixWorld()
+    lightRef.current.target.position.lerp(new Vector3(-100, 10, 0), 0.1);
+    lightRef.current.target.updateMatrixWorld();
   }, []);
   return (
     <SpotLight
       ref={lightRef}
       {...props}
       color={"white"}
-      distance={15}
-      intensity={50}
+      distance={25}
+      intensity={1}
       angle={1}
     />
   );
@@ -151,7 +158,7 @@ export default function Scene({ clickedOnce }) {
   useFrame((state) => {
     clickedOnce && setStopAnimation(true);
     if (stopAnimation && !moveCameraToDesk) {
-      moveCameraInFrontOfDesk(state);
+      // moveCameraInFrontOfDesk(state);
       setMoveCameraToDesk(true);
     } else if (!stopAnimation) {
       state.camera.lookAt(0, 0, 0);
@@ -191,19 +198,31 @@ export default function Scene({ clickedOnce }) {
         zoom={1}
       />
       {moveCameraToDesk && (
-        <OrbitControls enabled={isInteracting} makeDefault target={[0, 3, 0]} />
+        <OrbitControls enabled={isInteracting} makeDefault />
       )}
       <fog attach={"fog"} color={"black"} near={20} far={150} />
       <OverheadLight />
       {/* <primitive object={new THREE.AxesHelper(5)} /> */}
       <ambientLight intensity={0.01} />
       {/* <Stars /> */}
-      <HangingSpotLight position={[-10, 15, 10]} />
+      <HangingSpotLight position={[5, 15, 0]} />
       <Physics gravity={[0, -5, 0]}>
-        <Rope position={[-5, 2.5, 0.5]} />
-        <Rope position={[-3, 3, 1.25]} />
-        <Rope position={[-4, 3, -1.25]} />
-        <Rope position={[-3, 3, -0.5]} />
+        <Rope position={[-5, 2.5, 0.5]}>
+          <FalconHeavy rotation={[Math.PI / 6, Math.PI / 2, 0]} scale={0.01} />
+        </Rope>
+        <Rope position={[-3, 3, 1.25]}>
+          <Frame3 />
+        </Rope>
+        <Rope position={[-3, 3, -0.5]}>
+          <F1 rotation={[Math.PI / 6, 0, -Math.PI / 3]} scale={0.04} />
+        </Rope>
+        <Tims position={[0.25, 1.45, 1.65]} scale={0.04} />
+        <Plant scale={2} position={[0, 1.22, -3.25]} />
+        <Toy
+          scale={0.3}
+          rotation={[0, Math.PI / 3, 0]}
+          position={[-0.5, 1.52, 0]}
+        />
         <Chair
           scale={0.05}
           position={[0.8, -1.8, 1.8]}
@@ -211,19 +230,32 @@ export default function Scene({ clickedOnce }) {
         />
         <Mouse position={[0.5, 1.35, -1.8]} scale={0.28} />
         <Keyboard
-          position={[0.5, 1.2, 0]}
+          position={[0.3, 1.2, 0]}
           rotation={[0, Math.PI / 2, 0]}
           scale={0.07}
         />
         <Monitor position={[-1.8, 1.45, 0]} scale={0.1} />
+        <SoccerBall position={[5, -2.6, 3.5]} scale={0.07} />
+        <group position={[0.5, 0, 0.5]}>
+          <Paper
+            rotation={[0, Math.PI / 6, 0]}
+            position={[1, 1.25, 2]}
+            scale={0.05}
+          />
+          <Paper
+            rotation={[0, Math.PI / 3, 0]}
+            position={[1.25, 1.26, 2.5]}
+            scale={0.05}
+          />
+        </group>
         <Paper
-          rotation={[0, Math.PI / 6, 0]}
-          position={[1, 1.25, 2.5]}
+          rotation={[0, -Math.PI / 4, 0]}
+          position={[0.5, 1.25, -1.5]}
           scale={0.05}
         />
         <Paper
-          rotation={[0, Math.PI / 3, 0]}
-          position={[1.2, 1.26, 2.5]}
+          rotation={[0, Math.PI / 16, 0]}
+          position={[1.6, 1.26, 0]}
           scale={0.05}
         />
         <Lamp
