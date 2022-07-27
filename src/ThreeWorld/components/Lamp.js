@@ -7,7 +7,7 @@ title: Desk lamp
 */
 
 import React, { useRef, useEffect } from "react";
-import { useGLTF, useHelper } from "@react-three/drei";
+import { useGLTF } from "@react-three/drei";
 import { SpotLight } from "@react-three/drei";
 
 function Light(props) {
@@ -23,9 +23,7 @@ function Light(props) {
 export default function Lamp({ ...props }) {
   const group = useRef();
 
-  const { nodes, materials } = useGLTF(
-    process.env.PUBLIC_URL + "/desk_lamp/scene.gltf"
-  );
+  const { nodes, materials } = useGLTF("/desk_lamp/scene.gltf");
   return (
     <group>
       <Light

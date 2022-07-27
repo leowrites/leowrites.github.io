@@ -11,9 +11,7 @@ import { useGLTF } from "@react-three/drei";
 
 export default function Model({ ...props }) {
   const group = useRef();
-  const { nodes, materials } = useGLTF(
-    process.env.PUBLIC_URL + "/soccerball/scene.gltf"
-  );
+  const { nodes, materials } = useGLTF("/soccerball/scene.gltf");
   return (
     <group ref={group} {...props} dispose={null}>
       <group rotation={[-Math.PI / 2, 0, 0]}>

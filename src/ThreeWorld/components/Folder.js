@@ -8,9 +8,7 @@ function Folder({ folderRef, ...props }) {
   const [hovered, setHovered] = useState();
   const dispatch = useDispatch();
   useCursor(hovered);
-  const { nodes, materials } = useGLTF(
-    process.env.PUBLIC_URL + "/several_folders/scene.gltf"
-  );
+  const { nodes, materials } = useGLTF("/several_folders/scene.gltf");
   const Folders = () =>
     Array(5)
       .fill(5)

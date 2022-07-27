@@ -11,9 +11,7 @@ import { useGLTF } from "@react-three/drei";
 
 export default function Monitor({ ...props }) {
   const group = useRef();
-  const { nodes, materials } = useGLTF(
-    process.env.PUBLIC_URL + "/ultrawide_screen/scene.gltf"
-  );
+  const { nodes, materials } = useGLTF("/ultrawide_screen/scene.gltf");
   return (
     <group ref={group} dispose={null}>
       <group>

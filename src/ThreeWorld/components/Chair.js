@@ -11,9 +11,7 @@ import { useGLTF } from "@react-three/drei";
 
 export default function ({ ...props }) {
   const group = useRef();
-  const { nodes, materials } = useGLTF(
-    process.env.PUBLIC_URL + "/office_chair/scene.gltf"
-  );
+  const { nodes, materials } = useGLTF("/office_chair/scene.gltf");
   return (
     <group ref={group} {...props} dispose={null}>
       <group>
