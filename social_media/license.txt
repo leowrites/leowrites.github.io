@@ -1,8 +1,0 @@
-Model Information:
-* title:	Social Networks 3D Icons Pack
-* source:	https://sketchfab.com/3d-models/social-networks-3d-icons-pack-5aab7951f76e4172a1a6223229ecaf1b
-* author:	Aupuma (https://sketchfab.com/aupuma)
-
-Model License:
-* license type:	SKETCHFAB Editorial (https://sketchfab.com/licenses)
-* requirements:	Use only in connection with events that are newsworthy or of public interest
