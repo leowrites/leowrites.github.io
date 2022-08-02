@@ -48,7 +48,7 @@ export default function Scene({ ...props }) {
             rotation={[-Math.PI, -1.57, -Math.PI]}
             scale={[2.4, 2.35, 0.22]}
           /> */}
-          <mesh
+          {/* <mesh
             name="Boolean 10"
             geometry={nodes["Boolean 10"].geometry}
             material={materials.Walls}
@@ -102,10 +102,10 @@ export default function Scene({ ...props }) {
               rotation={[0, Math.PI / 2, 0]}
               scale={[1, 0.89, 1.77]}
             />
-          </mesh>
+          </mesh> */}
         </group>
         <group name="bottom_wall" position={[-0.86, 480.14, 362.76]}>
-          <mesh
+          {/* <mesh
             name="Boolean 9"
             geometry={nodes["Boolean 9"].geometry}
             material={materials.Walls}
@@ -159,7 +159,7 @@ export default function Scene({ ...props }) {
               rotation={[0, Math.PI / 2, 0]}
               scale={[1, 0.89, 1.77]}
             />
-          </mesh>
+          </mesh> */}
           {/* <mesh
             name="Cube 19"
             geometry={nodes['Cube 19'].geometry}
@@ -237,7 +237,7 @@ export default function Scene({ ...props }) {
             />
           </mesh>
         </group>
-        <group name="Roof" position={[-2.46, 805.17, -393.57]}>
+        {/* <group name="Roof" position={[-2.46, 805.17, -393.57]}>
           <group
             name="Text 2"
             position={[21.29, -59.02, 391.92]}
@@ -336,7 +336,7 @@ export default function Scene({ ...props }) {
             rotation={[-Math.PI / 2, 0, 0]}
             scale={[2.21, 2.21, 3.83]}
           />
-        </group>
+        </group> */}
         <mesh
           name="Floor"
           geometry={nodes.Floor.geometry}
