@@ -124,8 +124,8 @@ export default function Scene({ ...props }) {
         >
           <group
             name="Text 2"
-            position={[-1.92, -0.18, 2.31]}
-            rotation={[0, -1.16, 0]}
+            position={[-2.6, -0.18, -1.4]}
+            rotation={[0, -1.07, 0]}
             scale={0.45}
           >
             <mesh
@@ -374,8 +374,8 @@ export default function Scene({ ...props }) {
         >
           <group
             name="Text 21"
-            position={[-1.92, -0.18, 2.31]}
-            rotation={[0, -1.16, 0]}
+            position={[-2.6, -0.18, -1.4]}
+            rotation={[0, -1.07, 0]}
             scale={0.45}
           >
             <mesh
