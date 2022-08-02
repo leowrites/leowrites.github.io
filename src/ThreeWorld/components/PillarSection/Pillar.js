@@ -14,7 +14,7 @@ export default function Scene({ ...props }) {
         <mesh
           name="Pillar"
           geometry={nodes.Pillar.geometry}
-          material={materials["Pillar Material"]}
+          material={materials.Walls}
           castShadow
           receiveShadow
           position={[-2.04, 329.62, 200.32]}
