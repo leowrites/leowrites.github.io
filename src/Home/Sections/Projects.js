@@ -1,36 +1,23 @@
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
-import { gsap } from "gsap";
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import Button from "@mui/material/Button";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import IconButton from "@mui/material/IconButton";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 export default function Page() {
   const sectionRef = useRef();
-  //   useEffect(() => {
-  //     gsap.registerPlugin(ScrollTrigger);
-  //     gsap.fromTo(
-  //       ".page-two-text",
-  //       { x: -1000 },
-  //       {
-  //         opacity: 1,
-  //         x: 0,
-  //         stagger: 0.2,
-  //         scrollTrigger: {
-  //           trigger: sectionRef.current,
-  //           start: "-500",
-  //         },
-  //       }
-  //     );
-  //   }, []);
+  const theme = useTheme();
+  const matches = useMediaQuery(theme.breakpoints.down("md"));
   return (
     <Box
       ref={sectionRef}
       className={"projects"}
       sx={{
-        height: "100vh",
+        minHeight: "100vh",
+        maxHeight: "fit-content",
         textAlign: "start",
       }}
     >
@@ -38,13 +25,13 @@ export default function Page() {
         id={"text-box"}
         sx={{
           pt: "10rem",
-          width: "50%",
+          width: matches ? "75%" : "50%",
         }}
       >
         <Typography
           className={"page-two-text"}
+          variant="h2"
           sx={{
-            fontSize: "4rem",
             opacity: 1,
           }}
         >
@@ -52,8 +39,8 @@ export default function Page() {
         </Typography>
         <Typography
           className={"page-two-text"}
+          variant="h5"
           sx={{
-            fontSize: "2rem",
             opacity: 1,
           }}
         >
@@ -62,8 +49,8 @@ export default function Page() {
         </Typography>
         <Typography
           className={"page-two-text"}
+          variant="h5"
           sx={{
-            fontSize: "1.5rem",
             opacity: 1,
           }}
         >
@@ -71,8 +58,8 @@ export default function Page() {
         </Typography>
         <Typography
           className={"page-two-text"}
+          variant="h5"
           sx={{
-            fontSize: "1.5rem",
             opacity: 1,
           }}
         >
@@ -80,7 +67,15 @@ export default function Page() {
           myself when I just started learning React.
         </Typography>
         <Button
-          variant="primary"
+          variant="contained"
+          sx={{
+            backgroundColor: "white",
+            color: "black",
+            "&:hover": {
+              backgroundColor: "black",
+              color: "white",
+            },
+          }}
           onClick={() => window.open("https://www.uniplanit.com")}
         >
           Uniplanit
@@ -92,8 +87,8 @@ export default function Page() {
         </IconButton>
         <Typography
           className={"page-two-text"}
+          variant="h5"
           sx={{
-            fontSize: "1.5rem",
             opacity: 1,
           }}
         >

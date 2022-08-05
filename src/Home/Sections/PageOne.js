@@ -3,6 +3,8 @@ import Box from "@mui/material/Box";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { useEffect, useRef } from "react";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
 
 export default function Page() {
   const sectionRef = useRef();
@@ -18,28 +20,16 @@ export default function Page() {
         stagger: 0.2,
       }
     );
-    // gsap.to(backgroundRef.current, {
-    //   scrollTrigger: {
-    //     trigger: sectionRef.current,
-    //     start: "top top",
-    //     toggleActions: "play pause reverse restart",
-    //     // markers: true,
-    //     // scrub: 1,
-    //     // pin: true,
-    //   },
-    //   width: "250px",
-    //   height: "250px",
-    //   transform: "scale(15)",
-    //   borderRadius: "0%"
-    // });
   }, []);
+  const theme = useTheme();
+  const matches = useMediaQuery(theme.breakpoints.down("md"));
   return (
     <Box
       ref={sectionRef}
       className={"section-one"}
       sx={{
-        height: "100vh",
-        minHeight: "fit-content",
+        minHeight: "100vh",
+        maxHeight: "fit-content",
         display: "flex",
         justifyContent: "start",
         textAlign: "start",
@@ -48,25 +38,25 @@ export default function Page() {
     >
       <Box
         sx={{
-          width: "50%",
+          width: matches ? "75%" : "50%",
           mt: "5rem",
         }}
         id={"text-box"}
       >
         <Typography
           className={"fade-in"}
+          variant={"h2"}
           sx={{
-            fontSize: "4rem",
             opacity: 0,
           }}
         >
           Welcome to my portfolio!
         </Typography>
-        <Typography className={"fade-in"} sx={{ fontSize: "2rem", opacity: 0 }}>
+        <Typography className={"fade-in"} variant={"h4"} sx={{ opacity: 0 }}>
           My name is Siqi Liu(Leo), a second year computer science student at
           the University of Toronto.
         </Typography>
-        <Typography className={"fade-in"} sx={{ fontSize: "2rem", opacity: 0 }}>
+        <Typography className={"fade-in"} variant={"h5"} sx={{ opacity: 0 }}>
           Take a look at some of my experiences and projects to learn more about
           me. 👇
         </Typography>

@@ -1,7 +1,11 @@
-import { createTheme, ThemeProvider } from "@mui/material/styles";
+import {
+  createTheme,
+  ThemeProvider,
+  responsiveFontSizes,
+} from "@mui/material/styles";
 import "@fontsource/dm-sans";
 
-const theme = createTheme({
+let theme = createTheme({
   palette: {
     primary: {
       main: "rgb(255, 255, 255)",
@@ -12,6 +16,14 @@ const theme = createTheme({
     fontFamily: "DM Sans, sans-serif",
   },
 });
+
+// theme.typography.h2 = {
+//   [theme.breakpoints.down("sm")]: {
+//     fontSize: "2rem",
+//   },
+// };
+
+theme = responsiveFontSizes(theme);
 
 export default function ({ children }) {
   return <ThemeProvider theme={theme}>{children}</ThemeProvider>;

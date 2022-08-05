@@ -1,9 +1,9 @@
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import Grid from "@mui/material/Grid";
-import { gsap } from "gsap";
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
 
 export default function Page() {
   const sectionRef = useRef();
@@ -23,26 +23,28 @@ export default function Page() {
   //       }
   //     );
   //   }, []);
+  const theme = useTheme();
+  const matches = useMediaQuery(theme.breakpoints.down("md"));
   return (
     <Box
       ref={sectionRef}
       className={"education-section"}
       sx={{
-        // minHeight: "fit-content",
-        // maxHeight: "100vh",
+        minHeight: "100vh",
+        maxHeight: "fit-content",
         height: "100vh",
         textAlign: "start",
         zIndex: 1,
       }}
     >
       <Grid container spacing={2}>
-        <Grid item xs={6} />
-        <Grid item xs={6}>
+        <Grid item xs={3} md={6} />
+        <Grid item xs={9} md={6}>
           <Box sx={{ mt: "5rem" }} id={"text-box"}>
             <Typography
               className={"page-two-text"}
+              variant="h2"
               sx={{
-                fontSize: "4rem",
                 opacity: 1,
               }}
             >
@@ -50,26 +52,8 @@ export default function Page() {
             </Typography>
             <Typography
               className={"page-two-text"}
+              variant="h5"
               sx={{
-                fontSize: "4rem",
-                opacity: 1,
-              }}
-            >
-              Education
-            </Typography>
-            <Typography
-              className={"page-two-text"}
-              sx={{
-                fontSize: "4rem",
-                opacity: 1,
-              }}
-            >
-              Education
-            </Typography>
-            <Typography
-              className={"page-two-text"}
-              sx={{
-                fontSize: "2rem",
                 opacity: 1,
               }}
             >
@@ -78,8 +62,8 @@ export default function Page() {
             </Typography>
             <Typography
               className={"page-two-text"}
+              variant="h5"
               sx={{
-                fontSize: "2rem",
                 opacity: 1,
               }}
             >

@@ -1,5 +1,7 @@
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
+import { useMediaQuery } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 import { useRef } from "react";
 
 export default function Page() {
@@ -20,12 +22,15 @@ export default function Page() {
   //       }
   //     );
   //   }, []);
+  const theme = useTheme();
+  const matches = useMediaQuery(theme.breakpoints.down("md"));
   return (
     <Box
       ref={sectionRef}
       className={"about-me"}
       sx={{
-        height: "100vh",
+        minHeight: "100vh",
+        maxHeight: "fit-content",
         textAlign: "start",
         zIndex: 1,
       }}
@@ -33,14 +38,13 @@ export default function Page() {
       <Box
         id={"text-box"}
         sx={{
-          pt: "10rem",
-          width: "50%",
+          width: matches ? "75%" : "50%",
         }}
       >
         <Typography
           className={"page-two-text"}
+          variant="h2"
           sx={{
-            fontSize: "4rem",
             opacity: 1,
           }}
         >
@@ -48,8 +52,8 @@ export default function Page() {
         </Typography>
         <Typography
           className={"page-two-text"}
+          variant="h5"
           sx={{
-            fontSize: "2rem",
             opacity: 1,
           }}
         >
@@ -61,8 +65,8 @@ export default function Page() {
         </Typography>
         <Typography
           className={"page-two-text"}
+          variant="h5"
           sx={{
-            fontSize: "2rem",
             opacity: 1,
           }}
         >
