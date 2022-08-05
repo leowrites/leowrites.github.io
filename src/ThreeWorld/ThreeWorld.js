@@ -1,21 +1,20 @@
 import Loader from "./components/Loader";
-import React, { Suspense } from "react";
+import React, { Suspense, useEffect, useRef } from "react";
 import "./ThreeWorld.css";
-import SocialMedia from "./components/BackWall/SocialMedia";
 import Floor from "./components/Floor";
 import Projects from "./components/PillarSection/Projects";
 import Printer from "./components/PillarSection/Printer";
 import Pillar from "./components/PillarSection/Pillar";
 import F1 from "./components/F1";
-import Postprocessing from "./Postprocessing";
 import Wall from "./components/BackWall/Wall";
 import WindowTable from "./components/WindowTable";
 import Chair from "./components/Chair";
 import TableStuff from "./components/BackWall/TableStuff";
 import Plant from "./components/Plant";
-import { Canvas } from "@react-three/fiber";
-import { OrthographicCamera } from "@react-three/drei";
+import { Canvas, useFrame } from "@react-three/fiber";
+import { OrthographicCamera, Stars, useProgress } from "@react-three/drei";
 import { OrbitControls } from "@react-three/drei";
+import Box from "@mui/material/Box";
 
 function SceneSetting({ ...props }) {
   return (
@@ -53,7 +52,7 @@ function SceneSetting({ ...props }) {
         <OrthographicCamera
           name="Personal Camera"
           makeDefault={true}
-          zoom={1}
+          zoom={0.8}
           far={100000}
           near={-100000}
           position={[739.49, 600.7, 560.08]}
@@ -72,10 +71,18 @@ function SceneSetting({ ...props }) {
 }
 
 function Scene() {
+  const sceneRef = useRef();
+  function handleMouseMove(event) {
+    const mouseX = event.clientX - window.innerWidth / 2;
+    sceneRef.current.rotation.y = mouseX * 0.0002;
+  }
+  useEffect(() => {
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  });
   return (
-    <group>
+    <group position={[0, -380, 0]} ref={sceneRef}>
       <Floor />
-      <SocialMedia />
       <Pillar />
       <Projects position={[0, 0, -40]} />
       <F1 />
@@ -88,18 +95,13 @@ function Scene() {
     </group>
   );
 }
-
 export default function ThreeWorld() {
   return (
-    // <Loader />
-    <Suspense fallback={<Loader />}>
-      <div id={"canvas-container"}>
-        <Canvas shadows flat linear>
-          <Scene />
-          <SceneSetting />
-          {/* <Postprocessing /> */}
-        </Canvas>
-      </div>
-    </Suspense>
+    <div id={"canvas-container"}>
+      <Canvas shadows flat linear>
+        <Scene />
+        <SceneSetting />
+      </Canvas>
+    </div>
   );
 }
