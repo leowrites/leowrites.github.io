@@ -9,7 +9,7 @@ export default function Scene({ ...props }) {
   const extruderRef = useRef();
   const railRef = useRef();
   useFrame(({ clock }) => {
-    extruderRef.current.position.z = Math.sin(5 * clock.getElapsedTime()) * 10;
+    extruderRef.current.position.z = Math.sin(10 * clock.getElapsedTime()) * 10;
     railRef.current.position.y =
       Math.sin((1 / 2) * clock.getElapsedTime()) * 10;
     extruderRef.current.position.y = railRef.current.position.y;
