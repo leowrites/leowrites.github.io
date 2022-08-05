@@ -26,9 +26,18 @@ export default function Scene({ ...props }) {
     line9Ref,
     line10Ref,
   ];
+  let direction = 1;
   useFrame(({ clock }) => {
     // console.log(clock)
-    carRef.current.position.x += Math.sin(clock.getElapsedTime()) * 0.2;
+    // carRef.current.position.x += Math.sin(clock.getElapsedTime()) * 0.2;
+    if (carRef.current.position.x >= 280) {
+      direction = -1;
+    } else if (carRef.current.position.x <= 220) {
+      direction = 1;
+    }
+
+    carRef.current.position.x +=
+      Math.sin(clock.getElapsedTime()) * 0.2 * direction;
     refs.forEach((ref) => {
       if (ref.current.position.z >= 150) {
         ref.current.position.z = -155;
