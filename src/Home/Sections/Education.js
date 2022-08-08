@@ -7,24 +7,7 @@ import { useTheme } from "@mui/material/styles";
 
 export default function Page() {
   const sectionRef = useRef();
-  //   useEffect(() => {
-  //     gsap.registerPlugin(ScrollTrigger);
-  //     gsap.fromTo(
-  //       ".page-two-text",
-  //       { x: -1000 },
-  //       {
-  //         opacity: 1,
-  //         x: 0,
-  //         stagger: 0.2,
-  //         scrollTrigger: {
-  //           trigger: sectionRef.current,
-  //           start: "-500",
-  //         },
-  //       }
-  //     );
-  //   }, []);
   const theme = useTheme();
-  const matches = useMediaQuery(theme.breakpoints.down("md"));
   return (
     <Box
       ref={sectionRef}
@@ -57,8 +40,9 @@ export default function Page() {
                 opacity: 1,
               }}
             >
-              I'm a second year computer science student at the University of
-              Toronto, hoping to do a focus in web technologies.
+              I'm a second year <mark className="marker">computer science</mark>{" "}
+              student at the University of Toronto, hoping to explore different
+              areas of Computer Science.
             </Typography>
             <Typography
               className={"page-two-text"}

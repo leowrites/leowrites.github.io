@@ -19,6 +19,7 @@ export default function Page() {
         minHeight: "100vh",
         maxHeight: "fit-content",
         textAlign: "start",
+        zIndex: 1,
       }}
     >
       <Box
@@ -54,7 +55,8 @@ export default function Page() {
             opacity: 1,
           }}
         >
-          I'm most proud of Uniplanit, a MERN stack project that I spearheaded.
+          I'm most proud of Uniplanit, a{" "}
+          <mark className="marker">MERN stack</mark> project that I spearheaded.
         </Typography>
         <Typography
           className={"page-two-text"}
@@ -83,7 +85,12 @@ export default function Page() {
         <IconButton
           onClick={() => window.open("https://github.com/leowrites/UniPlanit")}
         >
-          <GitHubIcon />
+          <GitHubIcon
+            sx={{
+              color: "white",
+              fontSize: "2rem",
+            }}
+          />
         </IconButton>
         <Typography
           className={"page-two-text"}
@@ -93,13 +100,26 @@ export default function Page() {
           }}
         >
           See my other projects{" "}
-          <a href={"https://github.com/leowrites"}> here</a>, which ranges from
-          a simple{" "}
-          <a href={"https://github.com/leowrites/Pacman"}>Pacman game</a> with
-          AI, to a{" "}
-          <a href={"https://github.com/leowrites/R1_Main"}>model rocket</a> with
-          vectored thurst rocekt, to this 3D interactive personal portfolio that
-          you are seeing right now.
+          <a style={{ color: "hotpink" }} href={"https://github.com/leowrites"}>
+            {" "}
+            here
+          </a>
+          , which ranges from a simple{" "}
+          <a
+            style={{ color: "hotpink" }}
+            href={"https://github.com/leowrites/Pacman"}
+          >
+            Pacman game
+          </a>{" "}
+          with AI, to a{" "}
+          <a
+            style={{ color: "hotpink" }}
+            href={"https://github.com/leowrites/R1_Main"}
+          >
+            model rocket
+          </a>{" "}
+          with vectored thurst rocekt, to this 3D interactive personal portfolio
+          that you are seeing right now.
         </Typography>
       </Box>
     </Box>

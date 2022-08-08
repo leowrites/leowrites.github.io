@@ -53,8 +53,9 @@ export default function Page() {
           Welcome to my portfolio!
         </Typography>
         <Typography className={"fade-in"} variant={"h4"} sx={{ opacity: 0 }}>
-          My name is Siqi Liu(Leo), a second year computer science student at
-          the University of Toronto.
+          My name is <mark className={"marker"}>Siqi(Leo) Liu</mark>, a second
+          year computer science student at the{" "}
+          <mark className="marker">University of Toronto</mark>.
         </Typography>
         <Typography className={"fade-in"} variant={"h5"} sx={{ opacity: 0 }}>
           Take a look at some of my experiences and projects to learn more about
