@@ -1,8 +1,5 @@
 import React from "react";
 import useSpline from "@splinetool/r3f-spline";
-import { useFrame } from "@react-three/fiber";
-import { useRef } from "react";
-
 const Rocket = React.forwardRef((props, ref) => {
   const { nodes, materials } = useSpline(
     "https://prod.spline.design/Ibj-1yMp8ThsxUxp/scene.splinecode"
@@ -13,9 +10,9 @@ const Rocket = React.forwardRef((props, ref) => {
         <group
           ref={ref}
           name="Falcon Heavy"
-          position={[1.42, 6.1, -5.72]}
-          rotation={[-0.8, 2, -0.07]}
-          scale={[0.1, 0.09, 0.09]}
+          position={[-100.42, -80.1, -5.72]}
+          rotation={[-Math.PI / 3, 0, -0.07]}
+          scale={[0.2, 0.2, 0.2]}
         >
           <group name="Text 3" position={[26.82, 175.84, 30.95]}>
             <mesh
