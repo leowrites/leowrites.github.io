@@ -9,13 +9,11 @@ import { gsap } from "gsap";
 
 export default function () {
   const textRef = useRef();
-  const view = useSelector((state) => state.view.view);
   const transition = useSelector((state) => state.view.transition);
-  console.log(transition);
   useEffect(() => {
     if (transition === "transition_to_home") {
       gsap.to(textRef.current, {
-        color: "black",
+        color: "white",
         delay: 0.7,
       });
     }
@@ -31,7 +29,7 @@ export default function () {
     >
       <Box
         sx={{
-          ml: 4,
+          ml: "4vw",
           mt: 3,
           display: "flex",
           alignItems: "center",
@@ -51,7 +49,7 @@ export default function () {
             sx={{
               fontWeight: "bold",
             }}
-            color={"white"}
+            color={"#051E36"}
             variant={"h5"}
           >
             Siqi Liu
