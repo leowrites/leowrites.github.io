@@ -6,8 +6,11 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Rocket from "./Rocket";
 import UofTLogo from "./UofTLogo";
 import Earth from "./Earth";
+import Face from "./Face";
 import "./Background.css";
 import Gallery from "./Gallery";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
 
 function SceneSetting() {
   return (
@@ -50,21 +53,43 @@ function Scene() {
   const uoftRef = useRef();
   const galleryRef = useRef();
   const earthRef = useRef();
+  const faceRef = useRef();
+  const theme = useTheme();
+  const matches = useMediaQuery(theme.breakpoints.down("md"));
+  // disable pin for mobile for now since mobile is glitchy with pinning on
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
-    const rocketStartX = rocketRef.current.position.x;
-    const rocketStartY = rocketRef.current.position.y;
     gsap
       .timeline()
-      .to(rocketRef.current, {
+      .to(rocketRef.current.position, {
         scrollTrigger: {
           trigger: ".section-one",
           start: "top top",
           scrub: true,
-          onUpdate: ({ progress }) => {
-            rocketRef.current.position.x = rocketStartX + progress * 40;
-            rocketRef.current.position.y = rocketStartY + progress * 85;
-          },
+        },
+        x: 125,
+        y: 125,
+      })
+      .to(".section-one", {
+        scrollTrigger: {
+          trigger: ".section-one",
+          start: "top top",
+          end: "+=100%",
+          scrub: 1,
+          pin: matches ? false : true,
+          pinSpacing: true,
+          // markers: true,
+        },
+      })
+      .to(".about-me", {
+        scrollTrigger: {
+          trigger: ".about-me",
+          start: matches ? "-=15%" : "-=30%",
+          end: "+=100%",
+          scrub: 1,
+          pin: matches ? false : true,
+          pinSpacing: true,
+          // markers: true,
         },
       })
       .to(earthRef.current.position, {
@@ -73,40 +98,79 @@ function Scene() {
           start: "-=30%",
           end: "+=150%",
           scrub: 1,
+          // markers: true,
         },
+        x: matches ? -5 : 45.05,
         y: 100,
+      })
+      .to(".education-section", {
+        scrollTrigger: {
+          trigger: ".education-section",
+          start: "-=30%",
+          end: "+=50%",
+          scrub: 1,
+          pin: matches ? false : true,
+          pinSpacing: true,
+          // markers: true,
+        },
       })
       .to(uoftRef.current.position, {
         scrollTrigger: {
           trigger: ".education-section",
-          start: "-=50%",
-          end: "+=10%",
+          start: "-=30%",
+          end: "+=40%",
           scrub: 1,
+          // markers: true,
         },
-        x: -20,
+        x: matches ? 5 : -15,
+        y: 5,
       })
       .to(uoftRef.current.position, {
+        immediateRender: false,
         scrollTrigger: {
           trigger: ".education-section",
-          start: "-=25%",
-          end: "+=250%",
+          start: "-=20%",
+          end: "+=100%",
           scrub: 1,
+          // markers: true,
         },
-        y: 100,
+        y: 50,
       })
+      // .to(".projects", {
+      //   scrollTrigger: {
+      //     trigger: ".projects",
+      //     start: "-=20%",
+      //     end: "+=100%",
+      //     scrub: 1,
+      //     pin: true,
+      //     pinSpacing: true,
+      //     markers: true,
+      //   },
+      //   y: 50,
+      // })
       .to(galleryRef.current.position, {
         scrollTrigger: {
           trigger: ".projects",
           start: "-=50%",
           end: "+=150%",
-          markers: true,
           scrub: 1,
+          // markers: true,
         },
         y: 50,
       });
   }, []);
+  function handleMouseMove(event) {
+    const mouseX = event.clientX - window.innerWidth / 2;
+    const mouseY = event.clientY - window.innerHeight / 2;
+    faceRef.current.rotation.x = mouseY * 0.001;
+    faceRef.current.rotation.y = mouseX * 0.001;
+  }
+  useEffect(() => {
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  });
   useFrame(() => {
-    uoftRef.current.rotation.y += 0.005;
+    uoftRef.current.rotation.y += 0.007;
     uoftRef.current.rotation.z += 0.005;
     rocketRef.current.rotation.y += 0.002;
     earthRef.current.rotation.y += 0.002;
@@ -117,6 +181,7 @@ function Scene() {
       <SceneSetting />
       <Rocket ref={rocketRef} />
       <UofTLogo ref={uoftRef} />
+      <Face ref={faceRef} />
       <Earth ref={earthRef} />
       <Gallery ref={galleryRef} />
     </>
