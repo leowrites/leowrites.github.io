@@ -14,20 +14,6 @@ function App() {
     >
       <Navbar />
       <HomePage />
-      {/* {matches ? (
-          <>
-            <Box>
-              <Typography variant={"h2"} sx={{ py: "5rem", color: "white" }}>
-                Welcome to my world
-              </Typography>
-            </Box>
-            <ThreeWorld />
-          </>
-        ) : (
-          <Typography variant={"h6"} sx={{ py: "5rem", color: "white" }}>
-            Visit this website on a desktop to see my world!
-          </Typography>
-        )} */}
     </div>
   );
 }
