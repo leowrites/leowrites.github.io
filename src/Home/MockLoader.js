@@ -33,8 +33,8 @@ export default function MockLoader() {
     gsap
       .timeline()
       .to(buttonRef.current, {
-        color: "#f4f3ee",
-        backgroundColor: "#f4f3ee",
+        color: "#051E36",
+        backgroundColor: "#051E36",
         onStart: () => {
           dispatch(setTransition("transition_to_home"));
         },
@@ -51,7 +51,7 @@ export default function MockLoader() {
       .to(
         nameRef.current,
         {
-          color: "black",
+          color: "white",
           duration: 0.5,
         },
         "<"
@@ -77,9 +77,9 @@ export default function MockLoader() {
         <Typography
           zIndex={99}
           ref={nameRef}
+          variant={"h1"}
           sx={{
-            color: "white",
-            fontSize: "8rem",
+            color: "#051E36",
             fontFamily: "DM Sans, sans-serif",
           }}
         >
@@ -88,19 +88,19 @@ export default function MockLoader() {
         <Box
           id={"loader-bar"}
           sx={{
-            backgroundColor: "white",
+            backgroundColor: "#051E36",
             height: "1rem",
             width: "100%",
           }}
         />
         <Typography
+          variant={"h4"}
           sx={{
-            color: "white",
-            fontSize: "2rem",
+            color: "#051E36",
             fontFamily: "DM Sans, sans-serif",
           }}
         >
-          Loading... 100%
+          Welcome to my portfolio! 🎉
         </Typography>
         <Button
           sx={{
@@ -111,6 +111,7 @@ export default function MockLoader() {
             color: "black",
             "&:hover": {
               color: "white",
+              backgroundColor: "#051E36",
             },
           }}
           onClick={handleClick}

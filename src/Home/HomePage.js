@@ -23,6 +23,7 @@ function HomeWrapper({ children }) {
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
+          color: "white",
         }}
       >
         <Stack>{children}</Stack>
