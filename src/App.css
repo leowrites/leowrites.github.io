@@ -36,3 +36,13 @@
     transform: rotate(360deg);
   }
 }
+
+::selection {
+  color: #051e36;
+  background: rgb(215, 227, 51);
+}
+
+.marker {
+  color: #051e36;
+  background: rgb(215, 227, 51);
+}
