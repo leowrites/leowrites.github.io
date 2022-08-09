@@ -1,33 +1,32 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
-import "ThreeWorld/components/Loader.css";
+import "./Loader.css";
 import "@fontsource/dm-sans";
 import { gsap } from "gsap";
 import { useSelector, useDispatch } from "react-redux";
 import { setView, setTransition } from "app/viewSlice";
+import { useProgress } from "@react-three/drei";
 import Button from "@mui/material/Button";
 
-export default function MockLoader() {
+export default function Loader(props) {
   const buttonRef = useRef();
   const dispatch = useDispatch();
   const nameRef = useRef();
-  // useEffect(() => {
-  //   gsap.to("#loader-bar", {
-  //     transform: "scaleY(100)",
-  //     duration: 1,
-  //     delay: 1,
-  //   });
-  // });
-  // function handleClickStart() {
-  //   gsap.to(buttonRef.current, {
-  //     transform: "scale(100)",
-  //     color: "white",
-  //     duration: 1,
-  //     ease: "power3.out",
-  //   });
-  // }
+  const { progress } = useProgress();
+  const boxRef = useRef();
+  const view = useSelector((state) => state.view.view);
+  useEffect(() => {
+    view === "start"
+      ? (document.body.style.overflowY = "hidden")
+      : (document.body.style.overflowY = "auto");
+    console.log(view);
+  }, [view]);
+  gsap.to("#loader-bar", {
+    duration: 1,
+    width: `${progress}%`,
+  });
   function handleClick() {
     // dispatch(setView("transition_to_home"));
     gsap
@@ -64,15 +63,19 @@ export default function MockLoader() {
           opacity: 0,
           ease: "power3.out",
           onComplete: () => {
+            boxRef.current.style.display = "none";
             dispatch(setView("home"));
           },
         },
         "+=1"
       );
-    // fade out
   }
   return (
-    <Box id={"loader"} sx={{ width: "100vw" }}>
+    <Box
+      id={"loader"}
+      ref={boxRef}
+      sx={{ width: "100vw", position: "absolute", zIndex: 2 }}
+    >
       <Stack spacing={2} alignItems={"center"}>
         <Typography
           zIndex={99}
@@ -90,7 +93,7 @@ export default function MockLoader() {
           sx={{
             backgroundColor: "#051E36",
             height: "1rem",
-            width: "100%",
+            width: "0%",
           }}
         />
         <Typography
@@ -102,23 +105,27 @@ export default function MockLoader() {
         >
           Welcome to my portfolio! 🎉
         </Typography>
-        <Button
-          sx={{
-            width: "5rem",
-            height: "5rem",
-            borderRadius: "50%",
-            backgroundColor: "white",
-            color: "black",
-            "&:hover": {
-              color: "white",
-              backgroundColor: "#051E36",
-            },
-          }}
-          onClick={handleClick}
-          ref={buttonRef}
-        >
-          <Typography>Start</Typography>
-        </Button>
+        {progress === 100 ? (
+          <Button
+            sx={{
+              width: "5rem",
+              height: "5rem",
+              borderRadius: "50%",
+              backgroundColor: "white",
+              color: "black",
+              "&:hover": {
+                color: "white",
+                backgroundColor: "#051E36",
+              },
+            }}
+            onClick={handleClick}
+            ref={buttonRef}
+          >
+            <Typography>Start</Typography>
+          </Button>
+        ) : (
+          <Box sx={{ height: "5rem" }} />
+        )}
       </Stack>
     </Box>
   );

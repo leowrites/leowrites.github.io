@@ -1,5 +1,4 @@
 import Box from "@mui/material/Box";
-import MockLoader from "./MockLoader";
 import Stack from "@mui/material/Stack";
 import { useSelector } from "react-redux";
 import PageOne from "./Sections/PageOne";
@@ -10,11 +9,13 @@ import Background from "./Background/Background";
 import Container from "@mui/material/Container";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
-import { Suspense } from "react";
+import useSpline from "@splinetool/r3f-spline";
+import Loader from "./Loader";
 
 function HomeWrapper({ children }) {
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.down("md"));
+
   console.log(matches);
   return (
     <Container maxWidth={matches ? "sm" : "lg"}>
@@ -34,17 +35,16 @@ function HomeWrapper({ children }) {
 
 export default function HomePage() {
   const view = useSelector((state) => state.view.view);
-  return view === "start" ? (
-    <MockLoader />
-  ) : (
-    <HomeWrapper>
-      <PageOne />
-      <AboutMe />
-      <Education />
-      <Projects />
-      <Suspense fallback={null}>
+  return (
+    <>
+      <Loader />
+      <HomeWrapper>
+        <PageOne />
+        <AboutMe />
+        <Education />
+        <Projects />
         <Background />
-      </Suspense>
-    </HomeWrapper>
+      </HomeWrapper>
+    </>
   );
 }

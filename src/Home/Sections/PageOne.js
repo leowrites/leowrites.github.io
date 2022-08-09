@@ -5,22 +5,27 @@ import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { useEffect, useRef } from "react";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
+import { useSelector } from "react-redux";
 
 export default function Page() {
   const sectionRef = useRef();
   const backgroundRef = useRef();
+  const view = useSelector((state) => state.view.view);
+  console.log(view);
   useEffect(() => {
-    gsap.registerPlugin(ScrollTrigger);
-    gsap.fromTo(
-      ".fade-in",
-      { x: -500 },
-      {
-        opacity: 1,
-        x: 0,
-        stagger: 0.2,
-      }
-    );
-  }, []);
+    if (view === "home") {
+      gsap.registerPlugin(ScrollTrigger);
+      gsap.fromTo(
+        ".fade-in",
+        { x: -500 },
+        {
+          opacity: 1,
+          x: 0,
+          stagger: 0.2,
+        }
+      );
+    }
+  }, [view]);
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.down("md"));
   return (
