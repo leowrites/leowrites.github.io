@@ -9,6 +9,18 @@ body {
   background-color: black;
 }
 
+body::-webkit-scrollbar {
+  background-color: #051e36;
+}
+
+body::-webkit-scrollbar-thumb {
+  background: #292726;
+}
+
+body::-webkit-scrollbar-thumb:hover {
+  background: #454140;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
