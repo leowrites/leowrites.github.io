@@ -11,6 +11,8 @@ import "./Background.css";
 import Gallery from "./Gallery";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
+// import ContactMe from './ContactMe';
+import F1Scene from "./F1";
 
 function SceneSetting() {
   return (
@@ -54,6 +56,7 @@ function Scene() {
   const galleryRef = useRef();
   const earthRef = useRef();
   const faceRef = useRef();
+  const f1SceneRef = useRef();
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.down("md"));
   // disable pin for mobile for now since mobile is glitchy with pinning on
@@ -136,18 +139,18 @@ function Scene() {
         },
         y: 50,
       })
-      // .to(".projects", {
-      //   scrollTrigger: {
-      //     trigger: ".projects",
-      //     start: "-=20%",
-      //     end: "+=100%",
-      //     scrub: 1,
-      //     pin: true,
-      //     pinSpacing: true,
-      //     markers: true,
-      //   },
-      //   y: 50,
-      // })
+      .to(".projects", {
+        scrollTrigger: {
+          trigger: ".projects",
+          start: "-=10%",
+          end: "+=100%",
+          scrub: 1,
+          pin: matches ? false : true,
+          pinSpacing: true,
+          // markers: true,
+        },
+        // y: 50,
+      })
       .to(galleryRef.current.position, {
         scrollTrigger: {
           trigger: ".projects",
@@ -157,6 +160,16 @@ function Scene() {
           // markers: true,
         },
         y: 50,
+      })
+      .to(f1SceneRef.current.position, {
+        scrollTrigger: {
+          trigger: ".skills",
+          start: "-=50%",
+          end: "+=50%",
+          scrub: 1,
+          // markers: true
+        },
+        y: matches ? -10 : -20,
       });
   }, []);
   function handleMouseMove(event) {
@@ -184,6 +197,12 @@ function Scene() {
       <Face ref={faceRef} />
       <Earth ref={earthRef} />
       <Gallery ref={galleryRef} />
+      <F1Scene
+        ref={f1SceneRef}
+        position={[-5, -100, 0]}
+        rotation={[0, 0, 0]}
+        scale={matches ? 0.06 : 0.08}
+      />
     </>
   );
 }

@@ -1,6 +1,5 @@
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
-import { useSelector } from "react-redux";
 import PageOne from "./Sections/PageOne";
 import AboutMe from "./Sections/AboutMe";
 import Education from "./Sections/Education";
@@ -8,8 +7,8 @@ import Projects from "./Sections/Projects";
 import Background from "./Background/Background";
 import Container from "@mui/material/Container";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import Skills from "./Sections/Skills";
 import { useTheme } from "@mui/material/styles";
-import useSpline from "@splinetool/r3f-spline";
 import Loader from "./Loader";
 
 function HomeWrapper({ children }) {
@@ -34,7 +33,6 @@ function HomeWrapper({ children }) {
 }
 
 export default function HomePage() {
-  const view = useSelector((state) => state.view.view);
   return (
     <>
       <Loader />
@@ -43,6 +41,7 @@ export default function HomePage() {
         <AboutMe />
         <Education />
         <Projects />
+        <Skills />
         <Background />
       </HomeWrapper>
     </>
