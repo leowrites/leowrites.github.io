@@ -17,16 +17,29 @@ export default function Loader(props) {
   const { progress } = useProgress();
   const boxRef = useRef();
   const view = useSelector((state) => state.view.view);
+
   useEffect(() => {
     view === "start"
       ? (document.body.style.overflowY = "hidden")
       : (document.body.style.overflowY = "auto");
     console.log(view);
   }, [view]);
+
   gsap.to("#loader-bar", {
     duration: 1,
     width: `${progress}%`,
   });
+
+  useEffect(() => {
+    progress === 100 &&
+      setTimeout(() => {
+        gsap.to(buttonRef.current, {
+          duration: 1,
+          opacity: 1,
+        });
+      }, 500);
+  }, [progress]);
+
   function handleClick() {
     // dispatch(setView("transition_to_home"));
     gsap
@@ -88,6 +101,15 @@ export default function Loader(props) {
         >
           Siqi Liu
         </Typography>
+        <Typography
+          variant={"h4"}
+          sx={{
+            color: "#051E36",
+            fontFamily: "DM Sans, sans-serif",
+          }}
+        >
+          Developer ✲ UofT ✲ Toronto
+        </Typography>
         <Box
           id={"loader-bar"}
           sx={{
@@ -96,15 +118,6 @@ export default function Loader(props) {
             width: "0%",
           }}
         />
-        <Typography
-          variant={"h4"}
-          sx={{
-            color: "#051E36",
-            fontFamily: "DM Sans, sans-serif",
-          }}
-        >
-          Welcome to my portfolio! 🎉
-        </Typography>
         {progress === 100 ? (
           <Button
             sx={{
@@ -113,6 +126,7 @@ export default function Loader(props) {
               borderRadius: "50%",
               backgroundColor: "white",
               color: "black",
+              opacity: 0,
               "&:hover": {
                 color: "white",
                 backgroundColor: "#051E36",
