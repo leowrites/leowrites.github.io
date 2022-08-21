@@ -7,6 +7,7 @@ import Projects from "./Sections/Projects";
 import Background from "./Background/Background";
 import Container from "@mui/material/Container";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import ContactMe from "./Sections/ContactMe";
 import Skills from "./Sections/Skills";
 import { useTheme } from "@mui/material/styles";
 import Loader from "./Loader";
@@ -42,6 +43,7 @@ export default function HomePage() {
         <Education />
         <Projects />
         <Skills />
+        <ContactMe />
         <Background />
       </HomeWrapper>
     </>
