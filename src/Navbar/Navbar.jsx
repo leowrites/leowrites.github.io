@@ -1,5 +1,6 @@
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
+import Toolbar from "@mui/material/Toolbar";
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
 import logo from "./logo.png";
@@ -21,41 +22,40 @@ export default function () {
   return (
     <AppBar
       sx={{
-        zIndex: 9999,
         background: "transparent",
         boxShadow: "none",
+        position: "fixed",
       }}
-      position="fixed"
     >
-      <Box
-        sx={{
-          ml: "4vw",
-          mt: 3,
-          display: "flex",
-          alignItems: "center",
-        }}
-      >
-        <Avatar
-          alt="Siqi Liu"
-          src={logo}
+      <Toolbar>
+        <Box
           sx={{
-            mr: 1,
-            borderRadius: "25%",
+            display: "flex",
+            alignItems: "center",
           }}
-        />
-        <a style={{ textDecoration: "none" }} href={"http://portfoliu.net"}>
-          <Typography
-            ref={textRef}
+        >
+          <Avatar
+            alt="Siqi Liu"
+            src={logo}
             sx={{
-              fontWeight: "bold",
+              mr: 2,
+              borderRadius: "25%",
             }}
-            color={"#051E36"}
-            variant={"h5"}
-          >
-            Siqi Liu
-          </Typography>
-        </a>
-      </Box>
+          />
+          <a style={{ textDecoration: "none" }} href={"http://portfoliu.net"}>
+            <Typography
+              ref={textRef}
+              sx={{
+                fontWeight: "bold",
+              }}
+              color={"#051E36"}
+              variant={"h5"}
+            >
+              Siqi Liu
+            </Typography>
+          </a>
+        </Box>
+      </Toolbar>
     </AppBar>
   );
 }
