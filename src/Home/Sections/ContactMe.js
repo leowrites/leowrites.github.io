@@ -58,6 +58,7 @@ export default function Page() {
   const [emailSent, setEmailSent] = useState(false);
   return (
     <Box
+      className={"contact-me"}
       sx={{
         minHeight: "100vh",
         maxHeight: "fit-content",
@@ -66,7 +67,6 @@ export default function Page() {
       }}
     >
       <Box
-        id="text-box"
         sx={{
           pt: "10rem",
         }}
@@ -114,7 +114,8 @@ export default function Page() {
             >
               {({ handleChange }) => (
                 <Form>
-                  <Grid container spacing={1} xs={12} md={6} sx={{ pt: 2 }}>
+                  {/* <Grid container spacing={1}> */}
+                  <Grid container xs={12} md={6} spacing={1} sx={{ pt: 2 }}>
                     <Grid item xs={12} md={6}>
                       <CustomTextField
                         fullWidth
@@ -178,6 +179,8 @@ export default function Page() {
                       </LoadingButton>
                     </Grid>
                   </Grid>
+
+                  {/* </Grid> */}
                 </Form>
               )}
             </Formik>
