@@ -9,21 +9,12 @@ import { useSelector } from "react-redux";
 
 export default function Page() {
   const sectionRef = useRef();
-  const backgroundRef = useRef();
   const view = useSelector((state) => state.view.view);
   console.log(view);
   useEffect(() => {
     if (view === "home") {
       gsap.registerPlugin(ScrollTrigger);
-      gsap.fromTo(
-        ".fade-in",
-        { x: -500 },
-        {
-          opacity: 1,
-          x: 0,
-          stagger: 0.2,
-        }
-      );
+      gsap.from(".fade-in", { x: -500, opacity: 0, stagger: 0.2 });
     }
   }, [view]);
   const theme = useTheme();
@@ -39,12 +30,12 @@ export default function Page() {
         justifyContent: "start",
         textAlign: "start",
         zIndex: 1,
+        pt: "5rem",
       }}
     >
       <Box
         sx={{
           width: matches ? "75%" : "50%",
-          mt: "5rem",
         }}
         id={"text-box"}
       >
@@ -52,12 +43,12 @@ export default function Page() {
           className={"fade-in"}
           variant={"h2"}
           sx={{
-            opacity: 0,
+            opacity: 1,
           }}
         >
           Welcome to my portfolio!
         </Typography>
-        <Typography className={"fade-in"} variant={"h4"} sx={{ opacity: 0 }}>
+        <Typography className={"fade-in"} variant={"h4"} sx={{ opacity: 1 }}>
           My name is <mark className={"marker"}>Siqi(Leo) Liu</mark>, a second
           year computer science student at the{" "}
           <mark className="marker">University of Toronto</mark>.
@@ -66,18 +57,6 @@ export default function Page() {
           Take a look at some of my experiences and projects to learn more about
           me. 👇
         </Typography>
-        <Box
-          ref={backgroundRef}
-          sx={{
-            zIndex: -1,
-            backgroundColor: "lightblue",
-            display: "block",
-            borderRadius: "50%",
-            width: "0px",
-            height: "0px",
-            left: "50%",
-          }}
-        ></Box>
       </Box>
     </Box>
   );
