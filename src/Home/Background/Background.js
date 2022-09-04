@@ -11,7 +11,6 @@ import "./Background.css";
 import Gallery from "./Gallery";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
-// import ContactMe from './ContactMe';
 import F1Scene from "./F1";
 
 function SceneSetting() {
@@ -68,6 +67,7 @@ function Scene() {
         scrollTrigger: {
           trigger: ".section-one",
           start: "top top",
+          end: matches ? "+=100%" : "+=500%",
           scrub: true,
         },
         x: 125,
@@ -77,29 +77,27 @@ function Scene() {
         scrollTrigger: {
           trigger: ".section-one",
           start: "top top",
-          end: "+=100%",
+          end: "+=500%",
           scrub: 1,
           pin: matches ? false : true,
           pinSpacing: true,
-          // markers: true,
         },
       })
       .to(".about-me", {
         scrollTrigger: {
           trigger: ".about-me",
           start: matches ? "-=15%" : "-=30%",
-          end: "+=100%",
+          end: "+=500%",
           scrub: 1,
           pin: matches ? false : true,
           pinSpacing: true,
-          // markers: true,
         },
       })
       .to(earthRef.current.position, {
         scrollTrigger: {
           trigger: ".about-me",
           start: "-=30%",
-          end: "+=150%",
+          end: matches ? "+=100%" : "+=700%",
           scrub: 1,
           // markers: true,
         },
@@ -110,7 +108,7 @@ function Scene() {
         scrollTrigger: {
           trigger: ".education-section",
           start: "-=30%",
-          end: "+=50%",
+          end: matches ? "+=100%" : "+=500%",
           scrub: 1,
           pin: matches ? false : true,
           pinSpacing: true,
@@ -121,9 +119,8 @@ function Scene() {
         scrollTrigger: {
           trigger: ".education-section",
           start: "-=30%",
-          end: "+=40%",
+          end: matches ? "+=50%" : "+=400%",
           scrub: 1,
-          // markers: true,
         },
         x: matches ? 5 : -15,
         y: 5,
@@ -132,8 +129,8 @@ function Scene() {
         immediateRender: false,
         scrollTrigger: {
           trigger: ".education-section",
-          start: "-=20%",
-          end: "+=100%",
+          start: "+=30%",
+          end: matches ? "+=50%" : "+=100%",
           scrub: 1,
           // markers: true,
         },
@@ -143,7 +140,7 @@ function Scene() {
         scrollTrigger: {
           trigger: ".projects",
           start: "-=10%",
-          end: "+=100%",
+          end: "+=500%",
           scrub: 1,
           pin: matches ? false : true,
           pinSpacing: true,
@@ -155,7 +152,7 @@ function Scene() {
         scrollTrigger: {
           trigger: ".projects",
           start: "-=50%",
-          end: "+=150%",
+          end: matches ? "+=100%" : "+=500%",
           scrub: 1,
           // markers: true,
         },
