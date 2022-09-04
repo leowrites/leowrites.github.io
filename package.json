@@ -4,11 +4,13 @@
   "homepage": "https://leowrites.github.io.",
   "private": true,
   "dependencies": {
+    "@emailjs/browser": "^3.6.2",
     "@emotion/react": "^11.9.3",
     "@emotion/styled": "^11.9.3",
     "@fontsource/dm-sans": "^4.5.7",
     "@johannwagner/text-to-svg": "^4.0.5",
     "@mui/icons-material": "^5.8.4",
+    "@mui/lab": "^5.0.0-alpha.95",
     "@mui/material": "^5.9.1",
     "@react-three/cannon": "^6.3.0",
     "@react-three/drei": "^9.17.1",
