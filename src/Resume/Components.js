@@ -1,15 +1,7 @@
 import { useState } from "react";
 import { styled } from "@mui/material/styles";
-import {
-  Container,
-  Box,
-  Typography,
-  Button,
-  Collapse,
-  Divider,
-} from "@mui/material";
+import { Container, Box, Typography, Button, Collapse } from "@mui/material";
 
-// Custom styled components to match LaTeX-style formatting
 export const PageContainer = styled(Container)(({ theme }) => ({
   backgroundColor: "#fff",
   color: "#000",
@@ -51,7 +43,7 @@ export const EntrySubtitle = styled(Typography)({});
 
 export const EntryDate = styled(Typography)({});
 
-export const HoverBox = ({ handleClick, open, isProject, children }) => {
+export const HoverBox = ({ handleClick, open, children }) => {
   return (
     <Box
       onClick={handleClick}
@@ -66,6 +58,13 @@ export const HoverBox = ({ handleClick, open, isProject, children }) => {
           zIndex: 1,
           color: open ? "#fff" : "#000",
           transition: "color 0.5s ease",
+        },
+        "& .logo-image": {
+          filter: open ? "invert(100%)" : "none",
+          transition: "filter 0.5s ease",
+        },
+        "&:hover .logo-image": {
+          filter: "invert(100%)",
         },
         "&::before": {
           content: '""',
@@ -97,6 +96,7 @@ export const EntryContainer = ({
   company,
   caption = "",
   isProject,
+  logo,
   children,
 }) => {
   const [open, setOpen] = useState(false);
@@ -109,9 +109,24 @@ export const EntryContainer = ({
     <Box>
       <HoverBox handleClick={handleClick} open={open} isProject={isProject}>
         <Typography>{date}</Typography>
-        <Typography variant="h5" sx={{ fontWeight: "bold" }}>
+        <Typography
+          variant="h5"
+          sx={{ fontWeight: "bold", display: "inline", mr: "1rem" }}
+        >
           {company}
         </Typography>
+        {logo && (
+          <img
+            src={logo}
+            alt="Logo"
+            className="logo-image"
+            style={{
+              display: "inline",
+              // width: "1rem",
+              height: "1rem",
+            }}
+          />
+        )}
         {caption && (
           <Typography sx={{ fontSize: "1.2em", color: "#666" }}>
             {caption}

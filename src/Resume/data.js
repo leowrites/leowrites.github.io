@@ -31,6 +31,7 @@ const experience = [
     caption: "Firefox Privacy",
     bullets: ["WIP!"],
     tags: ["C++", "JavaScript"],
+    logo: "/mozilla.svg",
   },
   {
     title: "Research Assistant",
@@ -48,6 +49,7 @@ const experience = [
         abstraction levels.`,
     ],
     tags: ["Research", "Compiler", "LLVM", "MLIR", "Machine Learning", "C++"],
+    logo: "/uoft.png",
   },
   {
     title: "Software Engineer Intern",
@@ -74,6 +76,7 @@ several months-old persistent issues through collaborations with customer succes
       "Backend",
       "Node.js",
     ],
+    logo: "/seismic.svg",
   },
   {
     title: "Software Development Intern",
@@ -98,6 +101,7 @@ latency from 600ms to 150ms by eliminating request waterfalls, achieving 75% fas
       "Node.js",
       "Express",
     ],
+    logo: "/kg.svg",
   },
   {
     title: "Software Developer Intern",

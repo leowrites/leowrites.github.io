@@ -18,6 +18,7 @@ const ClassicExperienceSection = ({ experienceData }) => {
           date={exp.dates}
           company={`${exp.title} @ ${exp.organization}`}
           caption={exp.caption || ""}
+          logo={exp.logo}
         >
           {exp.bullets.map((bullet, idx) => (
             <BulletPoint key={idx}>
