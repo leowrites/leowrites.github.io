@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { styled } from "@mui/material/styles";
-import { Container, Box, Typography, Divider, Collapse } from "@mui/material";
+import { Container, Box, Typography, Button, Collapse } from "@mui/material";
 
 // Custom styled components to match LaTeX-style formatting
 export const PageContainer = styled(Container)(({ theme }) => ({
@@ -115,7 +115,7 @@ export const EntryContainer = ({
         in={open}
         timeout="auto"
         sx={{
-          padding: `8px 16px`,
+          padding: `0.5rem 1rem`,
           mb: open && "1rem",
         }}
       >
@@ -125,7 +125,56 @@ export const EntryContainer = ({
   );
 };
 
+export const EmptySectionText = ({ label }) => {
+  return (
+    <Box ml="1rem">
+      <Typography variant="h5" sx={{ fontWeight: "bold" }}>
+        {label}
+      </Typography>
+      <Typography sx={{ fontSize: "1.2em", color: "#666" }}>
+        Please select more filters
+      </Typography>
+    </Box>
+  );
+};
+
 export const BulletPoint = styled(Box)({
   display: "flex",
   lineHeight: 1.5,
 });
+
+// <Button
+// key={index}
+// disableRipple
+// onClick={() => handleTagClick(tag)}
+// sx={{
+//   backgroundColor: selected.includes(tag)
+//     ? "#051E36"
+//     : "#e0e0e0",
+//   color: selected.includes(tag) ? "#fff" : "#000",
+//   padding: "0.5rem 1rem",
+//   borderRadius: "0",
+//   textTransform: "capitalize",
+//   fontSize: "0.8rem",
+//   "&:hover": {
+//     color: selected.includes(tag) ? "#fff" : "#000",
+//     backgroundColor: selected.includes(tag)
+//       ? "#333"
+//       : "#d0d0d0",
+//   },
+// }}
+// >
+// {tag}
+// </Button>
+export const TagButton = styled(Button)(({ theme, selected }) => ({
+  backgroundColor: selected ? "#051E36" : "#e0e0e0",
+  color: selected ? "#fff" : "#000",
+  padding: "0.5rem 1rem",
+  borderRadius: "0",
+  textTransform: "capitalize",
+  fontSize: "0.8rem",
+  "&:hover": {
+    color: selected ? "#fff" : "#000",
+    backgroundColor: selected ? "#333" : "#d0d0d0",
+  },
+}));

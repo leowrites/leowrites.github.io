@@ -1,7 +1,12 @@
 // filepath: /Users/leoliu/Documents/code/leowrites.github.io/src/Resume/ClassicProjectsSection.js
 import React from "react";
 import { Box } from "@mui/material";
-import { SectionHeading, EntryContainer, BulletPoint } from "./Components";
+import {
+  SectionHeading,
+  EntryContainer,
+  BulletPoint,
+  EmptySectionText,
+} from "./Components";
 
 const ClassicProjectsSection = ({ projectsData }) => {
   return (
@@ -23,6 +28,9 @@ const ClassicProjectsSection = ({ projectsData }) => {
           ))}
         </EntryContainer>
       ))}
+      {projectsData.length === 0 && (
+        <EmptySectionText label="No projects listed" />
+      )}
     </Box>
   );
 };

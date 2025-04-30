@@ -1,7 +1,12 @@
 // filepath: /Users/leoliu/Documents/code/leowrites.github.io/src/Resume/ClassicExperienceSection.js
 import React from "react";
 import { Box } from "@mui/material";
-import { SectionHeading, EntryContainer, BulletPoint } from "./Components";
+import {
+  SectionHeading,
+  EntryContainer,
+  BulletPoint,
+  EmptySectionText,
+} from "./Components";
 
 const Volunteering = ({ experienceData }) => {
   return (
@@ -20,6 +25,9 @@ const Volunteering = ({ experienceData }) => {
           ))}
         </EntryContainer>
       ))}
+      {experienceData.length === 0 && (
+        <EmptySectionText label="No experience listed" />
+      )}
     </Box>
   );
 };
