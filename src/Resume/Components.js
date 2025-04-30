@@ -1,6 +1,13 @@
 import { useState } from "react";
 import { styled } from "@mui/material/styles";
-import { Container, Box, Typography, Button, Collapse } from "@mui/material";
+import {
+  Container,
+  Box,
+  Typography,
+  Button,
+  Collapse,
+  Divider,
+} from "@mui/material";
 
 // Custom styled components to match LaTeX-style formatting
 export const PageContainer = styled(Container)(({ theme }) => ({

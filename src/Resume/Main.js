@@ -6,14 +6,8 @@ import ExperienceSection from "./Experience";
 import ProjectsSection from "./Projects";
 import Volunteering from "./Volunteering";
 import Contacts from "./Contacts";
-import { TagButton } from "./Components";
-import {
-  Box,
-  useTheme,
-  useMediaQuery,
-  Button,
-  Typography,
-} from "@mui/material";
+import { Box, useTheme, useMediaQuery } from "@mui/material";
+import { TagFilter } from "./Filter";
 import {
   personalInfo,
   education,
@@ -22,64 +16,12 @@ import {
   volunteering,
 } from "./data";
 
-const TagFilter = ({
-  categoryToTags,
-  selected,
-  handleTagClick,
-  handleSelectAll,
-}) => {
-  return (
-    <>
-      <Box>
-        <Typography variant="h6" sx={{ mr: "1rem", display: "inline" }}>
-          Filter experience & projects by tags:
-        </Typography>
-        <Typography
-          onClick={handleSelectAll}
-          selected={true}
-          sx={{
-            textDecoration: "underline",
-            cursor: "pointer",
-            display: "inline",
-          }}
-        >
-          Select/Deselect All
-        </Typography>
-      </Box>
-      {Object.entries(categoryToTags).map(([key, value], index) => (
-        <Box key={index}>
-          <Typography sx={{ mb: "0.5rem" }}>{key}</Typography>
-          <Box
-            sx={{
-              display: "flex",
-              flexWrap: "wrap",
-              gap: "0.5rem",
-              mb: "1rem",
-            }}
-          >
-            {value.map((tag, index) => (
-              <TagButton
-                key={index}
-                disableRipple
-                onClick={() => handleTagClick(tag)}
-                selected={selected.includes(tag)}
-              >
-                {tag}
-              </TagButton>
-            ))}
-          </Box>
-        </Box>
-      ))}
-    </>
-  );
-};
-
 const Resume = () => {
   // Mock data - replace with your actual data
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up("md"));
 
-  const languages = ["TypeScript", "Python", "C++", "JavaScript", "Java"];
+  const languages = ["TypeScript", "Python", "C++", "Java"];
   const webFrameworks = ["React", "Node.js", "Express", "Django"];
   const fields = [
     "Backend",
@@ -95,7 +37,7 @@ const Resume = () => {
   const tags = languages.concat(webFrameworks, fields, frameworks, languages);
   const categoryToTags = {
     Languages: languages,
-    "Computing Libraries & Frameworks": frameworks,
+    "Computing/Compiler Libraries & Frameworks": frameworks,
     "Web Frameworks": webFrameworks,
     Fields: fields,
   };

@@ -24,12 +24,12 @@ const education = [
 
 const experience = [
   {
-    title: "Incoming Software Engineer Intern",
+    title: "Software Engineer Intern",
     organization: "Mozilla",
     location: "Toronto, ON",
     dates: "May 2025 - Present",
     caption: "Firefox Privacy",
-    bullets: [],
+    bullets: ["WIP!"],
     tags: ["C++", "JavaScript"],
   },
   {
@@ -47,7 +47,7 @@ const experience = [
         MLIR into LLVM, enabling a unified compiler stack capable of optimizing ML workloads at multiple 
         abstraction levels.`,
     ],
-    tags: ["Research", "Compiler", "LLVM", "MLIR", "Machine Learning"],
+    tags: ["Research", "Compiler", "LLVM", "MLIR", "Machine Learning", "C++"],
   },
   {
     title: "Software Engineer Intern",
@@ -64,7 +64,16 @@ migrating legacy configurations for 9 clients from file-based storage to MongoDB
       `Resolved 20+ bugs through systematic root cause analysis, reducing recurring support tickets by 5% and eliminating
 several months-old persistent issues through collaborations with customer success and product team`,
     ],
-    tags: ["Fullstack", "TypeScript", "MongoDB", "React", "Express"],
+    tags: [
+      "Fullstack",
+      "TypeScript",
+      "MongoDB",
+      "React",
+      "Express",
+      "Frontend",
+      "Backend",
+      "Node.js",
+    ],
   },
   {
     title: "Software Development Intern",
@@ -79,7 +88,16 @@ game statistics for over 500 employees, enabling real-time leaderboard functiona
       `Optimized API efficiency by implementing GraphQL resolvers with Apollo Express, reducing complex nested query
 latency from 600ms to 150ms by eliminating request waterfalls, achieving 75% faster data fetching`,
     ],
-    tags: ["Backend", "GraphQL", "Apollo", "Express"],
+    tags: [
+      "Backend",
+      "GraphQL",
+      "Apollo",
+      "Express",
+      "TypeScript",
+      "React",
+      "Node.js",
+      "Express",
+    ],
   },
   {
     title: "Software Developer Intern",
@@ -106,6 +124,17 @@ const projects = [
     tags: ["Compiler", "C++", "LLVM"],
   },
   {
+    name: "Accelerating Particle Collision Simulation",
+    description:
+      "Leveraging multi-threading and distributed computing for performance",
+    technologies: "C++, OpenMP, OpenMPI",
+    bullets: [
+      "Experimented with different optimization techniques such as binning, static arrays, and bucket sort to decrease sequential runtime from 53 seconds to 18 seconds for simulating 160,000 particles on SciNet, achieving a 2.94x increase and establishing a sequential baseline",
+      "Leveraged OpenMP to parallize 90% of the sequential code using static decomposition and uniform partitioning of data, further reducing the runtime to 2 seconds and achieving a performance improvement of 9x",
+    ],
+    tags: ["C++", "OpenMP", "OpenMPI"],
+  },
+  {
     name: "Food Item Classifier",
     description: "A machine learning experiment to classify food items",
     technologies: "Python, sklearn",
@@ -126,7 +155,7 @@ const projects = [
       "Improved accessibility to a C++ pandemic simulation model for epidemiologists and healthcare researchers by implementing 10+ RESTful Django endpoints, transforming a C++ application into a user friendly web platform",
       "Enabled scalable, concurrent pandemic simulation runs with automated output to a PostgreSQL instance by architecting a pipeline integrating the Django backend with AWS SQS and Batch",
     ],
-    tags: ["Backend", "Python", "Django", "AWS"],
+    tags: ["Backend", "Python", "Django", "AWS", "PostgreSQL"],
   },
   {
     name: "MemoryViz & PythonTA",
@@ -149,7 +178,16 @@ const projects = [
       "Achieved 80% code coverage with over 50 unit and integration tests, running automatically in a Docker container on Github Actions",
       "Configured automated testing by building a Docker continuous integration pipeline to run a total of 50+ tests on Github Actions for a 80% code coverage",
     ],
-    tags: ["Backend", "Java", "SpringBoot", "PostgreSQL"],
+    tags: [
+      "Fullstack",
+      "Frontend",
+      "Backend",
+      "Java",
+      "SpringBoot",
+      "PostgreSQL",
+      "React",
+      "TypeScript",
+    ],
   },
   {
     name: "Pacman Game with AI",
