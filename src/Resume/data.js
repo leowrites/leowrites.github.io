@@ -49,7 +49,6 @@ const experience = [
         abstraction levels.`,
     ],
     tags: ["Research", "Compiler", "LLVM", "MLIR", "Machine Learning", "C++"],
-    logo: "/uoft.png",
   },
   {
     title: "Software Engineer Intern",
