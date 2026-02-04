@@ -1,14 +1,8 @@
 // filepath: /Users/leoliu/Documents/code/leowrites.github.io/src/Resume/ClassicResumeHeader.js
-import React, { useContext } from "react";
-import { Box, Typography, IconButton, useTheme } from "@mui/material";
-import Brightness4Icon from "@mui/icons-material/Brightness4";
-import Brightness7Icon from "@mui/icons-material/Brightness7";
-import { ColorModeContext } from "../theme";
+import React from "react";
+import { Box, Typography } from "@mui/material";
 
 const ClassicResumeHeader = ({ personalInfo }) => {
-  const theme = useTheme();
-  const colorMode = useContext(ColorModeContext);
-
   return (
     <Box sx={{ mb: "2rem" }}>
       <Box
@@ -25,17 +19,6 @@ const ClassicResumeHeader = ({ personalInfo }) => {
         >
           Hello, I'm Leo
         </Typography>
-        <IconButton
-          onClick={colorMode.toggleColorMode}
-          color="inherit"
-          sx={{ ml: 2 }}
-        >
-          {theme.palette.mode === "dark" ? (
-            <Brightness7Icon />
-          ) : (
-            <Brightness4Icon />
-          )}
-        </IconButton>
       </Box>
       {personalInfo.description.map((info, index) => {
         return (

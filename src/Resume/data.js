@@ -3,7 +3,7 @@ import { Link } from "@mui/material";
 const personalInfo = {
   description: [
     <span>
-      I'm final year Computer Science student at the{" "}
+      I'm a final year Computer Science student at the{" "}
       <Link
         href="https://web.cs.toronto.edu/"
         color="secondary"

@@ -4,7 +4,7 @@ import EducationSection from "./Education";
 import Section from "./Section";
 import Contacts from "./Contacts";
 import { Box, useTheme, useMediaQuery } from "@mui/material";
-import { TagFilter } from "./Filter";
+import { ResumeNavbar } from "./ResumeNavbar";
 import {
   personalInfo,
   education,
@@ -64,20 +64,22 @@ const Resume = () => {
   );
 
   return (
-    <Box sx={{ p: matches ? "4rem" : "4rem 1rem", textAlign: "start" }}>
-      <ResumeHeader personalInfo={personalInfo} />
-      <TagFilter
+    <>
+      <ResumeNavbar
         categoryToTags={categoryToTags}
         selected={selected}
         handleTagClick={handleTagClick}
         handleSelectAll={handleSelectAll}
       />
-      <EducationSection educationData={education} />
-      <Section sectionTitle="Experience" items={filteredExperience} />
-      <Section sectionTitle="Leadership" items={filteredVolunteering} />
-      <Section sectionTitle="Projects" items={filteredProjects} />
-      <Contacts personalInfo={personalInfo} />
-    </Box>
+      <Box sx={{ p: matches ? "1rem 4rem" : "0.5rem", textAlign: "start" }}>
+        <ResumeHeader personalInfo={personalInfo} />
+        <EducationSection educationData={education} />
+        <Section sectionTitle="Experience" items={filteredExperience} />
+        <Section sectionTitle="Leadership" items={filteredVolunteering} />
+        <Section sectionTitle="Projects" items={filteredProjects} />
+        <Contacts personalInfo={personalInfo} />
+      </Box>
+    </>
   );
 };
 

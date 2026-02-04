@@ -6,7 +6,7 @@ export const StructuredVisual = ({ src, alt, type = "image" }) => {
     <Box
       sx={{
         width: "100%",
-        borderRadius: "8px",
+        borderRadius: "1rem",
         overflow: "hidden",
         mt: 2,
         mb: 2,

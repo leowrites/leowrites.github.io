@@ -127,20 +127,3 @@ export const EmptySectionText = ({ label }) => {
     </Box>
   );
 };
-
-export const TagButton = styled(Button)(({ theme, selected }) => ({
-  backgroundColor: selected
-    ? theme.palette.primary.main
-    : theme.palette.action.selected,
-  color: selected ? theme.palette.common.white : theme.palette.text.primary,
-  padding: "0.5rem 1rem",
-  borderRadius: "0",
-  textTransform: "capitalize",
-  fontSize: "0.8rem",
-  "&:hover": {
-    color: selected ? theme.palette.common.white : theme.palette.text.primary,
-    backgroundColor: selected
-      ? theme.palette.primary.dark
-      : theme.palette.action.hover,
-  },
-}));
