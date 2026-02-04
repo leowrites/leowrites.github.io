@@ -1,11 +1,12 @@
 import "App.css";
 import React from "react";
 import Main from "Resume/Main";
-import { Container } from "@mui/material";
+import { Container, CssBaseline } from "@mui/material";
 
 function App() {
   return (
     <div className="App">
+      <CssBaseline />
       <Container>
         <Main />
       </Container>

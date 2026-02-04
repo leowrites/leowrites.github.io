@@ -1,10 +1,47 @@
+import { Link } from "@mui/material";
+
 const personalInfo = {
   description: [
-    `I'm final year Computer Science student at the University of Toronto.`,
+    <span>
+      I'm final year Computer Science student at the{" "}
+      <Link
+        href="https://web.cs.toronto.edu/"
+        color="secondary"
+        underline="hover"
+        target="_blank"
+        rel="noopener"
+      >
+        University of Toronto
+      </Link>
+      .
+    </span>,
     `I have an interest in systems, performance optimization and machine learning. 
       At school, I have taken courses such as Compilers, Computer Architecture, Operating Systems, 
       and Deep Learning.`,
-    `Some of the most exciting projects I've worked on include contributing to the Triton lang & compiler for parallel programming, and enhancing Firefox Privacy at Mozilla.`,
+    <span>
+      Some of the most exciting projects I've worked on include contributing to
+      the{" "}
+      <Link
+        href="https://github.com/openai/triton"
+        color="secondary"
+        underline="hover"
+        target="_blank"
+        rel="noopener"
+      >
+        Triton
+      </Link>{" "}
+      lang & compiler for parallel programming, and enhancing{" "}
+      <Link
+        href="https://www.mozilla.org/en-US/firefox/"
+        color="secondary"
+        underline="hover"
+        target="_blank"
+        rel="noopener"
+      >
+        Firefox
+      </Link>{" "}
+      Privacy at Mozilla.
+    </span>,
   ],
   email: "leo@liuwork.ca",
   phone: "(778) 990-6015",
@@ -26,12 +63,25 @@ const experience = [
   {
     title: "Undergraduate Researcher",
     organization: "ParaMathics Lab, University of Toronto",
+    orgUrl: "http://paramathic.com",
     location: "Toronto, ON",
     dates: "May 2025 - Present",
     caption:
       "Researching compiler optimizations for machine learning workloads using MLIR and LLVM",
     bullets: [
-      "Contributed mixed-sparsity 2:4 kernel support for NVIDIA Tensor Cores in OpenAI's Triton compiler, achieving up to 37% throughput gains over cuSPARSELt.",
+      <span>
+        Contributed mixed-sparsity 2:4 kernel support for NVIDIA Tensor Cores in{" "}
+        <Link
+          href="https://github.com/openai/triton"
+          color="secondary"
+          underline="hover"
+          target="_blank"
+          rel="noopener"
+        >
+          OpenAI's Triton compiler
+        </Link>
+        , achieving up to 37% throughput gains over cuSPARSELt.
+      </span>,
       "Optimized kernels to achieve up to 8% performance gains with autotuned configurations, addressing issues related to L2 cache utilization, tail effects, and load imbalance",
     ],
     tags: ["Research", "Compiler", "LLVM", "MLIR", "Machine Learning", "C++"],
@@ -39,11 +89,25 @@ const experience = [
   {
     title: "Software Engineer Intern",
     organization: "Mozilla",
+    orgUrl: "https://www.mozilla.org",
     location: "Toronto, ON",
     dates: "May 2025 - Sep 2025",
     caption: "Firefox Privacy",
     bullets: [
-      "Designed and shipped a privacy customization feature to 1.5 M+ Firefox users, resolving 1,000+ site-breaking issues while preserving strict tracking protection.",
+      <span>
+        Designed and shipped a privacy customization feature to 1.5 M+{" "}
+        <Link
+          href="https://www.mozilla.org/en-US/firefox/new/"
+          color="secondary"
+          underline="hover"
+          target="_blank"
+          rel="noopener"
+        >
+          Firefox
+        </Link>{" "}
+        users, resolving 1,000+ site-breaking issues while preserving strict
+        tracking protection.
+      </span>,
       "Collaborated across Privacy, Messaging Systems, and UX teams to launch an interactive infobar that increased user adoption and visibility of Enhanced Tracking Protection.",
       "Built a debugging panel for web-compatibility diagnostics that cut issue triage time by 30%, improving team response speed and internal tooling reliability.",
     ],
@@ -53,6 +117,7 @@ const experience = [
   {
     title: "Software Engineer Intern",
     organization: "Seismic",
+    orgUrl: "https://seismic.com",
     location: "Toronto, ON",
     dates: "Sep 2024 - Dec 2024",
     caption:
@@ -80,6 +145,7 @@ several months-old persistent issues through collaborations with customer succes
   {
     title: "Software Development Intern",
     organization: "Konrad",
+    orgUrl: "https://www.konrad.com",
     location: "Toronto, ON",
     dates: "May 2024 - Aug 2024",
     caption:
@@ -105,6 +171,7 @@ latency from 600ms to 150ms by eliminating request waterfalls, achieving 75% fas
   {
     title: "Software Developer Intern",
     organization: "SKYTRAC",
+    orgUrl: "https://www.skytrac.ca",
     location: "Ottawa, ON",
     dates: "May 2023 - Aug 2023",
     bullets: [
@@ -218,6 +285,7 @@ const volunteering = [
   {
     title: "President",
     organization: "UofT Blueprint",
+    orgUrl: "https://uoftblueprint.org",
     location: "Toronto, ON",
     dates: "Aug 2023 - May 2024",
     bullets: [
@@ -230,10 +298,24 @@ const volunteering = [
   {
     title: "Project Lead",
     organization: "UofT Blueprint",
+    orgUrl: "https://uoftblueprint.org",
     location: "Toronto, ON",
     dates: "Aug 2023 - Aug 2024",
     bullets: [
-      `Increased menstruation awareness by partnering with The Period Purse and developing an educational Android period tracker for Canadian youth, available on Google Play Store with over 50 downloads`,
+      <span>
+        Increased menstruation awareness by partnering with{" "}
+        <Link
+          href="https://theperiodpurse.com/"
+          color="secondary"
+          underline="hover"
+          target="_blank"
+          rel="noopener"
+        >
+          The Period Purse
+        </Link>{" "}
+        and developing an educational Android period tracker for Canadian youth,
+        available on Google Play Store with over 50 downloads
+      </span>,
       `Managed a 7-people development team through backlog refinement, prioritization and modularization, implementing all 8 use-cases as specified and completing 90+ tickets over 1 year`,
     ],
     tags: ["Leadership", "Project Management", "Kotlin", "Android"],

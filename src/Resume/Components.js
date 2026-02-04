@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { styled } from "@mui/material/styles";
 import { Container, Box, Typography, Button, Collapse } from "@mui/material";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 export const PageContainer = styled(Container)(({ theme }) => ({
-  backgroundColor: "#fff",
-  color: "#000",
+  backgroundColor: theme.palette.background.default,
+  color: theme.palette.text.primary,
 }));
 
 export const SectionHeading = ({ children }) => {
@@ -16,7 +17,7 @@ export const SectionHeading = ({ children }) => {
         textAlign: "start",
         mt: "3rem",
         mb: "0.5rem",
-        color: "#051E36",
+        color: "text.primary",
       }}
     >
       {children}
@@ -43,54 +44,6 @@ export const EntrySubtitle = styled(Typography)({});
 
 export const EntryDate = styled(Typography)({});
 
-export const HoverBox = ({ handleClick, open, children }) => {
-  return (
-    <Box
-      onClick={handleClick}
-      sx={{
-        padding: "8px 16px",
-        cursor: "pointer",
-        position: "relative",
-        overflow: "hidden",
-        backgroundColor: open ? "#051E36" : "#fff",
-        "& > *": {
-          position: "relative",
-          zIndex: 1,
-          color: open ? "#fff" : "#000",
-          transition: "color 0.5s ease",
-        },
-        "& .logo-image": {
-          filter: open ? "invert(100%)" : "none",
-          transition: "filter 0.5s ease",
-        },
-        "&:hover .logo-image": {
-          filter: "invert(100%)",
-        },
-        "&::before": {
-          content: '""',
-          position: "absolute",
-          top: 0,
-          left: 0,
-          width: "100%",
-          height: "100%",
-          backgroundColor: "#051E36",
-          transform: open ? "translateX(0)" : "translateX(-100%)",
-          transition: "transform 0.5s ease",
-          zIndex: 0,
-        },
-        "&:hover::before": {
-          transform: "translateX(0)",
-        },
-        "&:hover > *": {
-          color: "#fff",
-        },
-      }}
-    >
-      {children}
-    </Box>
-  );
-};
-
 export const EntryContainer = ({
   date,
   company,
@@ -106,42 +59,82 @@ export const EntryContainer = ({
   };
 
   return (
-    <Box>
-      <HoverBox handleClick={handleClick} open={open} isProject={isProject}>
-        <Typography>{date}</Typography>
-        <Typography
-          variant="h5"
-          sx={{ fontWeight: "bold", display: "inline", mr: "1rem" }}
-        >
-          {company}
-        </Typography>
-        {logo && (
-          <img
-            src={logo}
-            alt="Logo"
-            className="logo-image"
-            style={{
-              display: "inline",
-              // width: "1rem",
-              height: "1rem",
-            }}
-          />
-        )}
-        {caption && (
-          <Typography sx={{ fontSize: "1.2em", color: "#666" }}>
-            {caption}
-          </Typography>
-        )}
-      </HoverBox>
-      <Collapse
-        in={open}
-        timeout="auto"
-        sx={{
-          padding: `0.5rem 1rem`,
-          mb: open && "1rem",
-        }}
+    <Box
+      sx={(theme) => ({
+        margin: "1rem 0",
+        borderRadius: "1rem",
+        overflow: "hidden",
+        backgroundColor: open
+          ? theme.palette.action.selected
+          : theme.palette.mode === "light"
+          ? theme.palette.grey[100]
+          : theme.palette.background.paper,
+        transition: "background-color 0.2s ease",
+        "&:hover": {
+          backgroundColor:
+            !open &&
+            (theme.palette.mode === "light"
+              ? theme.palette.grey[300]
+              : theme.palette.action.hover),
+        },
+      })}
+    >
+      <Box
+        onClick={handleClick}
+        sx={(theme) => ({
+          padding: "1rem",
+          cursor: "pointer",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          color: theme.palette.text.primary,
+          "& .logo-image": {
+            filter: theme.palette.mode === "dark" ? "invert(1)" : "none",
+            transition: "filter 0.2s ease",
+          },
+        })}
       >
-        {children}
+        <Box sx={{ flexGrow: 1 }}>
+          <Typography>{date}</Typography>
+          <Typography
+            variant="h5"
+            sx={{ fontWeight: "bold", display: "inline", mr: "1rem" }}
+          >
+            {company}
+          </Typography>
+          {logo && (
+            <img
+              src={logo}
+              alt="Logo"
+              className="logo-image"
+              style={{
+                display: "inline",
+                height: "1rem",
+              }}
+            />
+          )}
+          {caption && (
+            <Typography sx={{ fontSize: "1.2em", color: "text.secondary" }}>
+              {caption}
+            </Typography>
+          )}
+        </Box>
+        <ExpandMoreIcon
+          sx={{
+            transform: open ? "rotate(180deg)" : "rotate(0deg)",
+            transition: "transform 0.3s ease",
+            color: (theme) => theme.palette.text.primary,
+          }}
+        />
+      </Box>
+      <Collapse in={open} timeout={300}>
+        <Box
+          sx={{
+            padding: "0 1rem 1rem 1rem",
+          }}
+        >
+          {children}
+        </Box>
       </Collapse>
     </Box>
   );
@@ -153,7 +146,7 @@ export const EmptySectionText = ({ label }) => {
       <Typography variant="h5" sx={{ fontWeight: "bold" }}>
         {label}
       </Typography>
-      <Typography sx={{ fontSize: "1.2em", color: "#666" }}>
+      <Typography sx={{ fontSize: "1.2em", color: "text.secondary" }}>
         Please select more filters
       </Typography>
     </Box>
@@ -165,38 +158,19 @@ export const BulletPoint = styled(Box)({
   lineHeight: 1.5,
 });
 
-// <Button
-// key={index}
-// disableRipple
-// onClick={() => handleTagClick(tag)}
-// sx={{
-//   backgroundColor: selected.includes(tag)
-//     ? "#051E36"
-//     : "#e0e0e0",
-//   color: selected.includes(tag) ? "#fff" : "#000",
-//   padding: "0.5rem 1rem",
-//   borderRadius: "0",
-//   textTransform: "capitalize",
-//   fontSize: "0.8rem",
-//   "&:hover": {
-//     color: selected.includes(tag) ? "#fff" : "#000",
-//     backgroundColor: selected.includes(tag)
-//       ? "#333"
-//       : "#d0d0d0",
-//   },
-// }}
-// >
-// {tag}
-// </Button>
 export const TagButton = styled(Button)(({ theme, selected }) => ({
-  backgroundColor: selected ? "#051E36" : "#e0e0e0",
-  color: selected ? "#fff" : "#000",
+  backgroundColor: selected
+    ? theme.palette.primary.main
+    : theme.palette.action.selected,
+  color: selected ? theme.palette.common.white : theme.palette.text.primary,
   padding: "0.5rem 1rem",
   borderRadius: "0",
   textTransform: "capitalize",
   fontSize: "0.8rem",
   "&:hover": {
-    color: selected ? "#fff" : "#000",
-    backgroundColor: selected ? "#333" : "#d0d0d0",
+    color: selected ? theme.palette.common.white : theme.palette.text.primary,
+    backgroundColor: selected
+      ? theme.palette.primary.dark
+      : theme.palette.action.hover,
   },
 }));

@@ -1,6 +1,5 @@
-// filepath: /Users/leoliu/Documents/code/leowrites.github.io/src/Resume/ClassicExperienceSection.js
 import React from "react";
-import { Box } from "@mui/material";
+import { Box, Link } from "@mui/material";
 import {
   SectionHeading,
   EntryContainer,
@@ -11,21 +10,44 @@ import {
 const Volunteering = ({ experienceData }) => {
   return (
     <Box>
-      <SectionHeading>Extracurriculars</SectionHeading>
-      {experienceData.map((exp, index) => (
-        <EntryContainer
-          key={index}
-          date={exp.dates}
-          company={`${exp.title} @ ${exp.organization}`}
-          logo={exp.logo}
-        >
-          {exp.bullets.map((bullet, idx) => (
-            <BulletPoint key={idx}>
-              <Box> • {bullet}</Box>
-            </BulletPoint>
-          ))}
-        </EntryContainer>
-      ))}
+      <SectionHeading>Leadership</SectionHeading>
+      {experienceData.map((exp, index) => {
+        const companyContent = (
+          <span>
+            {exp.title} @{" "}
+            {exp.orgUrl ? (
+              <Link
+                href={exp.orgUrl}
+                target="_blank"
+                rel="noopener"
+                color="secondary"
+                underline="hover"
+                onClick={(e) => e.stopPropagation()}
+              >
+                {exp.organization}
+              </Link>
+            ) : (
+              exp.organization
+            )}
+          </span>
+        );
+
+        return (
+          <EntryContainer
+            key={index}
+            date={exp.dates}
+            company={companyContent}
+            caption={exp.caption || ""}
+            logo={exp.logo}
+          >
+            {exp.bullets.map((bullet, idx) => (
+              <BulletPoint key={idx}>
+                <Box> • {bullet}</Box>
+              </BulletPoint>
+            ))}
+          </EntryContainer>
+        );
+      })}
       {experienceData.length === 0 && (
         <EmptySectionText label="No experience listed" />
       )}

@@ -9,21 +9,24 @@ const Contacts = ({ personalInfo }) => {
       <SectionHeading>Contacts</SectionHeading>
       <Box sx={{ ml: "1rem" }}>
         <Link
-          sx={{ color: "#000", textDecoration: "underline" }}
+          sx={{ textDecoration: "underline" }}
+          color="secondary"
           href={`mailto:${personalInfo.email}`}
           target="_blank"
         >
           <Typography>Email</Typography>
         </Link>
         <Link
-          sx={{ color: "#000", textDecoration: "underline" }}
+          sx={{ textDecoration: "underline" }}
+          color="secondary"
           href={`https://${personalInfo.linkedin}`}
           target="_blank"
         >
           <Typography>LinkedIn</Typography>
         </Link>
         <Link
-          sx={{ color: "#000", textDecoration: "underline" }}
+          sx={{ textDecoration: "underline" }}
+          color="secondary"
           href={`https://${personalInfo.github}`}
           target="_blank"
         >
