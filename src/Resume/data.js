@@ -63,11 +63,11 @@ const experience = [
   {
     title: "Undergraduate Researcher",
     organization: "ParaMathics Lab, University of Toronto",
-    orgUrl: "http://paramathic.com",
+    url: "http://paramathic.com",
     location: "Toronto, ON",
     dates: "May 2025 - Present",
     caption:
-      "Researching compiler optimizations for machine learning workloads using MLIR and LLVM",
+      "Adding support for structured sparsity matrix multiplication to Triton",
     details: [
       {
         title: "Research Focus",
@@ -104,7 +104,7 @@ const experience = [
   {
     title: "Software Engineer Intern",
     organization: "Mozilla",
-    orgUrl: "https://www.mozilla.org",
+    url: "https://www.mozilla.org",
     location: "Toronto, ON",
     dates: "May 2025 - Sep 2025",
     caption: "Firefox Privacy",
@@ -138,7 +138,7 @@ const experience = [
       {
         title: "Implementation",
         content:
-          "I designed and implemented a new privacy customization feature that allows users to toggle protections for specific sites directly from the URL bar (SmartBlock 3.0). This involved collaborating with UX designers to create an intuitive 'breaking site' recovery flow and engineering the C++ backend logic to dynamically exempt sites from strict blocking rules without compromising global settings.",
+          "I designed and implemented a new privacy customization feature that allows users to toggle protections for specific sites directly in the Privacy settings page. This involved collaborating with UX designers to create an intuitive 'breaking site' recovery flow and engineering the backend logic to dynamically exempt sites from strict blocking rules without compromising global settings.",
       },
       {
         title: "Result",
@@ -169,11 +169,23 @@ const experience = [
   {
     title: "Software Engineer Intern",
     organization: "Seismic",
-    orgUrl: "https://seismic.com",
+    url: "https://seismic.com",
     location: "Toronto, ON",
     dates: "Sep 2024 - Dec 2024",
-    caption:
-      "Full-Stack developer on LiveSocial, a platform for curating personalized content for sales teams",
+    caption: (
+      <span>
+        Full-Stack developer for{" "}
+        <Link
+          href="https://www.seismic.com/customer-stories/seismic-livesocial/"
+          color="secondary"
+          underline="hover"
+          target="_blank"
+          rel="noopener"
+        >
+          Seismic LiveSocial
+        </Link>{" "}
+      </span>
+    ),
     details: [
       {
         title: "Project: LiveSocial",
@@ -211,11 +223,10 @@ const experience = [
   {
     title: "Software Development Intern",
     organization: "Konrad",
-    orgUrl: "https://www.konrad.com",
+    url: "https://www.konrad.com",
     location: "Toronto, ON",
     dates: "May 2024 - Aug 2024",
-    caption:
-      "Backend developer on an internal tool for managing and analyzing gaming data",
+    caption: "",
     details: [
       {
         title: "Internal Gaming Tool",
@@ -248,7 +259,7 @@ const experience = [
   {
     title: "Software Developer Intern",
     organization: "SKYTRAC",
-    orgUrl: "https://www.skytrac.ca",
+    url: "https://www.skytrac.ca",
     location: "Ottawa, ON",
     dates: "May 2023 - Aug 2023",
     details: [
@@ -268,8 +279,8 @@ const experience = [
 
 const projects = [
   {
-    name: "Minicc Compiler",
-    description: "A toy compiler for minicc, a subset of C",
+    title: "Minicc Compiler",
+    caption: "A toy compiler for minicc, a subset of C",
     technologies: "C++, Antlr4, LLVM",
     details: [
       {
@@ -281,8 +292,8 @@ const projects = [
     tags: ["Compiler", "C++", "LLVM"],
   },
   {
-    name: "Accelerating Particle Collision Simulation",
-    description:
+    title: "Accelerating Particle Collision Simulation",
+    caption:
       "Leveraging multi-threading and distributed computing for performance",
     technologies: "C++, OpenMP, OpenMPI",
     details: [
@@ -295,8 +306,8 @@ const projects = [
     tags: ["C++", "OpenMP", "OpenMPI"],
   },
   {
-    name: "Food Item Classifier",
-    description: "A machine learning experiment to classify food items",
+    title: "Food Item Classifier",
+    caption: "A machine learning experiment to classify food items",
     technologies: "Python, sklearn",
     details: [
       {
@@ -308,8 +319,8 @@ const projects = [
     tags: ["Machine Learning", "Python", "sklearn"],
   },
   {
-    name: "Cloud-based Pandemic Simulation Service",
-    description:
+    title: "Cloud-based Pandemic Simulation Service",
+    caption:
       "Collaboration with morLab to build a cloud-based simulation service",
     technologies: "Python, Django, AWS",
     dates: "Jan 2023 - May 2023",
@@ -323,8 +334,8 @@ const projects = [
     tags: ["Backend", "Python", "Django", "AWS", "PostgreSQL"],
   },
   {
-    name: "MemoryViz & PythonTA",
-    description: "Visualizing Memory Management in Python",
+    title: "MemoryViz & PythonTA",
+    caption: "Visualizing Memory Management in Python",
     technologies: "Python, TypeScript",
     dates: "Sept 2021 - Dec 2021",
     details: [
@@ -337,8 +348,8 @@ const projects = [
     tags: ["Python", "TypeScript", "React"],
   },
   {
-    name: "Campfire",
-    description:
+    title: "Campfire",
+    caption:
       "An internship review platform to connect recruiters and job-seekers",
     technologies: "React, Java, SprintBoot, PostgreSQL",
     details: [
@@ -360,8 +371,8 @@ const projects = [
     ],
   },
   {
-    name: "Pacman Game with AI",
-    description: "Computer Game with Custom AI Algorithms",
+    title: "Pacman Game with AI",
+    caption: "Computer Game with Custom AI Algorithms",
     technologies: "Python, Pygame",
     dates: "Sept 2022 - Dec 2022",
     details: [
@@ -373,8 +384,8 @@ const projects = [
     ],
   },
   {
-    name: "Model Rocket with Vectored Thrust",
-    description: "Engineering Project",
+    title: "Model Rocket with Vectored Thrust",
+    caption: "Engineering Project",
     technologies: "Arduino, 3D Printing",
     dates: "May 2022 - Aug 2022",
     details: [
@@ -391,7 +402,7 @@ const volunteering = [
   {
     title: "President",
     organization: "UofT Blueprint",
-    orgUrl: "https://uoftblueprint.org",
+    url: "https://uoftblueprint.org",
     location: "Toronto, ON",
     dates: "Aug 2023 - May 2024",
     details: [
@@ -410,7 +421,7 @@ const volunteering = [
   {
     title: "Project Lead",
     organization: "UofT Blueprint",
-    orgUrl: "https://uoftblueprint.org",
+    url: "https://uoftblueprint.org",
     location: "Toronto, ON",
     dates: "Aug 2023 - Aug 2024",
     details: [

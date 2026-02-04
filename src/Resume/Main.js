@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import ResumeHeader from "./Header";
 import EducationSection from "./Education";
-import ExperienceSection from "./Experience";
-import ProjectsSection from "./Projects";
-import Volunteering from "./Volunteering";
+import Section from "./Section";
 import Contacts from "./Contacts";
 import { Box, useTheme, useMediaQuery } from "@mui/material";
 import { TagFilter } from "./Filter";
@@ -75,9 +73,9 @@ const Resume = () => {
         handleSelectAll={handleSelectAll}
       />
       <EducationSection educationData={education} />
-      <ExperienceSection experienceData={filteredExperience} />
-      <Volunteering experienceData={filteredVolunteering} />
-      <ProjectsSection projectsData={filteredProjects} />
+      <Section sectionTitle="Experience" items={filteredExperience} />
+      <Section sectionTitle="Leadership" items={filteredVolunteering} />
+      <Section sectionTitle="Projects" items={filteredProjects} />
       <Contacts personalInfo={personalInfo} />
     </Box>
   );

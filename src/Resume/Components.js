@@ -3,11 +3,6 @@ import { styled } from "@mui/material/styles";
 import { Container, Box, Typography, Button, Collapse } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
-export const PageContainer = styled(Container)(({ theme }) => ({
-  backgroundColor: theme.palette.background.default,
-  color: theme.palette.text.primary,
-}));
-
 export const SectionHeading = ({ children }) => {
   return (
     <Typography
@@ -25,30 +20,10 @@ export const SectionHeading = ({ children }) => {
   );
 };
 
-export const EntryHeader = styled(Box)({
-  display: "flex",
-  flexDirection: "column",
-  alignItems: "flex-start",
-  justifyContent: "flex-start",
-});
-
-export const EntryTitle = styled(Typography)({
-  fontWeight: "bold",
-});
-
-export const TextContainer = ({ children }) => {
-  return children;
-};
-
-export const EntrySubtitle = styled(Typography)({});
-
-export const EntryDate = styled(Typography)({});
-
 export const EntryContainer = ({
   date,
   company,
   caption = "",
-  isProject,
   logo,
   children,
 }) => {
