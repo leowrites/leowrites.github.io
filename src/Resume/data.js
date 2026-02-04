@@ -68,21 +68,36 @@ const experience = [
     dates: "May 2025 - Present",
     caption:
       "Researching compiler optimizations for machine learning workloads using MLIR and LLVM",
-    bullets: [
-      <span>
-        Contributed mixed-sparsity 2:4 kernel support for NVIDIA Tensor Cores in{" "}
-        <Link
-          href="https://github.com/openai/triton"
-          color="secondary"
-          underline="hover"
-          target="_blank"
-          rel="noopener"
-        >
-          OpenAI's Triton compiler
-        </Link>
-        , achieving up to 37% throughput gains over cuSPARSELt.
-      </span>,
-      "Optimized kernels to achieve up to 8% performance gains with autotuned configurations, addressing issues related to L2 cache utilization, tail effects, and load imbalance",
+    details: [
+      {
+        title: "Research Focus",
+        content:
+          "Researching compiler optimizations for machine learning workloads using MLIR and LLVM at ParaMathics Lab.",
+      },
+      {
+        title: "OpenAI Triton Compiler",
+        content: (
+          <span>
+            Contributed mixed-sparsity 2:4 kernel support for NVIDIA Tensor
+            Cores in{" "}
+            <Link
+              href="https://github.com/openai/triton"
+              color="secondary"
+              underline="hover"
+              target="_blank"
+              rel="noopener"
+            >
+              OpenAI's Triton compiler
+            </Link>
+            , achieving up to 37% throughput gains over cuSPARSELt.
+          </span>
+        ),
+      },
+      {
+        title: "Kernel Optimization",
+        content:
+          "Optimized kernels to achieve up to 8% performance gains with autotuned configurations, addressing issues related to L2 cache utilization, tail effects, and load imbalance.",
+      },
     ],
     tags: ["Research", "Compiler", "LLVM", "MLIR", "Machine Learning", "C++"],
   },
@@ -93,23 +108,60 @@ const experience = [
     location: "Toronto, ON",
     dates: "May 2025 - Sep 2025",
     caption: "Firefox Privacy",
-    bullets: [
-      <span>
-        Designed and shipped a privacy customization feature to 1.5 M+{" "}
-        <Link
-          href="https://www.mozilla.org/en-US/firefox/new/"
-          color="secondary"
-          underline="hover"
-          target="_blank"
-          rel="noopener"
-        >
-          Firefox
-        </Link>{" "}
-        users, resolving 1,000+ site-breaking issues while preserving strict
-        tracking protection.
-      </span>,
-      "Collaborated across Privacy, Messaging Systems, and UX teams to launch an interactive infobar that increased user adoption and visibility of Enhanced Tracking Protection.",
-      "Built a debugging panel for web-compatibility diagnostics that cut issue triage time by 30%, improving team response speed and internal tooling reliability.",
+    details: [
+      {
+        title: "Introduction",
+        content: (
+          <span>
+            <Link
+              href="https://www.mozilla.org/en-US/firefox/new/"
+              color="secondary"
+              underline="hover"
+              target="_blank"
+              rel="noopener"
+            >
+              Firefox
+            </Link>{" "}
+            is one of the world's most popular browsers, known for its strong
+            privacy protections. As part of the Firefox Privacy team, I worked
+            on enhancing user control over their privacy settings, specifically
+            addressing the balance between strict tracking protection and web
+            compatibility.
+          </span>
+        ),
+      },
+      {
+        title: "The Challenge",
+        content:
+          "Enhanced Tracking Protection (ETP) is great for privacy, but 'Strict' mode often breaks websites that rely on trackers for functionality (e.g., login flows, payment gateways). Users would enable Strict mode, encounter broken sites, and confusingly disable ETP entirely, leaving them unprotected.",
+      },
+      {
+        title: "Implementation",
+        content:
+          "I designed and implemented a new privacy customization feature that allows users to toggle protections for specific sites directly from the URL bar (SmartBlock 3.0). This involved collaborating with UX designers to create an intuitive 'breaking site' recovery flow and engineering the C++ backend logic to dynamically exempt sites from strict blocking rules without compromising global settings.",
+      },
+      {
+        title: "Result",
+        content: (
+          <span>
+            The feature was shipped to over 1.5 million{" "}
+            <Link
+              href="https://www.mozilla.org/en-US/firefox/new/"
+              color="secondary"
+              underline="hover"
+              target="_blank"
+              rel="noopener"
+            >
+              Firefox
+            </Link>{" "}
+            users. It successfully resolved over 1,000 reported site-breaking
+            issues, significantly reducing support tickets. More importantly, it
+            increased the adoption of Strict Tracking Protection by giving users
+            the tool to manage exceptions granularly rather than disabling
+            protection globally.
+          </span>
+        ),
+      },
     ],
     tags: ["C++", "JavaScript"],
     logo: "/mozilla.svg",
@@ -122,13 +174,27 @@ const experience = [
     dates: "Sep 2024 - Dec 2024",
     caption:
       "Full-Stack developer on LiveSocial, a platform for curating personalized content for sales teams",
-    bullets: [
-      `Delivered a highly requested full-stack feature (React, Express) giving admins greater access control over
-platform-specific content sharing, enhancing customization for over 2,000 client companies`,
-      `Transformed a client configuration update process to self-service, reducing configuration update time by 99% by
-migrating legacy configurations for 9 clients from file-based storage to MongoDB`,
-      `Resolved 20+ bugs through systematic root cause analysis, reducing recurring support tickets by 5% and eliminating
-several months-old persistent issues through collaborations with customer success and product team`,
+    details: [
+      {
+        title: "Project: LiveSocial",
+        content:
+          "Full-Stack developer on LiveSocial, a platform for curating personalized content for sales teams.",
+      },
+      {
+        title: "Feature Development",
+        content:
+          "Delivered a highly requested full-stack feature (React, Express) giving admins greater access control over platform-specific content sharing, enhancing customization for over 2,000 client companies.",
+      },
+      {
+        title: "Process Improvement",
+        content:
+          "Transformed a client configuration update process to self-service, reducing configuration update time by 99% by migrating legacy configurations for 9 clients from file-based storage to MongoDB.",
+      },
+      {
+        title: "Engineering Excellence",
+        content:
+          "Resolved 20+ bugs through systematic root cause analysis, reducing recurring support tickets by 5% and eliminating several months-old persistent issues through collaborations with customer success and product team.",
+      },
     ],
     tags: [
       "Fullstack",
@@ -150,11 +216,22 @@ several months-old persistent issues through collaborations with customer succes
     dates: "May 2024 - Aug 2024",
     caption:
       "Backend developer on an internal tool for managing and analyzing gaming data",
-    bullets: [
-      `Developed a daily data ingestion pipeline integrating 4 gaming platform APIs to automatically fetch and aggregate
-game statistics for over 500 employees, enabling real-time leaderboard functionality`,
-      `Optimized API efficiency by implementing GraphQL resolvers with Apollo Express, reducing complex nested query
-latency from 600ms to 150ms by eliminating request waterfalls, achieving 75% faster data fetching`,
+    details: [
+      {
+        title: "Internal Gaming Tool",
+        content:
+          "Backend developer on an internal tool for managing and analyzing gaming data.",
+      },
+      {
+        title: "Data Pipeline",
+        content:
+          "Developed a daily data ingestion pipeline integrating 4 gaming platform APIs to automatically fetch and aggregate game statistics for over 500 employees, enabling real-time leaderboard functionality.",
+      },
+      {
+        title: "Performance Optimization",
+        content:
+          "Optimized API efficiency by implementing GraphQL resolvers with Apollo Express, reducing complex nested query latency from 600ms to 150ms by eliminating request waterfalls, achieving 75% faster data fetching.",
+      },
     ],
     tags: [
       "Backend",
@@ -174,9 +251,16 @@ latency from 600ms to 150ms by eliminating request waterfalls, achieving 75% fas
     orgUrl: "https://www.skytrac.ca",
     location: "Ottawa, ON",
     dates: "May 2023 - Aug 2023",
-    bullets: [
-      `Reduced flight analysts' workflows by 15\% by building a web dashboard with BackboneJS, automatically retrieving flight data from the MySQL database to allow efficient viewing and annotation of flight events`,
-      `Identified 1 critical data inconsistency with an automated Python data verification script across flight log databases`,
+    details: [
+      {
+        title: "Flight Data Dashboard",
+        content: `Reduced flight analysts' workflows by 15% by building a web dashboard with BackboneJS, automatically retrieving flight data from the MySQL database to allow efficient viewing and annotation of flight events.`,
+      },
+      {
+        title: "Data Integrity",
+        content:
+          "Identified 1 critical data inconsistency with an automated Python data verification script across flight log databases.",
+      },
     ],
     tags: ["Backend", "Python", "MySQL", "BackboneJS"],
   },
@@ -187,9 +271,12 @@ const projects = [
     name: "Minicc Compiler",
     description: "A toy compiler for minicc, a subset of C",
     technologies: "C++, Antlr4, LLVM",
-    bullets: [
-      "Implemented a compiler capable of parsing and translating minicc code into LLVM IR",
-      "Implemented alloca2reg optimization pass to reduce stack allocation overhead, achieving a 23% reduction in runtime",
+    details: [
+      {
+        title: "Summary",
+        content:
+          "Implemented a compiler capable of parsing and translating minicc code into LLVM IR, featuring an alloca2reg optimization pass that reduces stack allocation overhead, achieving a 23% reduction in runtime.",
+      },
     ],
     tags: ["Compiler", "C++", "LLVM"],
   },
@@ -198,9 +285,12 @@ const projects = [
     description:
       "Leveraging multi-threading and distributed computing for performance",
     technologies: "C++, OpenMP, OpenMPI",
-    bullets: [
-      "Experimented with different optimization techniques such as binning, static arrays, and bucket sort to decrease sequential runtime from 53 seconds to 18 seconds for simulating 160,000 particles on SciNet, achieving a 2.94x increase and establishing a sequential baseline",
-      "Leveraged OpenMP to parallize 90% of the sequential code using static decomposition and uniform partitioning of data, further reducing the runtime to 2 seconds and achieving a performance improvement of 9x",
+    details: [
+      {
+        title: "Summary",
+        content:
+          "Optimized particle simulation using binning, static arrays, and bucket sort, improving sequential runtime from 53s to 18s (2.94x) for 160k particles on SciNet. Further reduced runtime to 2s (9x) by parallelizing 90% of the code with OpenMP using static decomposition and uniform partitioning.",
+      },
     ],
     tags: ["C++", "OpenMP", "OpenMPI"],
   },
@@ -208,9 +298,12 @@ const projects = [
     name: "Food Item Classifier",
     description: "A machine learning experiment to classify food items",
     technologies: "Python, sklearn",
-    bullets: [
-      "Developed a model to classify food items based on text questions using random forest, neural networks and linear regression models.",
-      "Achieved an accuracy of over 85% on the validation dataset and 80% on the test dataset.",
+    details: [
+      {
+        title: "Summary",
+        content:
+          "Developed a model to classify food items based on text questions using random forest, neural networks and linear regression models, achieving an accuracy of over 85% on the validation dataset and 80% on the test dataset.",
+      },
     ],
     tags: ["Machine Learning", "Python", "sklearn"],
   },
@@ -220,10 +313,12 @@ const projects = [
       "Collaboration with morLab to build a cloud-based simulation service",
     technologies: "Python, Django, AWS",
     dates: "Jan 2023 - May 2023",
-    bullets: [
-      "Developed a user-friendly web interface using React and Django for a C++ pandemic simulation model, improving model accessibility and simplifying workflows for epidemiologists and healthcare researchers.",
-      "Improved accessibility to a C++ pandemic simulation model for epidemiologists and healthcare researchers by implementing 10+ RESTful Django endpoints, transforming a C++ application into a user friendly web platform",
-      "Enabled scalable, concurrent pandemic simulation runs with automated output to a PostgreSQL instance by architecting a pipeline integrating the Django backend with AWS SQS and Batch",
+    details: [
+      {
+        title: "Summary",
+        content:
+          "Built a user-friendly web platform using React and Django to make a C++ pandemic simulation model accessible to epidemiologists. Implemented 10+ RESTful endpoints and architected an AWS SQS/Batch pipeline for scalable, concurrent simulations with automated PostgreSQL output.",
+      },
     ],
     tags: ["Backend", "Python", "Django", "AWS", "PostgreSQL"],
   },
@@ -232,9 +327,12 @@ const projects = [
     description: "Visualizing Memory Management in Python",
     technologies: "Python, TypeScript",
     dates: "Sept 2021 - Dec 2021",
-    bullets: [
-      `Spearheaded the development of Webstepper, an interactive, educational Python memory visualization tool.`,
-      `Adopted by 900+ students each semester in Computer Science fundamentals courses at UofT, providing a hands-on approach to understanding programming concepts such as memory and references.`,
+    details: [
+      {
+        title: "Summary",
+        content:
+          "Spearheaded the development of Webstepper, an interactive Python memory visualization tool adopted by 900+ students each semester in CS fundamentals courses at UofT to teach memory and reference concepts.",
+      },
     ],
     tags: ["Python", "TypeScript", "React"],
   },
@@ -243,10 +341,12 @@ const projects = [
     description:
       "An internship review platform to connect recruiters and job-seekers",
     technologies: "React, Java, SprintBoot, PostgreSQL",
-    bullets: [
-      "Developed scalable and maintainable Spring Boot endpoints by following the SOLID principles",
-      "Achieved 80% code coverage with over 50 unit and integration tests, running automatically in a Docker container on Github Actions",
-      "Configured automated testing by building a Docker continuous integration pipeline to run a total of 50+ tests on Github Actions for a 80% code coverage",
+    details: [
+      {
+        title: "Summary",
+        content:
+          "Developed scalable Spring Boot endpoints following SOLID principles and achieved 80% code coverage with over 50 automated unit/integration tests in a Docker CI/CD pipeline on Github Actions.",
+      },
     ],
     tags: [
       "Fullstack",
@@ -264,9 +364,12 @@ const projects = [
     description: "Computer Game with Custom AI Algorithms",
     technologies: "Python, Pygame",
     dates: "Sept 2022 - Dec 2022",
-    bullets: [
-      "Implemented A* pathfinding algorithm for ghost movement with different behavior patterns",
-      "Created a scoring system with multiple game levels and enhanced user experience with sound effects",
+    details: [
+      {
+        title: "Summary",
+        content:
+          "Implemented A* pathfinding algorithm for ghost movement with customized behavior patterns, creating a multi-level game with enhanced sound effects and user experience.",
+      },
     ],
   },
   {
@@ -274,9 +377,12 @@ const projects = [
     description: "Engineering Project",
     technologies: "Arduino, 3D Printing",
     dates: "May 2022 - Aug 2022",
-    bullets: [
-      "Designed custom thrust vectoring mechanism for enhanced flight control",
-      "Programmed Arduino-based flight controller and implemented telemetry system",
+    details: [
+      {
+        title: "Summary",
+        content:
+          "Designed a custom thrust vectoring mechanism for enhanced flight control and programmed an Arduino-based flight controller with a telemetry system.",
+      },
     ],
   },
 ];
@@ -288,9 +394,15 @@ const volunteering = [
     orgUrl: "https://uoftblueprint.org",
     location: "Toronto, ON",
     dates: "Aug 2023 - May 2024",
-    bullets: [
-      `Led 40+ members in delivering pro-bono software solutions to 3 nonprofits, while establishing corporate partnerships with Manulife and Guidewire to facilitate internship preparation events for 100+ students`,
-      `Established Project Lead Hub and comprehensive Handbook to standardize project management methodologies, client requirement scoping, and team engagement best practices`,
+    details: [
+      {
+        title: "Leadership & Strategy",
+        content: `Led 40+ members in delivering pro-bono software solutions to 3 nonprofits, while establishing corporate partnerships with Manulife and Guidewire to facilitate internship preparation events for 100+ students.`,
+      },
+      {
+        title: "Operational Excellence",
+        content: `Established Project Lead Hub and comprehensive Handbook to standardize project management methodologies, client requirement scoping, and team engagement best practices.`,
+      },
     ],
     tags: ["Leadership", "Club", "Project Management"],
     logo: "/bp.svg",
@@ -301,22 +413,30 @@ const volunteering = [
     orgUrl: "https://uoftblueprint.org",
     location: "Toronto, ON",
     dates: "Aug 2023 - Aug 2024",
-    bullets: [
-      <span>
-        Increased menstruation awareness by partnering with{" "}
-        <Link
-          href="https://theperiodpurse.com/"
-          color="secondary"
-          underline="hover"
-          target="_blank"
-          rel="noopener"
-        >
-          The Period Purse
-        </Link>{" "}
-        and developing an educational Android period tracker for Canadian youth,
-        available on Google Play Store with over 50 downloads
-      </span>,
-      `Managed a 7-people development team through backlog refinement, prioritization and modularization, implementing all 8 use-cases as specified and completing 90+ tickets over 1 year`,
+    details: [
+      {
+        title: "Project: Period Purse",
+        content: (
+          <span>
+            Increased menstruation awareness by partnering with{" "}
+            <Link
+              href="https://theperiodpurse.com/"
+              color="secondary"
+              underline="hover"
+              target="_blank"
+              rel="noopener"
+            >
+              The Period Purse
+            </Link>{" "}
+            and developing an educational Android period tracker for Canadian
+            youth, available on Google Play Store with over 50 downloads.
+          </span>
+        ),
+      },
+      {
+        title: "Team Management",
+        content: `Managed a 7-people development team through backlog refinement, prioritization and modularization, implementing all 8 use-cases as specified and completing 90+ tickets over 1 year.`,
+      },
     ],
     tags: ["Leadership", "Project Management", "Kotlin", "Android"],
     logo: "/bp.svg",

@@ -1,11 +1,7 @@
 import React from "react";
 import { Box, Link } from "@mui/material";
-import {
-  SectionHeading,
-  EntryContainer,
-  BulletPoint,
-  EmptySectionText,
-} from "./Components";
+import { SectionHeading, EntryContainer, EmptySectionText } from "./Components";
+import { StructuredDetails } from "./StructuredDetails";
 
 const Volunteering = ({ experienceData }) => {
   return (
@@ -40,11 +36,7 @@ const Volunteering = ({ experienceData }) => {
             caption={exp.caption || ""}
             logo={exp.logo}
           >
-            {exp.bullets.map((bullet, idx) => (
-              <BulletPoint key={idx}>
-                <Box> • {bullet}</Box>
-              </BulletPoint>
-            ))}
+            <StructuredDetails details={exp.details} />
           </EntryContainer>
         );
       })}

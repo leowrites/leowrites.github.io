@@ -153,11 +153,6 @@ export const EmptySectionText = ({ label }) => {
   );
 };
 
-export const BulletPoint = styled(Box)({
-  display: "flex",
-  lineHeight: 1.5,
-});
-
 export const TagButton = styled(Button)(({ theme, selected }) => ({
   backgroundColor: selected
     ? theme.palette.primary.main

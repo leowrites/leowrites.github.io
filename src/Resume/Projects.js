@@ -1,11 +1,7 @@
 import React from "react";
 import { Box, Link } from "@mui/material";
-import {
-  SectionHeading,
-  EntryContainer,
-  BulletPoint,
-  EmptySectionText,
-} from "./Components";
+import { SectionHeading, EntryContainer, EmptySectionText } from "./Components";
+import { StructuredDetails } from "./StructuredDetails";
 
 const ClassicProjectsSection = ({ projectsData }) => {
   return (
@@ -34,13 +30,7 @@ const ClassicProjectsSection = ({ projectsData }) => {
             caption={project.description}
             isProject
           >
-            {" "}
-            {project.bullets.map((bullet, idx) => (
-              <BulletPoint key={idx}>
-                <Box mr="0.1in">•</Box>
-                <Box>{bullet}</Box>
-              </BulletPoint>
-            ))}
+            <StructuredDetails details={project.details} />
           </EntryContainer>
         );
       })}
