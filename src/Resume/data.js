@@ -1,15 +1,15 @@
 const personalInfo = {
   description: [
-    `I'm a fourth year Computer Science student at the University of Toronto.`,
-    `I have a interest in systems, performance optimization and machine learning. 
+    `I'm final year Computer Science student at the University of Toronto.`,
+    `I have an interest in systems, performance optimization and machine learning. 
       At school, I have taken courses such as Compilers, Computer Architecture, Operating Systems, 
-      and Machine Learning.`,
-    `I'm currently working as a Software Engineer Intern at Mozilla, and as a Research Assistant for the ParaMathics Lab.`,
+      and Deep Learning.`,
+    `Some of the most exciting projects I've worked on include contributing to the Triton lang & compiler for parallel programming, and enhancing Firefox Privacy at Mozilla.`,
   ],
   email: "leo@liuwork.ca",
   phone: "(778) 990-6015",
   github: "github.com/leowrites",
-  linkedin: "linkedin.com/in/siqiliu-",
+  linkedin: "linkedin.com/in/leowrites/",
 };
 
 const education = [
@@ -18,37 +18,37 @@ const education = [
     degree: "Bachelor of Science in Computer Science",
     dates: "Sep 2021 - May 2026",
     courses:
-      "ML, Compilers & Interpreters, Computer Architecture, Parallel Programming",
+      "Algorithms Design and Complexity, Compilers & Interpreters, Computer Architecture, Deep Learning, Intro to ML, Computer Networks, Operating Systems, Parallel Programming, Databases, Intro to AI, Software Engineering, Software Design, Functional Programming",
   },
 ];
 
 const experience = [
   {
-    title: "Software Engineer Intern",
-    organization: "Mozilla",
-    location: "Toronto, ON",
-    dates: "May 2025 - Present",
-    caption: "Firefox Privacy",
-    bullets: ["WIP!"],
-    tags: ["C++", "JavaScript"],
-    logo: "/mozilla.svg",
-  },
-  {
-    title: "Research Assistant",
+    title: "Undergraduate Researcher",
     organization: "ParaMathics Lab, University of Toronto",
     location: "Toronto, ON",
     dates: "May 2025 - Present",
     caption:
       "Researching compiler optimizations for machine learning workloads using MLIR and LLVM",
     bullets: [
-      `This project aims to advance machine learning compiler infrastructure by 
-        leveraging MLIR (Multi-Level Intermediate Representation) and LLVM (Low-Level Virtual Machine) 
-        technologies. Our objective is to enhance the performance, portability, and flexibility 
-        of machine learning models across diverse hardware platforms. We will focus on integrating 
-        MLIR into LLVM, enabling a unified compiler stack capable of optimizing ML workloads at multiple 
-        abstraction levels.`,
+      "Contributed mixed-sparsity 2:4 kernel support for NVIDIA Tensor Cores in OpenAI's Triton compiler, achieving up to 37% throughput gains over cuSPARSELt.",
+      "Optimized kernels to achieve up to 8% performance gains with autotuned configurations, addressing issues related to L2 cache utilization, tail effects, and load imbalance",
     ],
     tags: ["Research", "Compiler", "LLVM", "MLIR", "Machine Learning", "C++"],
+  },
+  {
+    title: "Software Engineer Intern",
+    organization: "Mozilla",
+    location: "Toronto, ON",
+    dates: "May 2025 - Sep 2025",
+    caption: "Firefox Privacy",
+    bullets: [
+      "Designed and shipped a privacy customization feature to 1.5 M+ Firefox users, resolving 1,000+ site-breaking issues while preserving strict tracking protection.",
+      "Collaborated across Privacy, Messaging Systems, and UX teams to launch an interactive infobar that increased user adoption and visibility of Enhanced Tracking Protection.",
+      "Built a debugging panel for web-compatibility diagnostics that cut issue triage time by 30%, improving team response speed and internal tooling reliability.",
+    ],
+    tags: ["C++", "JavaScript"],
+    logo: "/mozilla.svg",
   },
   {
     title: "Software Engineer Intern",
@@ -225,6 +225,7 @@ const volunteering = [
       `Established Project Lead Hub and comprehensive Handbook to standardize project management methodologies, client requirement scoping, and team engagement best practices`,
     ],
     tags: ["Leadership", "Club", "Project Management"],
+    logo: "/bp.svg",
   },
   {
     title: "Project Lead",
@@ -236,6 +237,7 @@ const volunteering = [
       `Managed a 7-people development team through backlog refinement, prioritization and modularization, implementing all 8 use-cases as specified and completing 90+ tickets over 1 year`,
     ],
     tags: ["Leadership", "Project Management", "Kotlin", "Android"],
+    logo: "/bp.svg",
   },
 ];
 

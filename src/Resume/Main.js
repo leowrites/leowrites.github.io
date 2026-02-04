@@ -1,4 +1,3 @@
-// filepath: /Users/leoliu/Documents/code/leowrites.github.io/src/Resume/Resume.js
 import React, { useState } from "react";
 import ResumeHeader from "./Header";
 import EducationSection from "./Education";
@@ -17,7 +16,6 @@ import {
 } from "./data";
 
 const Resume = () => {
-  // Mock data - replace with your actual data
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up("md"));
 
@@ -78,8 +76,8 @@ const Resume = () => {
       />
       <EducationSection educationData={education} />
       <ExperienceSection experienceData={filteredExperience} />
-      <ProjectsSection projectsData={filteredProjects} />
       <Volunteering experienceData={filteredVolunteering} />
+      <ProjectsSection projectsData={filteredProjects} />
       <Contacts personalInfo={personalInfo} />
     </Box>
   );

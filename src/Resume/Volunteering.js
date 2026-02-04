@@ -17,6 +17,7 @@ const Volunteering = ({ experienceData }) => {
           key={index}
           date={exp.dates}
           company={`${exp.title} @ ${exp.organization}`}
+          logo={exp.logo}
         >
           {exp.bullets.map((bullet, idx) => (
             <BulletPoint key={idx}>
