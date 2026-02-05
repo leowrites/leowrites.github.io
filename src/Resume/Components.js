@@ -1,6 +1,5 @@
 import { useState } from "react";
-import { styled } from "@mui/material/styles";
-import { Container, Box, Typography, Button, Collapse } from "@mui/material";
+import { Box, Typography, Collapse } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 export const SectionHeading = ({ children }) => {

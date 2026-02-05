@@ -1,4 +1,10 @@
-import { Link } from "@mui/material";
+import {
+  StructuredVisual,
+  StructuredLink,
+  StructuredLinksContainer,
+} from "./StructuredDetails";
+import { Link, Typography } from "@mui/material";
+import BugReportIcon from "@mui/icons-material/BugReport";
 
 const personalInfo = {
   description: [
@@ -30,7 +36,7 @@ const personalInfo = {
       >
         Triton
       </Link>{" "}
-      lang & compiler for parallel programming, and enhancing{" "}
+      language and compiler for GPU programming, and enhancing{" "}
       <Link
         href="https://www.mozilla.org/en-US/firefox/"
         color="secondary"
@@ -54,8 +60,26 @@ const education = [
     institution: "University of Toronto",
     degree: "Bachelor of Science in Computer Science",
     dates: "Sep 2021 - May 2026",
-    courses:
-      "Algorithms Design and Complexity, Compilers & Interpreters, Computer Architecture, Deep Learning, Intro to ML, Computer Networks, Operating Systems, Parallel Programming, Databases, Intro to AI, Software Engineering, Software Design, Functional Programming",
+    details: [
+      {
+        title: "Systems",
+        content:
+          "Compilers & Interpreters, Operating Systems, Computer Architecture, Parallel Programming, Databases, Computer Networks, Computer Organization",
+      },
+      {
+        title: "AI & ML",
+        content: "Deep Learning, Intro to ML, Intro to AI",
+      },
+      {
+        title: "Software Engineering & Theory",
+        content:
+          "Algorithms Design and Complexity, Software Engineering, Software Design, Functional Programming, Data Structures & Analysis, Web Development, Computer Graphics",
+      },
+      {
+        title: "Math",
+        content: "Probability, Multivariable Calculus, Linear Algebra",
+      },
+    ],
   },
 ];
 
@@ -70,16 +94,13 @@ const experience = [
       "Adding support for structured sparsity matrix multiplication to Triton",
     details: [
       {
-        title: "Research Focus",
-        content:
-          "Researching compiler optimizations for machine learning workloads using MLIR and LLVM at ParaMathics Lab.",
-      },
-      {
-        title: "OpenAI Triton Compiler",
+        title: "Introduction",
         content: (
           <span>
-            Contributed mixed-sparsity 2:4 kernel support for NVIDIA Tensor
-            Cores in{" "}
+            Matrix multiplication is one of the most expensive operations in
+            machine learning. While GPUs are optimized for dense data,
+            exploiting sparsity (zeros) can lead to massive speedups. I worked
+            on extending the{" "}
             <Link
               href="https://github.com/openai/triton"
               color="secondary"
@@ -87,16 +108,46 @@ const experience = [
               target="_blank"
               rel="noopener"
             >
-              OpenAI's Triton compiler
-            </Link>
-            , achieving up to 37% throughput gains over cuSPARSELt.
+              Triton compiler
+            </Link>{" "}
+            to support these sparse operations efficiently.
+            <StructuredVisual
+              src="/triton/matrix_decomposition.png"
+              alt="Matrix Decomposition"
+            ></StructuredVisual>
           </span>
         ),
       },
       {
-        title: "Kernel Optimization",
+        title: "The Challenge: Sparse Kernels",
         content:
-          "Optimized kernels to achieve up to 8% performance gains with autotuned configurations, addressing issues related to L2 cache utilization, tail effects, and load imbalance.",
+          "Defining sparsity at the block level introduces complex scheduling problems—like a factory line where some parts are heavy and some are light. Simple sequential schedules lead to load imbalance and poor GPU utilization as threads stall waiting for others to finish dense blocks.",
+      },
+      {
+        title: "Schedules",
+        content:
+          "I implemented block-sparse matrix multiplication support in Triton using K-dimension block iteration. To solve the load balancing issue, I developed a decoupled dual-program scheduling strategy. This approach launches distinct programs that specialize threads for either sparse or dense blocks, optimizing instruction cache usage and keeping execution units saturated.",
+      },
+      {
+        title: "Autotuning API",
+        content: (
+          <>
+            I built a robust user-facing API featuring an automated tuning
+            engine. The system automates the search for optimal kernel
+            configurations, caches results to amortize tuning costs, and
+            enforces a strict verification pipeline. This pipeline validates
+            results against reference implementations on smaller matrices before
+            scaling up, ensuring mathematical precision. The autotuning
+            subsystem contributed an additional 8% performance boost by
+            discovering non-obvious optimal configurations, providing a 'fast
+            path' to high performance that users could trust for production
+            workloads.
+            <StructuredVisual
+              src="/triton/inspector.png"
+              alt="Insepctor"
+            ></StructuredVisual>
+          </>
+        ),
       },
     ],
     tags: ["Research", "Compiler", "LLVM", "MLIR", "Machine Learning", "C++"],
@@ -137,29 +188,61 @@ const experience = [
       },
       {
         title: "Implementation",
-        content:
-          "I designed and implemented a new privacy customization feature that allows users to toggle protections for specific sites directly in the Privacy settings page. This involved collaborating with UX designers to create an intuitive 'breaking site' recovery flow and engineering the backend logic to dynamically exempt sites from strict blocking rules without compromising global settings.",
+        content: (
+          <>
+            <Typography variant="body1" color="text.secondary" paragraph>
+              I implemented granular controls for Enhanced Tracking Protection
+              (ETP), adding configuration options to 'Strict' and 'Custom'
+              modes. This feature enables users to manage automatic exception
+              levels, choosing between applying exceptions list entries for
+              major website breakage or extending them to fix minor convenience
+              issues, giving them precise control over the privacy-compatibility
+              balance.
+            </Typography>
+            <StructuredLinksContainer>
+              <StructuredLink
+                href="https://bugzilla.mozilla.org/show_bug.cgi?id=1970632"
+                icon={<BugReportIcon />}
+              >
+                Tracking Protection exceptions UX for ETP-Strict users
+              </StructuredLink>
+              <StructuredLink
+                href="https://bugzilla.mozilla.org/show_bug.cgi?id=1975478"
+                icon={<BugReportIcon />}
+              >
+                Add anti-tracking exceptions onboarding for existing ETP-Strict
+                users
+              </StructuredLink>
+            </StructuredLinksContainer>
+          </>
+        ),
       },
       {
         title: "Result",
         content: (
-          <span>
-            The feature was shipped to over 1.5 million{" "}
-            <Link
-              href="https://www.mozilla.org/en-US/firefox/new/"
-              color="secondary"
-              underline="hover"
-              target="_blank"
-              rel="noopener"
-            >
-              Firefox
-            </Link>{" "}
-            users. It successfully resolved over 1,000 reported site-breaking
-            issues, significantly reducing support tickets. More importantly, it
-            increased the adoption of Strict Tracking Protection by giving users
-            the tool to manage exceptions granularly rather than disabling
-            protection globally.
-          </span>
+          <>
+            <span>
+              In FX144, The feature was shipped to over 1.5 million{" "}
+              <Link
+                href="https://www.mozilla.org/en-US/firefox/new/"
+                color="secondary"
+                underline="hover"
+                target="_blank"
+                rel="noopener"
+              >
+                Firefox
+              </Link>{" "}
+              users. It successfully resolved over 1,000 reported site-breaking
+              issues, significantly reducing support tickets. More importantly,
+              it increased the adoption of Strict Tracking Protection by giving
+              users the tool to manage exceptions granularly rather than
+              disabling protection globally.
+            </span>
+            <StructuredVisual
+              src="/fx/fx_privacy.png"
+              alt="Firefox Privacy Settings"
+            ></StructuredVisual>
+          </>
         ),
       },
     ],

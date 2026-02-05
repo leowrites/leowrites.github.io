@@ -2,6 +2,7 @@
 import React from "react";
 import { Box, Typography } from "@mui/material";
 import { SectionHeading, EntryContainer } from "./Components";
+import { StructuredDetails } from "./StructuredDetails";
 
 const ClassicEducationSection = ({ educationData }) => {
   return (
@@ -13,7 +14,7 @@ const ClassicEducationSection = ({ educationData }) => {
           date={edu.dates}
           company={`${edu.degree}, ${edu.institution}`}
         >
-          <Typography>Courses: {edu.courses}</Typography>
+          <StructuredDetails details={edu.details} />
         </EntryContainer>
       ))}
     </Box>
