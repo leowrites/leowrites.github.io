@@ -1,13 +1,15 @@
+import { generateId } from "./utils";
 import React from "react";
 import { Box, Link } from "@mui/material";
 import { SectionHeading, EntryContainer, EmptySectionText } from "./Components";
 import { StructuredDetails } from "./StructuredDetails";
 
-const Section = ({ sectionTitle, items }) => {
+const Section = ({ sectionTitle, items, onSelect, selectedId }) => {
   return (
     <Box>
       <SectionHeading>{sectionTitle}</SectionHeading>
       {items.map((item, index) => {
+        const id = generateId(item);
         const titleContent =
           item.url && !item.organization ? (
             <Link
@@ -54,10 +56,18 @@ const Section = ({ sectionTitle, items }) => {
         return (
           <EntryContainer
             key={index}
+            id={id}
             date={item.dates}
             company={headerContent}
             caption={item.caption || ""}
             logo={item.logo}
+            selected={selectedId === id}
+            onSelect={
+              onSelect
+                ? () =>
+                    onSelect(id, <StructuredDetails details={item.details} />)
+                : undefined
+            }
           >
             <StructuredDetails details={item.details} />
           </EntryContainer>

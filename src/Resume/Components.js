@@ -25,28 +25,42 @@ export const EntryContainer = ({
   caption = "",
   logo,
   children,
+  onSelect,
+  selected = false,
+  id,
 }) => {
-  const [open, setOpen] = useState(false);
+  const [expanded, setExpanded] = useState(false);
+
+  // If onSelect is provided, we use selection mode (controlled).
+  // Otherwise, we use expansion mode (uncontrolled).
+  const isSelectionMode = !!onSelect;
+  const showContent = isSelectionMode ? selected : expanded;
 
   const handleClick = () => {
-    setOpen(!open);
+    if (isSelectionMode) {
+      onSelect();
+    } else {
+      setExpanded(!expanded);
+    }
   };
 
   return (
     <Box
+      id={id}
       sx={(theme) => ({
         margin: "1rem 0",
         borderRadius: "1rem",
         overflow: "hidden",
-        backgroundColor: open
+        backgroundColor: showContent
           ? theme.palette.action.selected
           : theme.palette.mode === "light"
           ? theme.palette.grey[100]
           : theme.palette.background.paper,
         transition: "background-color 0.2s ease",
+        border: selected ? `2px solid ${theme.palette.primary.main}` : "none",
         "&:hover": {
           backgroundColor:
-            !open &&
+            !showContent &&
             (theme.palette.mode === "light"
               ? theme.palette.grey[300]
               : theme.palette.action.hover),
@@ -93,23 +107,29 @@ export const EntryContainer = ({
             </Typography>
           )}
         </Box>
-        <ExpandMoreIcon
-          sx={{
-            transform: open ? "rotate(180deg)" : "rotate(0deg)",
-            transition: "transform 0.3s ease",
-            color: (theme) => theme.palette.text.primary,
-          }}
-        />
+        {/* Only show expand icon if in expansion mode (not selection mode) */}
+        {!isSelectionMode && (
+          <ExpandMoreIcon
+            sx={{
+              transform: expanded ? "rotate(180deg)" : "rotate(0deg)",
+              transition: "transform 0.3s ease",
+              color: (theme) => theme.palette.text.primary,
+            }}
+          />
+        )}
       </Box>
-      <Collapse in={open} timeout={300}>
-        <Box
-          sx={{
-            padding: "0 1rem 1rem 1rem",
-          }}
-        >
-          {children}
-        </Box>
-      </Collapse>
+      {/* If not selection mode, render collapsible children as before */}
+      {!isSelectionMode && (
+        <Collapse in={expanded} timeout={300}>
+          <Box
+            sx={{
+              padding: "0 1rem 1rem 1rem",
+            }}
+          >
+            {children}
+          </Box>
+        </Collapse>
+      )}
     </Box>
   );
 };
