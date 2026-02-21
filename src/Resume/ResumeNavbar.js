@@ -4,16 +4,15 @@ import {
   Button,
   Popover,
   Chip,
-  alpha,
   useTheme,
   IconButton,
-  useMediaQuery,
 } from "@mui/material";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
 import { useState, useContext } from "react";
 import { ColorModeContext } from "../theme";
+import { NAVBAR_HEIGHT } from "./constants";
 
 export const ResumeNavbar = ({
   categoryToTags,
@@ -22,7 +21,6 @@ export const ResumeNavbar = ({
   handleSelectAll,
 }) => {
   const theme = useTheme();
-  const matches = useMediaQuery(theme.breakpoints.up("md"));
   const colorMode = useContext(ColorModeContext);
   const [anchorEl, setAnchorEl] = useState(null);
 
@@ -50,29 +48,28 @@ export const ResumeNavbar = ({
         position: "sticky",
         top: 0,
         zIndex: 100,
-        backgroundColor: theme.palette.background.default,
-        py: 1,
-        px: matches ? "4rem" : "0.5rem",
+        height: NAVBAR_HEIGHT,
+        my: "1rem",
+        boxSizing: "border-box",
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
       }}
     >
-      <Button
+      <IconButton
         aria-describedby={id}
-        variant="outlined"
         onClick={handleClick}
         disableRipple
         sx={{
+          backgroundColor: theme.palette.background.default,
           color: "inherit",
-          borderRadius: "1rem",
+          borderRadius: "50%",
           borderColor: "divider",
         }}
       >
         <FilterListIcon />
-      </Button>
+      </IconButton>
 
-      {/* Theme Toggle */}
       <IconButton
         onClick={colorMode.toggleColorMode}
         color="inherit"

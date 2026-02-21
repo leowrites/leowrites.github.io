@@ -58,20 +58,47 @@ const Resume = () => {
     ];
 
     // In a real app with large data this might be slow, but for a resume it's fine
-    const item = allItems.find((item) => generateId(item) === hash);
+    let foundItem = null;
+    let foundProject = null;
 
-    if (item && item.details) {
+    for (const item of allItems) {
+      if (generateId(item) === hash) {
+        foundItem = item;
+        break;
+      }
+
+      const nestedProj = item.projects?.find(
+        (p) =>
+          generateId({
+            ...p,
+            title: p.projectName,
+            organization: item.organization,
+          }) === hash
+      );
+
+      if (nestedProj) {
+        foundItem = item;
+        foundProject = nestedProj;
+        break;
+      }
+    }
+
+    const match = foundProject || foundItem;
+    if (match?.details) {
       setSelectedId(hash);
-      setSelectedContent(<StructuredDetails details={item.details} />);
-      // Scroll to element after render
-      setTimeout(() => {
-        const element = document.getElementById(hash);
-        if (element) {
-          element.scrollIntoView({ behavior: "smooth", block: "center" });
-        }
-      }, 100);
+      setSelectedContent(<StructuredDetails details={match.details} />);
+      scrollToHash(hash);
     }
   }, []);
+
+  const scrollToHash = (hash) => {
+    setTimeout(() => {
+      const element = document.getElementById(hash);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+    }, 100);
+  };
 
   const handleSelect = (id, content) => {
     if (selectedId === id) {
@@ -118,7 +145,7 @@ const Resume = () => {
         handleTagClick={handleTagClick}
         handleSelectAll={handleSelectAll}
       />
-      <Box sx={{ p: matches ? "1rem 4rem" : "0.5rem", textAlign: "start" }}>
+      <Box sx={{ p: matches ? "4rem" : "1rem 0.5rem", textAlign: "start" }}>
         <ResumeHeader personalInfo={personalInfo} />
         {matches ? (
           <Box sx={{ display: "flex", alignItems: "flex-start", gap: 4 }}>
@@ -163,7 +190,7 @@ const Resume = () => {
                 transition:
                   "width 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease 0.2s",
                 position: "sticky",
-                top: "100px",
+                top: "70px",
                 maxHeight: "calc(100vh - 100px)",
                 overflowY: "auto",
                 "&::-webkit-scrollbar": { display: "none" },

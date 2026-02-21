@@ -4,12 +4,19 @@ import {
   ThemeProvider,
   responsiveFontSizes,
 } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import "@fontsource/dm-sans";
 
 export const ColorModeContext = createContext({ toggleColorMode: () => {} });
 
 export default function ThemeProviderWrapper({ children }) {
-  const [mode, setMode] = useState("light");
+  const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
+  const [mode, setMode] = useState(prefersDarkMode ? "dark" : "light");
+
+  // Update mode when system preference changes, but only if user hasn't toggled manually
+  React.useEffect(() => {
+    setMode(prefersDarkMode ? "dark" : "light");
+  }, [prefersDarkMode]);
 
   const colorMode = useMemo(
     () => ({

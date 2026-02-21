@@ -1,7 +1,13 @@
 import { generateId } from "./utils";
 import React from "react";
-import { Box, Link } from "@mui/material";
-import { SectionHeading, EntryContainer, EmptySectionText } from "./Components";
+import { Box } from "@mui/material";
+import {
+  SectionHeading,
+  EntryContainer,
+  ProjectEntry,
+  EmptySectionText,
+  TooltipLink,
+} from "./Components";
 import { StructuredDetails } from "./StructuredDetails";
 
 const Section = ({ sectionTitle, items, onSelect, selectedId }) => {
@@ -10,18 +16,16 @@ const Section = ({ sectionTitle, items, onSelect, selectedId }) => {
       <SectionHeading>{sectionTitle}</SectionHeading>
       {items.map((item, index) => {
         const id = generateId(item);
+        const hasProjects = item.projects && item.projects.length > 0;
         const titleContent =
           item.url && !item.organization ? (
-            <Link
+            <TooltipLink
               href={item.url}
-              target="_blank"
-              rel="noopener"
-              color="secondary"
-              underline="hover"
               onClick={(e) => e.stopPropagation()}
+              tooltipText={item.tooltipText}
             >
               {item.title}
-            </Link>
+            </TooltipLink>
           ) : (
             item.title
           );
@@ -30,16 +34,13 @@ const Section = ({ sectionTitle, items, onSelect, selectedId }) => {
           <span>
             {" @ "}
             {item.url ? (
-              <Link
+              <TooltipLink
                 href={item.url}
-                target="_blank"
-                rel="noopener"
-                color="secondary"
-                underline="hover"
                 onClick={(e) => e.stopPropagation()}
+                tooltipText={item.tooltipText}
               >
                 {item.organization}
-              </Link>
+              </TooltipLink>
             ) : (
               item.organization
             )}
@@ -53,6 +54,22 @@ const Section = ({ sectionTitle, items, onSelect, selectedId }) => {
           </span>
         );
 
+        const handleParentSelect = onSelect
+          ? () => onSelect(id, <StructuredDetails details={item.details} />)
+          : undefined;
+
+        const isParentSelected = selectedId === id;
+        const isChildSelected =
+          hasProjects &&
+          item.projects.some((p) => {
+            const pId = generateId({
+              ...p,
+              organization: item.organization,
+            });
+            return pId === selectedId;
+          });
+        const isSelected = isParentSelected || isChildSelected;
+
         return (
           <EntryContainer
             key={index}
@@ -61,15 +78,52 @@ const Section = ({ sectionTitle, items, onSelect, selectedId }) => {
             company={headerContent}
             caption={item.caption || ""}
             logo={item.logo}
-            selected={selectedId === id}
-            onSelect={
-              onSelect
-                ? () =>
-                    onSelect(id, <StructuredDetails details={item.details} />)
-                : undefined
-            }
+            selected={isSelected}
+            onSelect={handleParentSelect}
+            isFolder={hasProjects}
           >
-            <StructuredDetails details={item.details} />
+            {hasProjects ? (
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "0.25rem",
+                }}
+              >
+                {item.projects.map((proj, pIndex) => {
+                  const projId = generateId({
+                    ...proj,
+                    title: proj.projectName,
+                    organization: item.organization,
+                  });
+                  return (
+                    <ProjectEntry
+                      key={pIndex}
+                      id={projId}
+                      projectName={proj.projectName}
+                      caption={proj.caption}
+                      selected={selectedId === projId}
+                      onSelect={
+                        onSelect
+                          ? () =>
+                              onSelect(
+                                projId,
+                                <StructuredDetails details={proj.details} />
+                              )
+                          : undefined
+                      }
+                    >
+                      {!onSelect && (
+                        <StructuredDetails details={proj.details} />
+                      )}
+                    </ProjectEntry>
+                  );
+                })}
+              </Box>
+            ) : (
+              // Render raw details if no projects
+              <StructuredDetails details={item.details} />
+            )}
           </EntryContainer>
         );
       })}

@@ -1,24 +1,18 @@
-import {
-  StructuredVisual,
-  StructuredLink,
-  StructuredLinksContainer,
-} from "./StructuredDetails";
-import { Link, Typography } from "@mui/material";
+import { StructuredVisual } from "./StructuredDetails";
+import { Box, Typography } from "@mui/material";
 import BugReportIcon from "@mui/icons-material/BugReport";
+import { TooltipLink, CodeBlock } from "./Components";
 
 const personalInfo = {
   description: [
     <span>
       I'm a final year Computer Science student at the{" "}
-      <Link
+      <TooltipLink
         href="https://web.cs.toronto.edu/"
-        color="secondary"
-        underline="hover"
-        target="_blank"
-        rel="noopener"
+        tooltipText="My alma mater, where I study Computer Science"
       >
         University of Toronto
-      </Link>
+      </TooltipLink>
       .
     </span>,
     `I have an interest in systems, performance optimization and machine learning. 
@@ -27,25 +21,19 @@ const personalInfo = {
     <span>
       Some of the most exciting projects I've worked on include contributing to
       the{" "}
-      <Link
+      <TooltipLink
         href="https://github.com/openai/triton"
-        color="secondary"
-        underline="hover"
-        target="_blank"
-        rel="noopener"
+        tooltipText="A ML compiler for deep learning"
       >
         Triton
-      </Link>{" "}
+      </TooltipLink>{" "}
       language and compiler for GPU programming, and enhancing{" "}
-      <Link
+      <TooltipLink
         href="https://www.mozilla.org/en-US/firefox/"
-        color="secondary"
-        underline="hover"
-        target="_blank"
-        rel="noopener"
+        tooltipText="A free and open-source web browser developed by Mozilla"
       >
         Firefox
-      </Link>{" "}
+      </TooltipLink>{" "}
       Privacy at Mozilla.
     </span>,
   ],
@@ -88,28 +76,27 @@ const experience = [
     title: "Undergraduate Researcher",
     organization: "ParaMathics Lab, University of Toronto",
     url: "http://paramathic.com",
+    tooltipText:
+      "A research group at the University of Toronto focusing on large-scale parallel and cloud systems",
     location: "Toronto, ON",
     dates: "May 2025 - Present",
     caption:
       "Adding support for structured sparsity matrix multiplication to Triton",
     details: [
       {
-        title: "Introduction",
+        title: "Overview",
         content: (
           <span>
             Matrix multiplication is one of the most expensive operations in
             machine learning. While GPUs are optimized for dense data,
             exploiting sparsity (zeros) can lead to massive speedups. I worked
             on extending the{" "}
-            <Link
+            <TooltipLink
               href="https://github.com/openai/triton"
-              color="secondary"
-              underline="hover"
-              target="_blank"
-              rel="noopener"
+              tooltipText="A ML compiler for deep learning"
             >
               Triton compiler
-            </Link>{" "}
+            </TooltipLink>{" "}
             to support these sparse operations efficiently.
             <StructuredVisual
               src="/triton/matrix_decomposition.png"
@@ -118,36 +105,135 @@ const experience = [
           </span>
         ),
       },
+    ],
+    projects: [
       {
-        title: "The Challenge: Sparse Kernels",
-        content:
-          "Defining sparsity at the block level introduces complex scheduling problems—like a factory line where some parts are heavy and some are light. Simple sequential schedules lead to load imbalance and poor GPU utilization as threads stall waiting for others to finish dense blocks.",
+        projectName: "Sparse Matrix Multiplication Support",
+        caption:
+          "Adding block-sparse support to Triton via decoupled scheduling",
+        details: [
+          {
+            title: "Sparse Kernels",
+            content:
+              "Defining sparsity at the block level introduces complex scheduling problems—like a factory line where some parts are heavy and some are light. Simple sequential schedules lead to load imbalance and poor GPU utilization as threads stall waiting for others to finish dense blocks.",
+          },
+          {
+            title: "Schedules",
+            content:
+              "I implemented block-sparse matrix multiplication support in Triton using K-dimension block iteration. To solve the load balancing issue, I developed a decoupled dual-program scheduling strategy. This approach launches distinct programs that specialize threads for either sparse or dense blocks, optimizing instruction cache usage and keeping execution units saturated.",
+          },
+          {
+            title: "Autotuning API",
+            content: (
+              <>
+                I built a robust user-facing API featuring an automated tuning
+                engine. The system automates the search for optimal kernel
+                configurations, caches results to amortize tuning costs, and
+                enforces a strict verification pipeline. This pipeline validates
+                results against reference implementations on smaller matrices
+                before scaling up, ensuring mathematical precision. The
+                autotuning subsystem contributed an additional 8% performance
+                boost by discovering non-obvious optimal configurations,
+                providing a 'fast path' to high performance that users could
+                trust for production workloads.
+                <StructuredVisual
+                  src="/triton/inspector.png"
+                  alt="Insepctor"
+                ></StructuredVisual>
+              </>
+            ),
+          },
+        ],
       },
       {
-        title: "Schedules",
-        content:
-          "I implemented block-sparse matrix multiplication support in Triton using K-dimension block iteration. To solve the load balancing issue, I developed a decoupled dual-program scheduling strategy. This approach launches distinct programs that specialize threads for either sparse or dense blocks, optimizing instruction cache usage and keeping execution units saturated.",
-      },
-      {
-        title: "Autotuning API",
-        content: (
-          <>
-            I built a robust user-facing API featuring an automated tuning
-            engine. The system automates the search for optimal kernel
-            configurations, caches results to amortize tuning costs, and
-            enforces a strict verification pipeline. This pipeline validates
-            results against reference implementations on smaller matrices before
-            scaling up, ensuring mathematical precision. The autotuning
-            subsystem contributed an additional 8% performance boost by
-            discovering non-obvious optimal configurations, providing a 'fast
-            path' to high performance that users could trust for production
-            workloads.
-            <StructuredVisual
-              src="/triton/inspector.png"
-              alt="Insepctor"
-            ></StructuredVisual>
-          </>
-        ),
+        projectName: "Fused matmul-compress kernel",
+        details: [
+          {
+            title: "Minimizing Data Movement",
+            content: (
+              <>
+                <Typography sx={{ display: "block" }}>
+                  Often, data movement is the most significant constraint on
+                  computation performance as opposed to the raw compute
+                  capabilities. In a deep learning model, data is moved to and
+                  from shared memory many times in each layer. For example for
+                  one MLP layer, we need to load the input matrix, the weights
+                  and the biases. We may then have some activation function that
+                  operates on the dot product. After the activation function,
+                  the output is sparse and we want to compress the data into 2:4
+                  sparsity. The current workflow looks like this:
+                </Typography>
+                <StructuredVisual
+                  src="/triton/ref_compress.png"
+                  alt="Reference compression workflow"
+                ></StructuredVisual>
+                <Typography>
+                  If we can performance the pruning and compression step
+                  directly within the Triton kernel, we can avoid the costly
+                  step of moving data.
+                </Typography>
+                <StructuredVisual
+                  src="/triton/compress_kernel.png"
+                  alt="Compress kernel"
+                ></StructuredVisual>
+              </>
+            ),
+          },
+          {
+            title: "Kernel Implementation",
+            content: (
+              <>
+                <CodeBlock
+                  language="python"
+                  code={`@triton.jit
+def compress_kernel(
+    dense_ptr,
+    sparse_ptr,
+    meta_ptr,
+    M, K,
+    stride_dm, stride_dk,
+    stride_sm, stride_sk,
+    BLOCK_M: tl.constexpr,
+    BLOCK_N: tl.constexpr,
+):
+    """Compression kernel using 2D grid to tile over M and K.
+    
+    Simplified assuming M == BLOCK_M and K == BLOCK_N.
+    """
+    k_start = 0
+    offs_m = tl.arange(0, BLOCK_M)
+    quad_offs = tl.arange(0, BLOCK_N // 4)
+    
+    # Dense column offsets for each position within quads
+    offs_v0 = k_start + quad_offs * 4 + 0
+    offs_v1 = k_start + quad_offs * 4 + 1
+    offs_v2 = k_start + quad_offs * 4 + 2
+    offs_v3 = k_start + quad_offs * 4 + 3
+    
+    ptrs_v0 = dense_ptr + offs_m[:, None] * stride_dm + offs_v0[None, :] * stride_dk
+    ptrs_v1 = dense_ptr + offs_m[:, None] * stride_dm + offs_v1[None, :] * stride_dk
+    ptrs_v2 = dense_ptr + offs_m[:, None] * stride_dm + offs_v2[None, :] * stride_dk
+    ptrs_v3 = dense_ptr + offs_m[:, None] * stride_dm + offs_v3[None, :] * stride_dk
+    
+    v0 = tl.load(ptrs_v0)
+    v1 = tl.load(ptrs_v1)
+    v2 = tl.load(ptrs_v2)
+    v3 = tl.load(ptrs_v3)
+    
+    compress_store_block(
+        v0, v1, v2, v3,
+        sparse_ptr, meta_ptr,
+        stride_sm, stride_sk,
+        M, K,
+        BLOCK_M, BLOCK_N,
+        0, 0 # Single block kernel, pid (0, 0)
+    )
+    `}
+                />
+              </>
+            ),
+          },
+        ],
       },
     ],
     tags: ["Research", "Compiler", "LLVM", "MLIR", "Machine Learning", "C++"],
@@ -156,23 +242,21 @@ const experience = [
     title: "Software Engineer Intern",
     organization: "Mozilla",
     url: "https://www.mozilla.org",
+    tooltipText: "A non-profit organization behind the Firefox web browser",
     location: "Toronto, ON",
     dates: "May 2025 - Sep 2025",
     caption: "Firefox Privacy",
     details: [
       {
-        title: "Introduction",
+        title: "Overview",
         content: (
           <span>
-            <Link
+            <TooltipLink
               href="https://www.mozilla.org/en-US/firefox/new/"
-              color="secondary"
-              underline="hover"
-              target="_blank"
-              rel="noopener"
+              tooltipText="A free and open-source web browser developed by Mozilla"
             >
               Firefox
-            </Link>{" "}
+            </TooltipLink>{" "}
             is one of the world's most popular browsers, known for its strong
             privacy protections. As part of the Firefox Privacy team, I worked
             on enhancing user control over their privacy settings, specifically
@@ -181,69 +265,78 @@ const experience = [
           </span>
         ),
       },
+    ],
+    projects: [
       {
-        title: "The Challenge",
-        content:
-          "Enhanced Tracking Protection (ETP) is great for privacy, but 'Strict' mode often breaks websites that rely on trackers for functionality (e.g., login flows, payment gateways). Users would enable Strict mode, encounter broken sites, and confusingly disable ETP entirely, leaving them unprotected.",
-      },
-      {
-        title: "Implementation",
-        content: (
-          <>
-            <Typography variant="body1" color="text.secondary" paragraph>
-              I implemented granular controls for Enhanced Tracking Protection
-              (ETP), adding configuration options to 'Strict' and 'Custom'
-              modes. This feature enables users to manage automatic exception
-              levels, choosing between applying exceptions list entries for
-              major website breakage or extending them to fix minor convenience
-              issues, giving them precise control over the privacy-compatibility
-              balance.
-            </Typography>
-            <StructuredLinksContainer>
-              <StructuredLink
-                href="https://bugzilla.mozilla.org/show_bug.cgi?id=1970632"
-                icon={<BugReportIcon />}
-              >
-                Tracking Protection exceptions UX for ETP-Strict users
-              </StructuredLink>
-              <StructuredLink
-                href="https://bugzilla.mozilla.org/show_bug.cgi?id=1975478"
-                icon={<BugReportIcon />}
-              >
-                Add anti-tracking exceptions onboarding for existing ETP-Strict
-                users
-              </StructuredLink>
-            </StructuredLinksContainer>
-          </>
-        ),
-      },
-      {
-        title: "Result",
-        content: (
-          <>
-            <span>
-              In FX144, The feature was shipped to over 1.5 million{" "}
-              <Link
-                href="https://www.mozilla.org/en-US/firefox/new/"
-                color="secondary"
-                underline="hover"
-                target="_blank"
-                rel="noopener"
-              >
-                Firefox
-              </Link>{" "}
-              users. It successfully resolved over 1,000 reported site-breaking
-              issues, significantly reducing support tickets. More importantly,
-              it increased the adoption of Strict Tracking Protection by giving
-              users the tool to manage exceptions granularly rather than
-              disabling protection globally.
-            </span>
-            <StructuredVisual
-              src="/fx/fx_privacy.png"
-              alt="Firefox Privacy Settings"
-            ></StructuredVisual>
-          </>
-        ),
+        projectName: "Enhanced Tracking Protection",
+        caption: "Granular configuration options for ETP-Strict users",
+        details: [
+          {
+            title: "The Problem",
+            content:
+              "Enhanced Tracking Protection (ETP) is great for privacy, but 'Strict' mode often breaks websites that rely on trackers for functionality (e.g., login flows, payment gateways). Users would enable Strict mode, encounter broken sites, and confusingly disable ETP entirely, leaving them unprotected.",
+          },
+          {
+            title: "Implementation",
+            content: (
+              <>
+                <Typography variant="body1" color="text.secondary" paragraph>
+                  I implemented granular controls for Enhanced Tracking
+                  Protection (ETP), adding configuration options to 'Strict' and
+                  'Custom' modes. This feature enables users to manage automatic
+                  exception levels, choosing between applying exceptions list
+                  entries for major website breakage or extending them to fix
+                  minor convenience issues, giving them precise control over the
+                  privacy-compatibility balance.
+                </Typography>
+                <Box sx={{ mt: 1, display: "flex", flexWrap: "wrap", gap: 1 }}>
+                  <TooltipLink
+                    variant="button"
+                    href="https://bugzilla.mozilla.org/show_bug.cgi?id=1970632"
+                    icon={<BugReportIcon />}
+                    tooltipText="Bugzilla issue tracking the UX implementation for ETP-Strict exceptions"
+                  >
+                    Tracking Protection exceptions UX for ETP-Strict users
+                  </TooltipLink>
+                  <TooltipLink
+                    variant="button"
+                    href="https://bugzilla.mozilla.org/show_bug.cgi?id=1975478"
+                    icon={<BugReportIcon />}
+                    tooltipText="Bugzilla issue tracking the onboarding experience for ETP-Strict users"
+                  >
+                    Add anti-tracking exceptions onboarding for existing
+                    ETP-Strict users
+                  </TooltipLink>
+                </Box>
+              </>
+            ),
+          },
+          {
+            title: "Result",
+            content: (
+              <>
+                <span>
+                  In FX144, The feature was shipped to over 1.5 million{" "}
+                  <TooltipLink
+                    href="https://www.mozilla.org/en-US/firefox/new/"
+                    tooltipText="A free and open-source web browser developed by Mozilla"
+                  >
+                    Firefox
+                  </TooltipLink>{" "}
+                  users. It successfully resolved over 1,000 reported
+                  site-breaking issues, significantly reducing support tickets.
+                  More importantly, it increased the adoption of Strict Tracking
+                  Protection by giving users the tool to manage exceptions
+                  granularly rather than disabling protection globally.
+                </span>
+                <StructuredVisual
+                  src="/fx/fx_privacy.png"
+                  alt="Firefox Privacy Settings"
+                ></StructuredVisual>
+              </>
+            ),
+          },
+        ],
       },
     ],
     tags: ["C++", "JavaScript"],
@@ -253,42 +346,49 @@ const experience = [
     title: "Software Engineer Intern",
     organization: "Seismic",
     url: "https://seismic.com",
+    tooltipText: "A global leader in sales enablement and marketing automation",
     location: "Toronto, ON",
     dates: "Sep 2024 - Dec 2024",
     caption: (
       <span>
         Full-Stack developer for{" "}
-        <Link
+        <TooltipLink
           href="https://www.seismic.com/customer-stories/seismic-livesocial/"
-          color="secondary"
-          underline="hover"
-          target="_blank"
-          rel="noopener"
+          tooltipText="A platform for curating and distributing personalized content"
         >
           Seismic LiveSocial
-        </Link>{" "}
+        </TooltipLink>{" "}
       </span>
     ),
     details: [
       {
-        title: "Project: LiveSocial",
+        title: "Overview",
         content:
+          "During my internship at Seismic, I worked as a Full-Stack developer on LiveSocial, a platform dedicated to curating and distributing personalized content for enterprise sales teams. I collaborated with product, customer success, and core engineering to improve platform stability and expand customization capabilities for our clients.",
+      },
+    ],
+    projects: [
+      {
+        projectName: "LiveSocial",
+        caption:
           "Full-Stack developer on LiveSocial, a platform for curating personalized content for sales teams.",
-      },
-      {
-        title: "Feature Development",
-        content:
-          "Delivered a highly requested full-stack feature (React, Express) giving admins greater access control over platform-specific content sharing, enhancing customization for over 2,000 client companies.",
-      },
-      {
-        title: "Process Improvement",
-        content:
-          "Transformed a client configuration update process to self-service, reducing configuration update time by 99% by migrating legacy configurations for 9 clients from file-based storage to MongoDB.",
-      },
-      {
-        title: "Engineering Excellence",
-        content:
-          "Resolved 20+ bugs through systematic root cause analysis, reducing recurring support tickets by 5% and eliminating several months-old persistent issues through collaborations with customer success and product team.",
+        details: [
+          {
+            title: "Feature Development",
+            content:
+              "Delivered a highly requested full-stack feature (React, Express) giving admins greater access control over platform-specific content sharing, enhancing customization for over 2,000 client companies.",
+          },
+          {
+            title: "Process Improvement",
+            content:
+              "Transformed a client configuration update process to self-service, reducing configuration update time by 99% by migrating legacy configurations for 9 clients from file-based storage to MongoDB.",
+          },
+          {
+            title: "Engineering Excellence",
+            content:
+              "Resolved 20+ bugs through systematic root cause analysis, reducing recurring support tickets by 5% and eliminating several months-old persistent issues through collaborations with customer success and product team.",
+          },
+        ],
       },
     ],
     tags: [
@@ -307,24 +407,35 @@ const experience = [
     title: "Software Development Intern",
     organization: "Konrad",
     url: "https://www.konrad.com",
+    tooltipText:
+      "A digital innovation consultancy specializing in digital strategy, design, and execution",
     location: "Toronto, ON",
     dates: "May 2024 - Aug 2024",
     caption: "",
     details: [
       {
-        title: "Internal Gaming Tool",
+        title: "Overview",
         content:
-          "Backend developer on an internal tool for managing and analyzing gaming data.",
+          "During my time at Konrad Group, I worked as a backend developer focusing on internal tooling. My primary contribution was developing a robust data ingestion pipeline to support an internal gaming analytics platform used by the entire company.",
       },
+    ],
+    projects: [
       {
-        title: "Data Pipeline",
-        content:
-          "Developed a daily data ingestion pipeline integrating 4 gaming platform APIs to automatically fetch and aggregate game statistics for over 500 employees, enabling real-time leaderboard functionality.",
-      },
-      {
-        title: "Performance Optimization",
-        content:
-          "Optimized API efficiency by implementing GraphQL resolvers with Apollo Express, reducing complex nested query latency from 600ms to 150ms by eliminating request waterfalls, achieving 75% faster data fetching.",
+        projectName: "Internal Gaming Analytics Tool",
+        caption:
+          "Backend development for scraping, processing, and serving game statistics.",
+        details: [
+          {
+            title: "Data Pipeline",
+            content:
+              "Developed a daily data ingestion pipeline integrating 4 gaming platform APIs to automatically fetch and aggregate game statistics for over 500 employees, enabling real-time leaderboard functionality.",
+          },
+          {
+            title: "Performance Optimization",
+            content:
+              "Optimized API efficiency by implementing GraphQL resolvers with Apollo Express, reducing complex nested query latency from 600ms to 150ms by eliminating request waterfalls, achieving 75% faster data fetching.",
+          },
+        ],
       },
     ],
     tags: [
@@ -343,17 +454,32 @@ const experience = [
     title: "Software Developer Intern",
     organization: "SKYTRAC",
     url: "https://www.skytrac.ca",
+    tooltipText:
+      "A leader in aerospace satellite communications and intelligent connectivity",
     location: "Ottawa, ON",
     dates: "May 2023 - Aug 2023",
     details: [
       {
-        title: "Flight Data Dashboard",
-        content: `Reduced flight analysts' workflows by 15% by building a web dashboard with BackboneJS, automatically retrieving flight data from the MySQL database to allow efficient viewing and annotation of flight events.`,
-      },
-      {
-        title: "Data Integrity",
+        title: "Overview",
         content:
-          "Identified 1 critical data inconsistency with an automated Python data verification script across flight log databases.",
+          "During my internship at SKYTRAC, I developed full-stack solutions to improve the efficiency and accuracy of flight data analysis for aviation analysts.",
+      },
+    ],
+    projects: [
+      {
+        projectName: "Flight Data Systems",
+        caption: "Automated tooling and visualization for flight logs.",
+        details: [
+          {
+            title: "Flight Data Dashboard",
+            content: `Reduced flight analysts' workflows by 15% by building a web dashboard with BackboneJS, automatically retrieving flight data from the MySQL database to allow efficient viewing and annotation of flight events.`,
+          },
+          {
+            title: "Data Integrity",
+            content:
+              "Identified 1 critical data inconsistency with an automated Python data verification script across flight log databases.",
+          },
+        ],
       },
     ],
     tags: ["Backend", "Python", "MySQL", "BackboneJS"],
@@ -486,6 +612,8 @@ const volunteering = [
     title: "President",
     organization: "UofT Blueprint",
     url: "https://uoftblueprint.org",
+    tooltipText:
+      "A student-led group that builds technology and software for social good",
     location: "Toronto, ON",
     dates: "Aug 2023 - May 2024",
     details: [
@@ -504,32 +632,45 @@ const volunteering = [
   {
     title: "Project Lead",
     organization: "UofT Blueprint",
-    url: "https://uoftblueprint.org",
+    url: "https://www.uoftblueprint.org",
+    tooltipText:
+      "A student-led group that builds technology and software for social good",
     location: "Toronto, ON",
     dates: "Aug 2023 - Aug 2024",
     details: [
       {
-        title: "Project: Period Purse",
-        content: (
-          <span>
-            Increased menstruation awareness by partnering with{" "}
-            <Link
-              href="https://theperiodpurse.com/"
-              color="secondary"
-              underline="hover"
-              target="_blank"
-              rel="noopener"
-            >
-              The Period Purse
-            </Link>{" "}
-            and developing an educational Android period tracker for Canadian
-            youth, available on Google Play Store with over 50 downloads.
-          </span>
-        ),
+        title: "Overview",
+        content:
+          "As a Project Lead for UofT Blueprint, I helped manage student teams dedicated to building technology for social good, collaborating with non-profit organizations to deliver high-impact software solutions.",
       },
+    ],
+    projects: [
       {
-        title: "Team Management",
-        content: `Managed a 7-people development team through backlog refinement, prioritization and modularization, implementing all 8 use-cases as specified and completing 90+ tickets over 1 year.`,
+        projectName: "Period Purse",
+        caption: "Educational Android period tracker for Canadian youth",
+        details: [
+          {
+            title: "Impact",
+            content: (
+              <span>
+                Increased menstruation awareness by partnering with{" "}
+                <TooltipLink
+                  href="https://theperiodpurse.com/"
+                  tooltipText="A non-profit organization aiming to achieve menstrual equity"
+                >
+                  The Period Purse
+                </TooltipLink>{" "}
+                and developing an educational Android period tracker for
+                Canadian youth, available on Google Play Store with over 50
+                downloads.
+              </span>
+            ),
+          },
+          {
+            title: "Team Management",
+            content: `Managed a 7-people development team through backlog refinement, prioritization and modularization, implementing all 8 use-cases as specified and completing 90+ tickets over 1 year.`,
+          },
+        ],
       },
     ],
     tags: ["Leadership", "Project Management", "Kotlin", "Android"],

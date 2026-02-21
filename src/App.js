@@ -7,7 +7,7 @@ function App() {
   return (
     <div className="App">
       <CssBaseline />
-      <Container>
+      <Container maxWidth="xl">
         <Main />
       </Container>
     </div>
