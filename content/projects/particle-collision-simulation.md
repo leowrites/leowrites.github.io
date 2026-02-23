@@ -1,0 +1,1 @@
+Optimized particle simulation using binning, static arrays, and bucket sort, improving sequential runtime from 53s to 18s (2.94x) for 160k particles on SciNet. Further reduced runtime to 2s (9x) by parallelizing 90% of the code with OpenMP using static decomposition and uniform partitioning.

@@ -1,0 +1,1 @@
+Developed a model to classify food items based on text questions using random forest, neural networks and linear regression models, achieving an accuracy of over 85% on the validation dataset and 80% on the test dataset.
