@@ -42,7 +42,7 @@ export default function ThemeProviderWrapper({ children }) {
           paper: mode === "light" ? "#fff" : "#1e1e1e",
         },
         text: {
-          primary: mode === "light" ? "#051E36" : "#fff",
+          primary: mode === "light" ? "#000" : "#fff",
           secondary: mode === "light" ? "#666" : "#ccc",
         },
       },

@@ -19,6 +19,7 @@ import remarkGfm from "remark-gfm";
 import rehypeRaw from "rehype-raw";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForwardIos";
+import GitHubIcon from "@mui/icons-material/GitHub";
 import { StructuredVisual } from "./StructuredDetails";
 
 export const SectionHeading = ({ children }) => {
@@ -40,6 +41,7 @@ export const EntryContainer = ({
   company,
   caption = "",
   logo,
+  githubLink,
   children,
   onSelect,
   selected = false,
@@ -137,29 +139,56 @@ export const EntryContainer = ({
             </Typography>
           )}
         </Box>
-        {(isFolder || !isSelectionMode) && (
-          <Box
-            onClick={isFolder ? handleExpandClick : undefined}
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              padding: "0.5rem",
-              borderRadius: "50%",
-              "&:hover": {
-                backgroundColor: isFolder ? "rgba(0,0,0,0.05)" : "transparent",
-              },
-            }}
-          >
-            <ExpandMoreIcon
+        <Box sx={{ display: "flex", alignItems: "center", gap: "0.25rem" }}>
+          {githubLink && (
+            <Box
+              component="a"
+              href={githubLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={(e) => e.stopPropagation()}
               sx={{
-                transform: expanded ? "rotate(180deg)" : "rotate(0deg)",
-                transition: "transform 0.1s ease",
-                color: (theme) => theme.palette.text.primary,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                padding: "0.5rem",
+                borderRadius: "50%",
+                color: "text.secondary",
+                "&:hover": {
+                  backgroundColor: "rgba(0,0,0,0.05)",
+                  color: "text.primary",
+                },
               }}
-            />
-          </Box>
-        )}
+            >
+              <GitHubIcon sx={{ fontSize: "1.2rem" }} />
+            </Box>
+          )}
+          {(isFolder || !isSelectionMode) && (
+            <Box
+              onClick={isFolder ? handleExpandClick : undefined}
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                padding: "0.5rem",
+                borderRadius: "50%",
+                "&:hover": {
+                  backgroundColor: isFolder
+                    ? "rgba(0,0,0,0.05)"
+                    : "transparent",
+                },
+              }}
+            >
+              <ExpandMoreIcon
+                sx={{
+                  transform: expanded ? "rotate(180deg)" : "rotate(0deg)",
+                  transition: "transform 0.1s ease",
+                  color: (theme) => theme.palette.text.primary,
+                }}
+              />
+            </Box>
+          )}
+        </Box>
       </Box>
       {(isFolder || !isSelectionMode) && (
         <Collapse in={expanded} timeout={300}>
@@ -433,7 +462,19 @@ export const MarkdownRenderer = ({ content }) => {
         </code>
       );
     },
-    img: ({ node, ...props }) => {
+    img: ({ node, width, height, ...props }) => {
+      if (width || height) {
+        return (
+          <Box sx={{ textAlign: "center", my: 2 }}>
+            <img
+              width={width}
+              height={height}
+              style={{ display: "inline-block" }}
+              {...props}
+            />
+          </Box>
+        );
+      }
       return <StructuredVisual src={props.src} alt={props.alt} />;
     },
   };

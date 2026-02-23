@@ -1,7 +1,7 @@
 import "App.css";
 import React from "react";
 import Main from "Resume/Main";
-import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
+import { createHashRouter, RouterProvider, Outlet } from "react-router-dom";
 import { Container, CssBaseline } from "@mui/material";
 
 function Layout() {
@@ -15,7 +15,7 @@ function Layout() {
   );
 }
 
-const router = createBrowserRouter([
+const router = createHashRouter([
   {
     element: <Layout />,
     children: [

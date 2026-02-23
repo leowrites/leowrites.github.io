@@ -79,6 +79,7 @@ const Section = ({ sectionTitle, items, onSelect, selectedId }) => {
             company={headerContent}
             caption={item.caption || ""}
             logo={item.logo}
+            githubLink={item.githubLink}
             selected={isSelected}
             onSelect={handleParentSelect}
             isFolder={hasProjects}

@@ -22,9 +22,6 @@ export const StructuredVisual = ({ src, alt, type = "image" }) => {
           style={{
             width: "100%",
             display: "block",
-            WebkitUserDrag: "none",
-            userSelect: "none",
-            pointerEvents: "none",
           }}
         />
       )}

@@ -70,7 +70,8 @@ const experience = [
     dates: "May 2025 - Present",
     caption:
       "Adding support for structured sparsity matrix multiplication to Triton",
-    content: `Matrix multiplication is one of the most expensive operations in machine learning. While GPUs are optimized for dense data, exploiting sparsity (zeros) can lead to massive speedups. I worked on extending the [Triton compiler](https://github.com/openai/triton "A ML compiler for deep learning") to support these sparse operations efficiently.
+    content: `### Overview 
+Matrix multiplication is one of the most expensive operations in machine learning. While GPUs are optimized for dense data, exploiting sparsity (zeros) can lead to massive speedups. I worked on extending the [Triton compiler](https://github.com/openai/triton "A ML compiler for deep learning") to support these sparse operations efficiently.
 
 ![Matrix Decomposition](/triton/matrix_decomposition.png)`,
 
@@ -163,7 +164,11 @@ def compress_kernel(
     location: "Toronto, ON",
     dates: "May 2025 - Sep 2025",
     caption: "Firefox Privacy",
-    content: `[Firefox](https://www.mozilla.org/en-US/firefox/new/ "A free and open-source web browser developed by Mozilla") is one of the world's most popular browsers, known for its strong privacy protections. As part of the Firefox Privacy team, I worked on enhancing user control over their privacy settings, specifically addressing the balance between strict tracking protection and web compatibility.`,
+    content: `<img src="/firefox.png" alt="Firefox" width="100" />
+
+### Overview
+
+[Firefox](https://www.mozilla.org/en-US/firefox/new/ "A free and open-source web browser developed by Mozilla") is one of the world's most popular browsers, known for its strong privacy protections. As part of the Firefox Privacy team, I worked on enhancing user control over their privacy settings, specifically addressing the balance between strict tracking protection and web compatibility.`,
 
     projects: [
       {
@@ -205,7 +210,10 @@ In FX144, the feature was shipped to over 1.5 million [Firefox](https://www.mozi
         </TooltipLink>{" "}
       </span>
     ),
-    content: `During my internship at Seismic, I worked as a Full-Stack developer on LiveSocial, a platform dedicated to curating and distributing personalized content for enterprise sales teams. I collaborated with product, customer success, and core engineering to improve platform stability and expand customization capabilities for our clients.`,
+    content: `<img src="/seismic_logo.jpeg" alt="BP" width="100" style="border-radius:50%"/>
+
+### Overview
+During my internship at Seismic, I worked as a Full-Stack developer on LiveSocial, a platform dedicated to curating and distributing personalized content for enterprise sales teams. I collaborated with product, customer success, and core engineering to improve platform stability and expand customization capabilities for our clients.`,
 
     projects: [
       {
@@ -243,7 +251,8 @@ Resolved 20+ bugs through systematic root cause analysis, reducing recurring sup
     location: "Toronto, ON",
     dates: "May 2024 - Aug 2024",
     caption: "",
-    content: `During my time at Konrad Group, I worked as a backend developer focusing on internal tooling. My primary contribution was developing a robust data ingestion pipeline to support an internal gaming analytics platform used by the entire company.`,
+    content: `<img src="/konrad.jpeg" alt="BP" width="100" style="border-radius:50%"/>
+During my time at Konrad Group, I worked as a backend developer focusing on internal tooling. My primary contribution was developing a robust data ingestion pipeline to support an internal gaming analytics platform used by the entire company.`,
 
     projects: [
       {
@@ -301,6 +310,7 @@ const projects = [
     technologies: "C++, Antlr4, LLVM",
     content: `Implemented a compiler capable of parsing and translating minicc code into LLVM IR, featuring an alloca2reg optimization pass that reduces stack allocation overhead, achieving a 23% reduction in runtime.`,
     tags: ["Compiler", "C++", "LLVM"],
+    githubLink: "https://github.com/leowrites/compiler",
   },
   {
     title: "Accelerating Particle Collision Simulation",
@@ -316,6 +326,7 @@ const projects = [
     technologies: "Python, sklearn",
     content: `Developed a model to classify food items based on text questions using random forest, neural networks and linear regression models, achieving an accuracy of over 85% on the validation dataset and 80% on the test dataset.`,
     tags: ["Machine Learning", "Python", "sklearn"],
+    githubLink: "https://github.com/raftay/ML_Challenge",
   },
   {
     title: "Cloud-based Pandemic Simulation Service",
@@ -333,6 +344,7 @@ const projects = [
     dates: "Sept 2021 - Dec 2021",
     content: `Spearheaded the development of Webstepper, an interactive Python memory visualization tool adopted by 900+ students each semester in CS fundamentals courses at UofT to teach memory and reference concepts.`,
     tags: ["Python", "TypeScript", "React"],
+    githubLink: "https://github.com/pyta-uoft/pyta",
   },
   {
     title: "Campfire",
@@ -350,6 +362,7 @@ const projects = [
       "React",
       "TypeScript",
     ],
+    githubLink: "https://github.com/leowrites/Campfire",
   },
   {
     title: "Pacman Game with AI",
@@ -357,6 +370,7 @@ const projects = [
     technologies: "Python, Pygame",
     dates: "Sept 2022 - Dec 2022",
     content: `Implemented A* pathfinding algorithm for ghost movement with customized behavior patterns, creating a multi-level game with enhanced sound effects and user experience.`,
+    githubLink: "https://github.com/leowrites/Pacman",
   },
   {
     title: "Model Rocket with Vectored Thrust",
@@ -364,6 +378,7 @@ const projects = [
     technologies: "Arduino, 3D Printing",
     dates: "May 2022 - Aug 2022",
     content: `Designed a custom thrust vectoring mechanism for enhanced flight control and programmed an Arduino-based flight controller with a telemetry system.`,
+    githubLink: "https://github.com/leowrites/R1_Main",
   },
 ];
 
@@ -376,7 +391,9 @@ const volunteering = [
       "A student-led group that builds technology and software for social good",
     location: "Toronto, ON",
     dates: "Aug 2023 - May 2024",
-    content: `### Leadership & Strategy
+    content: `<img src="/bp.png" alt="BP" width="100" style="border-radius:50%"/>
+
+### Leadership & Strategy
 Led 40+ members in delivering pro-bono software solutions to 3 nonprofits, while establishing corporate partnerships with Manulife and Guidewire to facilitate internship preparation events for 100+ students.
 
 ### Operational Excellence
@@ -392,7 +409,10 @@ Established Project Lead Hub and comprehensive Handbook to standardize project m
       "A student-led group that builds technology and software for social good",
     location: "Toronto, ON",
     dates: "Aug 2023 - Aug 2024",
-    content: `As a Project Lead for UofT Blueprint, I helped manage student teams dedicated to building technology for social good, collaborating with non-profit organizations to deliver high-impact software solutions.`,
+    content: `<img src="/bp.png" alt="BP" width="100" style="border-radius:50%"/>
+
+### Overview
+As a Project Lead for UofT Blueprint, I helped manage student teams dedicated to building technology for social good, collaborating with non-profit organizations to deliver high-impact software solutions.`,
 
     projects: [
       {
