@@ -1,5 +1,12 @@
 import React from "react";
-import { Box, IconButton, useTheme } from "@mui/material";
+import {
+  Box,
+  Breadcrumbs,
+  IconButton,
+  Link,
+  Typography,
+  useTheme,
+} from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import OpenInFullIcon from "@mui/icons-material/OpenInFull";
 import CloseFullScreen from "@mui/icons-material/CloseFullscreen";
@@ -21,6 +28,18 @@ const DetailPane = ({
   getBlogUrl,
 }) => {
   const theme = useTheme();
+
+  const breadcrumbs = [];
+  if (parentItem) {
+    breadcrumbs.push(
+      parentItem.organization || parentItem.title || parentItem.institution
+    );
+  }
+  if (selectedProject) {
+    breadcrumbs.push(selectedProject.projectName);
+  } else if (parentItem && !selectedProject) {
+    // top-level item already pushed above, no extra crumb needed
+  }
 
   return (
     <Box
@@ -84,6 +103,29 @@ const DetailPane = ({
               {isBlogMode ? <CloseFullScreen /> : <CloseIcon />}
             </IconButton>
           </Box>
+          {!isBlogMode && breadcrumbs.length > 0 && (
+            <Breadcrumbs
+              sx={{ mb: 2, color: "text.secondary", fontSize: "0.85rem" }}
+            >
+              {breadcrumbs.map((crumb, i) => {
+                const isLast = i === breadcrumbs.length - 1;
+                return isLast ? (
+                  <Typography
+                    key={i}
+                    fontSize="0.85rem"
+                    color="text.primary"
+                    fontWeight="bold"
+                  >
+                    {crumb}
+                  </Typography>
+                ) : (
+                  <Typography key={i} fontSize="0.85rem" color="text.secondary">
+                    {crumb}
+                  </Typography>
+                );
+              })}
+            </Breadcrumbs>
+          )}
           {isBlogMode && (
             <BlogView
               selectedProject={selectedProject}
