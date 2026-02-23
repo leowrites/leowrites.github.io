@@ -1,6 +1,6 @@
 import "App.css";
 import React from "react";
-import Main from "Resume/Main";
+import Main from "main/Main";
 import { createHashRouter, RouterProvider, Outlet } from "react-router-dom";
 import { Container, CssBaseline } from "@mui/material";
 
@@ -24,6 +24,7 @@ const router = createHashRouter([
         path: "/experience/:companySlug/projects/:projectSlug",
         element: <Main />,
       },
+      { path: "/projects/:standaloneSlug", element: <Main /> },
       { path: "*", element: <Main /> },
     ],
   },

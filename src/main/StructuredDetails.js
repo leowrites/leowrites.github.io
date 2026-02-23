@@ -19,6 +19,7 @@ export const StructuredVisual = ({ src, alt, type = "image" }) => {
         <img
           src={src}
           alt={alt}
+          loading="lazy"
           style={{
             width: "100%",
             display: "block",

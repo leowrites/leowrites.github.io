@@ -1,6 +1,7 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
 import { allItems } from "./Main";
+import { projects } from "./data";
 import { generateId, generateSlug } from "./utils";
 import { MarkdownRenderer } from "./Components";
 import { StructuredDetails } from "./StructuredDetails";
@@ -13,9 +14,10 @@ import { StructuredDetails } from "./StructuredDetails";
  */
 export const useBlogMode = () => {
   const navigate = useNavigate();
-  const { companySlug, projectSlug } = useParams();
+  const { companySlug, projectSlug, standaloneSlug } = useParams();
   const location = useLocation();
-  const isBlogMode = Boolean(companySlug && projectSlug);
+  const isBlogMode = Boolean((companySlug && projectSlug) || standaloneSlug);
+  const isStandaloneProject = Boolean(standaloneSlug && !companySlug);
 
   const [selectedContent, setSelectedContent] = useState(null);
   const [selectedId, setSelectedId] = useState(null);
@@ -105,6 +107,19 @@ export const useBlogMode = () => {
     }
   }, [companySlug, projectSlug]);
 
+  // Standalone project route: /projects/:standaloneSlug
+  useEffect(() => {
+    if (!standaloneSlug) return;
+    window.scrollTo(0, 0);
+    const found = projects.find(
+      (p) => generateSlug(p.title) === standaloneSlug
+    );
+    if (found) {
+      setSelectedId(generateId(found));
+      setSelectedContent(renderContent(found));
+    }
+  }, [standaloneSlug]);
+
   // Restore selection when navigating back from blog mode
   useEffect(() => {
     const restoreId = location.state?.restoreProjectId;
@@ -131,17 +146,20 @@ export const useBlogMode = () => {
     }
   }, [location.state]);
 
-  const handleSelect = (id, content) => {
-    if (selectedId === id) {
-      setSelectedId(null);
-      setSelectedContent(null);
-      window.history.replaceState(null, "", " ");
-    } else {
-      setSelectedId(id);
-      setSelectedContent(content);
-      window.history.replaceState(null, "", "#" + id);
-    }
-  };
+  const handleSelect = useCallback(
+    (id, content) => {
+      if (selectedId === id) {
+        setSelectedId(null);
+        setSelectedContent(null);
+        window.history.replaceState(null, "", " ");
+      } else {
+        setSelectedId(id);
+        setSelectedContent(content);
+        window.history.replaceState(null, "", "#" + id);
+      }
+    },
+    [selectedId]
+  );
 
   const selectedProject = useMemo(() => {
     if (!selectedId) return null;
@@ -171,14 +189,15 @@ export const useBlogMode = () => {
     return null;
   }, [selectedProject]);
 
-  const getBlogUrl = (projName, parent) => {
+  const getBlogUrl = useCallback((projName, parent) => {
     const company = generateSlug(parent?.organization || parent?.title || "");
     const project = generateSlug(projName);
     return `/experience/${company}/projects/${project}`;
-  };
+  }, []);
 
   return {
     isBlogMode,
+    isStandaloneProject,
     selectedContent,
     selectedId,
     selectedProject,
