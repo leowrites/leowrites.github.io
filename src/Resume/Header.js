@@ -8,8 +8,8 @@ const ClassicResumeHeader = ({ personalInfo }) => {
       <Box
         sx={{
           display: "flex",
-          justifyContent: "space-between",
           alignItems: "center",
+          justifyContent: "space-between",
           mb: "1rem",
         }}
       >
@@ -19,6 +19,19 @@ const ClassicResumeHeader = ({ personalInfo }) => {
         >
           Hello, I'm Leo
         </Typography>
+        <Box
+          component="img"
+          src="/IMG_1822.JPG"
+          alt="Portrait of Leo"
+          sx={{
+            marginRight: { xs: 0, lg: "4rem" },
+            width: 200,
+            height: 200,
+            borderRadius: "1rem",
+            objectFit: "cover",
+            flexShrink: 2,
+          }}
+        />
       </Box>
       {personalInfo.description.map((info, index) => {
         return (

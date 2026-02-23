@@ -1,7 +1,6 @@
 import React from "react";
 import { Box } from "@mui/material";
-import { SectionHeading, EntryContainer } from "./Components";
-import { StructuredDetails } from "./StructuredDetails";
+import { SectionHeading, EntryContainer, MarkdownRenderer } from "./Components";
 import { generateId } from "./utils";
 
 const ClassicEducationSection = ({ educationData, onSelect, selectedId }) => {
@@ -19,12 +18,11 @@ const ClassicEducationSection = ({ educationData, onSelect, selectedId }) => {
             selected={selectedId === id}
             onSelect={
               onSelect
-                ? () =>
-                    onSelect(id, <StructuredDetails details={edu.details} />)
+                ? () => onSelect(id, <MarkdownRenderer content={edu.content} />)
                 : undefined
             }
           >
-            <StructuredDetails details={edu.details} />
+            <MarkdownRenderer content={edu.content} />
           </EntryContainer>
         );
       })}

@@ -32,6 +32,7 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
@@ -45,4 +46,29 @@
 .marker {
   color: #051e36;
   background: rgb(215, 227, 51);
+}
+
+/* View Transitions API: smooth morph for project-modal */
+::view-transition-group(project-modal) {
+  animation-duration: 0.35s;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+::view-transition-old(project-modal) {
+  animation-duration: 0.2s;
+  animation-timing-function: ease-out;
+}
+
+::view-transition-new(project-modal) {
+  animation-duration: 0.2s;
+  animation-timing-function: ease-in;
+}
+
+/* Default page cross-fade */
+::view-transition-old(root) {
+  animation-duration: 0.2s;
+}
+
+::view-transition-new(root) {
+  animation-duration: 0.2s;
 }

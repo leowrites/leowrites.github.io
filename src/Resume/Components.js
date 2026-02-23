@@ -1,22 +1,25 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Box,
   Typography,
   Collapse,
-  Tooltip,
   Link,
-  IconButton,
   Button,
   Divider,
   useTheme,
+  Tooltip,
 } from "@mui/material";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import {
   vscDarkPlus,
   vs,
 } from "react-syntax-highlighter/dist/esm/styles/prism";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import rehypeRaw from "rehype-raw";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForwardIos";
+import { StructuredVisual } from "./StructuredDetails";
 
 export const SectionHeading = ({ children }) => {
   return (
@@ -46,6 +49,13 @@ export const EntryContainer = ({
   const [expanded, setExpanded] = useState(false);
   const isSelectionMode = !!onSelect;
   const showContent = isSelectionMode ? selected : expanded;
+
+  // Auto-expand when a child is selected (e.g. restored from blog mode)
+  useEffect(() => {
+    if (selected && isFolder && !expanded) {
+      setExpanded(true);
+    }
+  }, [selected]);
 
   const handleCardClick = () => {
     if (isSelectionMode) {
@@ -271,19 +281,6 @@ export const ProjectEntry = ({
   );
 };
 
-export const EmptySectionText = ({ label }) => {
-  return (
-    <Box ml="1rem">
-      <Typography variant="h5" sx={{ fontWeight: "bold" }}>
-        {label}
-      </Typography>
-      <Typography sx={{ fontSize: "1.2em", color: "text.secondary" }}>
-        Please select more filters
-      </Typography>
-    </Box>
-  );
-};
-
 export const TooltipLink = ({
   href,
   tooltipText,
@@ -373,5 +370,81 @@ export const CodeBlock = ({ language = "javascript", code }) => {
         {code}
       </SyntaxHighlighter>
     </Box>
+  );
+};
+
+export const MarkdownRenderer = ({ content }) => {
+  const theme = useTheme();
+
+  const components = {
+    a: ({ node, title, ...props }) => {
+      return (
+        <TooltipLink
+          href={props.href}
+          tooltipText={title}
+          target="_blank"
+          {...props}
+        />
+      );
+    },
+    p: ({ node, ...props }) => {
+      return (
+        <Typography
+          variant="body1"
+          paragraph
+          color="text.secondary"
+          {...props}
+        />
+      );
+    },
+    h3: ({ node, ...props }) => {
+      return (
+        <Typography
+          variant="h6"
+          fontWeight="bold"
+          gutterBottom
+          sx={{ mt: 4 }}
+          {...props}
+        />
+      );
+    },
+    code({ node, inline, className, children, ...props }) {
+      const match = /language-(\w+)/.exec(className || "");
+      if (!inline && match) {
+        return (
+          <CodeBlock
+            language={match[1]}
+            code={String(children).replace(/\n$/, "")}
+            {...props}
+          />
+        );
+      }
+      return (
+        <code
+          className={className}
+          style={{
+            backgroundColor: theme.palette.mode === "dark" ? "#333" : "#f5f5f5",
+            padding: "0.2rem 0.4rem",
+            borderRadius: "0.25rem",
+          }}
+          {...props}
+        >
+          {children}
+        </code>
+      );
+    },
+    img: ({ node, ...props }) => {
+      return <StructuredVisual src={props.src} alt={props.alt} />;
+    },
+  };
+
+  return (
+    <ReactMarkdown
+      remarkPlugins={[remarkGfm]}
+      rehypePlugins={[rehypeRaw]}
+      components={components}
+    >
+      {content}
+    </ReactMarkdown>
   );
 };

@@ -1,14 +1,14 @@
 import { generateId } from "./utils";
+import { StructuredDetails } from "./StructuredDetails";
 import React from "react";
 import { Box } from "@mui/material";
 import {
   SectionHeading,
   EntryContainer,
   ProjectEntry,
-  EmptySectionText,
   TooltipLink,
+  MarkdownRenderer,
 } from "./Components";
-import { StructuredDetails } from "./StructuredDetails";
 
 const Section = ({ sectionTitle, items, onSelect, selectedId }) => {
   return (
@@ -55,7 +55,7 @@ const Section = ({ sectionTitle, items, onSelect, selectedId }) => {
         );
 
         const handleParentSelect = onSelect
-          ? () => onSelect(id, <StructuredDetails details={item.details} />)
+          ? () => onSelect(id, <MarkdownRenderer content={item.content} />)
           : undefined;
 
         const isParentSelected = selectedId === id;
@@ -64,6 +64,7 @@ const Section = ({ sectionTitle, items, onSelect, selectedId }) => {
           item.projects.some((p) => {
             const pId = generateId({
               ...p,
+              title: p.projectName,
               organization: item.organization,
             });
             return pId === selectedId;
@@ -108,28 +109,33 @@ const Section = ({ sectionTitle, items, onSelect, selectedId }) => {
                           ? () =>
                               onSelect(
                                 projId,
-                                <StructuredDetails details={proj.details} />
+                                proj.content ? (
+                                  <MarkdownRenderer content={proj.content} />
+                                ) : (
+                                  <StructuredDetails details={proj.details} />
+                                ),
+                                proj,
+                                item
                               )
                           : undefined
                       }
                     >
-                      {!onSelect && (
-                        <StructuredDetails details={proj.details} />
-                      )}
+                      {!onSelect &&
+                        (proj.content ? (
+                          <MarkdownRenderer content={proj.content} />
+                        ) : (
+                          <StructuredDetails details={proj.details} />
+                        ))}
                     </ProjectEntry>
                   );
                 })}
               </Box>
             ) : (
-              // Render raw details if no projects
-              <StructuredDetails details={item.details} />
+              <MarkdownRenderer content={item.content} />
             )}
           </EntryContainer>
         );
       })}
-      {items.length === 0 && (
-        <EmptySectionText label={`No ${sectionTitle.toLowerCase()} listed`} />
-      )}
     </Box>
   );
 };

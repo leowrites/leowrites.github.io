@@ -1,14 +1,16 @@
 import React from "react";
-import { Box, Typography, Button, Tooltip } from "@mui/material";
+import { Box, Typography } from "@mui/material";
+import { MarkdownRenderer } from "./Components";
 
 export const StructuredVisual = ({ src, alt, type = "image" }) => {
   return (
     <Box
       sx={{
         width: { xs: "100%", md: "90%" },
+        maxWidth: { sm: "500px" },
         borderRadius: "1rem",
         overflow: "hidden",
-        my: 2,
+        my: 4,
         mx: "auto",
         boxShadow: "0 8px 24px rgba(0,0,0,0.08)",
       }}
@@ -39,9 +41,7 @@ export const StructuredDetails = ({ details }) => {
             {section.title}
           </Typography>
           {typeof section.content === "string" ? (
-            <Typography variant="body1" paragraph color="text.secondary">
-              {section.content}
-            </Typography>
+            <MarkdownRenderer content={section.content} />
           ) : (
             <Box mb={2} color="text.secondary">
               {section.content}
