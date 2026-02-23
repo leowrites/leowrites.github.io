@@ -45,17 +45,7 @@ const education = [
     institution: "University of Toronto",
     degree: "Bachelor of Science in Computer Science",
     dates: "Sep 2021 - May 2026",
-    content: `### Systems
-Compilers & Interpreters, Operating Systems, Computer Architecture, Parallel Programming, Databases, Computer Networks, Computer Organization
-
-### AI & ML
-Deep Learning, Intro to ML, Intro to AI
-
-### Software Engineering & Theory
-Algorithms Design and Complexity, Software Engineering, Software Design, Functional Programming, Data Structures & Analysis, Web Development, Computer Graphics
-
-### Math
-Probability, Multivariable Calculus, Linear Algebra`,
+    contentKey: "education/uoft-bsc-cs",
   },
 ];
 
@@ -70,88 +60,20 @@ const experience = [
     dates: "May 2025 - Present",
     caption:
       "Adding support for structured sparsity matrix multiplication to Triton",
-    content: `### Overview 
-Matrix multiplication is one of the most expensive operations in machine learning. While GPUs are optimized for dense data, exploiting sparsity (zeros) can lead to massive speedups. I worked on extending the [Triton compiler](https://github.com/openai/triton "A ML compiler for deep learning") to support these sparse operations efficiently.
-
-![Matrix Decomposition](/triton/matrix_decomposition.png)`,
+    contentKey: "experience/paramathics-overview",
 
     projects: [
       {
         projectName: "Sparse Matrix Multiplication Support",
         caption:
           "Adding block-sparse support to Triton via decoupled scheduling",
-        content: `### Sparse Kernels
-Defining sparsity at the block level introduces complex scheduling problems—like a factory line where some parts are heavy and some are light. Simple sequential schedules lead to load imbalance and poor GPU utilization as threads stall waiting for others to finish dense blocks.
-
-### Schedules
-I implemented block-sparse matrix multiplication support in Triton using K-dimension block iteration. To solve the load balancing issue, I developed a decoupled dual-program scheduling strategy. This approach launches distinct programs that specialize threads for either sparse or dense blocks, optimizing instruction cache usage and keeping execution units saturated.
-
-### Autotuning API
-I built a robust user-facing API featuring an automated tuning engine. The system automates the search for optimal kernel configurations, caches results to amortize tuning costs, and enforces a strict verification pipeline. This pipeline validates results against reference implementations on smaller matrices before scaling up, ensuring mathematical precision. The autotuning subsystem contributed an additional 8% performance boost by discovering non-obvious optimal configurations, providing a 'fast path' to high performance that users could trust for production workloads.
-
-![Inspector](/triton/inspector.png)`,
+        contentKey: "experience/paramathics-sparse-matrix",
+        tags: ["Triton", "Compiler", "CUDA", "Sparse Kernels", "MLIR"],
       },
       {
         projectName: "Fused matmul-compress kernel",
-        content: `
-### Minimizing Data Movement
-
-Often, data movement is the most significant constraint on computation performance as opposed to the raw compute capabilities. In a deep learning model, data is moved to and from shared memory many times in each layer. For example for one MLP layer, we need to load the input matrix, the weights and the biases. We may then have some activation function that operates on the dot product. After the activation function, the output is sparse and we want to compress the data into 2:4 sparsity. The current workflow looks like this:
-
-![Reference compression workflow](/triton/ref_compress.png)
-
-If we can performance the pruning and compression step directly within the Triton kernel, we can avoid the costly step of moving data.
-
-![Compress kernel](/triton/compress_kernel.png)
-
-### Kernel Implementation
-
-\`\`\`python
-@triton.jit
-def compress_kernel(
-    dense_ptr,
-    sparse_ptr,
-    meta_ptr,
-    M, K,
-    stride_dm, stride_dk,
-    stride_sm, stride_sk,
-    BLOCK_M: tl.constexpr,
-    BLOCK_N: tl.constexpr,
-):
-    """Compression kernel using 2D grid to tile over M and K.
-    
-    Simplified assuming M == BLOCK_M and K == BLOCK_N.
-    """
-    k_start = 0
-    offs_m = tl.arange(0, BLOCK_M)
-    quad_offs = tl.arange(0, BLOCK_N // 4)
-    
-    # Dense column offsets for each position within quads
-    offs_v0 = k_start + quad_offs * 4 + 0
-    offs_v1 = k_start + quad_offs * 4 + 1
-    offs_v2 = k_start + quad_offs * 4 + 2
-    offs_v3 = k_start + quad_offs * 4 + 3
-    
-    ptrs_v0 = dense_ptr + offs_m[:, None] * stride_dm + offs_v0[None, :] * stride_dk
-    ptrs_v1 = dense_ptr + offs_m[:, None] * stride_dm + offs_v1[None, :] * stride_dk
-    ptrs_v2 = dense_ptr + offs_m[:, None] * stride_dm + offs_v2[None, :] * stride_dk
-    ptrs_v3 = dense_ptr + offs_m[:, None] * stride_dm + offs_v3[None, :] * stride_dk
-    
-    v0 = tl.load(ptrs_v0)
-    v1 = tl.load(ptrs_v1)
-    v2 = tl.load(ptrs_v2)
-    v3 = tl.load(ptrs_v3)
-    
-    compress_store_block(
-        v0, v1, v2, v3,
-        sparse_ptr, meta_ptr,
-        stride_sm, stride_sk,
-        M, K,
-        BLOCK_M, BLOCK_N,
-        0, 0 # Single block kernel, pid (0, 0)
-    )
-\`\`\`
-`,
+        contentKey: "experience/paramathics-fused-matmul-compress",
+        tags: ["Triton", "GPU", "Kernel Fusion", "Compression", "Python"],
       },
     ],
     tags: ["Research", "Compiler", "LLVM", "MLIR", "Machine Learning", "C++"],
@@ -164,29 +86,14 @@ def compress_kernel(
     location: "Toronto, ON",
     dates: "May 2025 - Sep 2025",
     caption: "Firefox Privacy",
-    content: `<img src="/firefox.png" alt="Firefox" width="100" />
-
-### Overview
-
-[Firefox](https://www.mozilla.org/en-US/firefox/new/ "A free and open-source web browser developed by Mozilla") is one of the world's most popular browsers, known for its strong privacy protections. As part of the Firefox Privacy team, I worked on enhancing user control over their privacy settings, specifically addressing the balance between strict tracking protection and web compatibility.`,
+    contentKey: "experience/mozilla-overview",
 
     projects: [
       {
         projectName: "Enhanced Tracking Protection",
         caption: "Granular configuration options for ETP-Strict users",
-        content: `### The Problem
-Enhanced Tracking Protection (ETP) is great for privacy, but 'Strict' mode often breaks websites that rely on trackers for functionality (e.g., login flows, payment gateways). Users would enable Strict mode, encounter broken sites, and confusingly disable ETP entirely, leaving them unprotected.
-
-### Implementation
-I implemented granular controls for Enhanced Tracking Protection (ETP), adding configuration options to 'Strict' and 'Custom' modes. This feature enables users to manage automatic exception levels, choosing between applying exceptions list entries for major website breakage or extending them to fix minor convenience issues, giving them precise control over the privacy-compatibility balance.
-
-- [Tracking Protection exceptions UX for ETP-Strict users](https://bugzilla.mozilla.org/show_bug.cgi?id=1970632)
-- [Add anti-tracking exceptions onboarding for existing ETP-Strict users](https://bugzilla.mozilla.org/show_bug.cgi?id=1975478)
-
-### Result
-In FX144, the feature was shipped to over 1.5 million [Firefox](https://www.mozilla.org/en-US/firefox/new/ "A free and open-source web browser developed by Mozilla") users. It successfully resolved over 1,000 reported site-breaking issues, significantly reducing support tickets. More importantly, it increased the adoption of Strict Tracking Protection by giving users the tool to manage exceptions granularly rather than disabling protection globally.
-
-![Firefox Privacy Settings](/fx/fx_privacy.png)`,
+        contentKey: "experience/mozilla-etp",
+        tags: ["Firefox", "Privacy", "ETP", "C++", "JavaScript"],
       },
     ],
     tags: ["C++", "JavaScript"],
@@ -210,24 +117,15 @@ In FX144, the feature was shipped to over 1.5 million [Firefox](https://www.mozi
         </TooltipLink>{" "}
       </span>
     ),
-    content: `<img src="/seismic_logo.jpeg" alt="BP" width="100" style="border-radius:50%"/>
-
-### Overview
-During my internship at Seismic, I worked as a Full-Stack developer on LiveSocial, a platform dedicated to curating and distributing personalized content for enterprise sales teams. I collaborated with product, customer success, and core engineering to improve platform stability and expand customization capabilities for our clients.`,
+    contentKey: "experience/seismic-overview",
 
     projects: [
       {
         projectName: "LiveSocial",
         caption:
           "Full-Stack developer on LiveSocial, a platform for curating personalized content for sales teams.",
-        content: `### Feature Development
-Delivered a highly requested full-stack feature (React, Express) giving admins greater access control over platform-specific content sharing, enhancing customization for over 2,000 client companies.
-
-### Process Improvement
-Transformed a client configuration update process to self-service, reducing configuration update time by 99% by migrating legacy configurations for 9 clients from file-based storage to MongoDB.
-
-### Engineering Excellence
-Resolved 20+ bugs through systematic root cause analysis, reducing recurring support tickets by 5% and eliminating several months-old persistent issues through collaborations with customer success and product team.`,
+        contentKey: "experience/seismic-livesocial",
+        tags: ["React", "Express", "MongoDB", "TypeScript", "Fullstack"],
       },
     ],
     tags: [
@@ -251,26 +149,21 @@ Resolved 20+ bugs through systematic root cause analysis, reducing recurring sup
     location: "Toronto, ON",
     dates: "May 2024 - Aug 2024",
     caption: "",
-    content: `<img src="/konrad.jpeg" alt="BP" width="100" style="border-radius:50%"/>
-During my time at Konrad Group, I worked as a backend developer focusing on internal tooling. My primary contribution was developing a robust data ingestion pipeline to support an internal gaming analytics platform used by the entire company.`,
+    contentKey: "experience/konrad-overview",
 
     projects: [
       {
         projectName: "Internal Gaming Analytics Tool",
         caption:
           "Backend development for scraping, processing, and serving game statistics.",
-        content: `### Data Pipeline
-Developed a daily data ingestion pipeline integrating 4 gaming platform APIs to automatically fetch and aggregate game statistics for over 500 employees, enabling real-time leaderboard functionality.
-
-### Performance Optimization
-Optimized API efficiency by implementing GraphQL resolvers with Apollo Express, reducing complex nested query latency from 600ms to 150ms by eliminating request waterfalls, achieving 75% faster data fetching.`,
+        contentKey: "experience/konrad-gaming-analytics",
+        tags: ["Backend", "GraphQL", "Apollo", "Node.js", "TypeScript"],
       },
     ],
     tags: [
       "Backend",
       "GraphQL",
       "Apollo",
-      "Express",
       "TypeScript",
       "React",
       "Node.js",
@@ -286,17 +179,14 @@ Optimized API efficiency by implementing GraphQL resolvers with Apollo Express, 
       "A leader in aerospace satellite communications and intelligent connectivity",
     location: "Ottawa, ON",
     dates: "May 2023 - Aug 2023",
-    content: `During my internship at SKYTRAC, I developed full-stack solutions to improve the efficiency and accuracy of flight data analysis for aviation analysts.`,
+    contentKey: "experience/skytrac-overview",
 
     projects: [
       {
         projectName: "Flight Data Systems",
         caption: "Automated tooling and visualization for flight logs.",
-        content: `### Flight Data Dashboard
-Reduced flight analysts' workflows by 15% by building a web dashboard with BackboneJS, automatically retrieving flight data from the MySQL database to allow efficient viewing and annotation of flight events.
-
-### Data Integrity
-Identified 1 critical data inconsistency with an automated Python data verification script across flight log databases.`,
+        contentKey: "experience/skytrac-flight-data",
+        tags: ["BackboneJS", "Python", "MySQL", "Data Tooling"],
       },
     ],
     tags: ["Backend", "Python", "MySQL", "BackboneJS"],
@@ -308,7 +198,7 @@ const projects = [
     title: "Minicc Compiler",
     caption: "A toy compiler for minicc, a subset of C",
     technologies: "C++, Antlr4, LLVM",
-    content: `Implemented a compiler capable of parsing and translating minicc code into LLVM IR, featuring an alloca2reg optimization pass that reduces stack allocation overhead, achieving a 23% reduction in runtime.`,
+    contentKey: "projects/minicc-compiler",
     tags: ["Compiler", "C++", "LLVM"],
     githubLink: "https://github.com/leowrites/compiler",
   },
@@ -317,14 +207,14 @@ const projects = [
     caption:
       "Leveraging multi-threading and distributed computing for performance",
     technologies: "C++, OpenMP, OpenMPI",
-    content: `Optimized particle simulation using binning, static arrays, and bucket sort, improving sequential runtime from 53s to 18s (2.94x) for 160k particles on SciNet. Further reduced runtime to 2s (9x) by parallelizing 90% of the code with OpenMP using static decomposition and uniform partitioning.`,
+    contentKey: "projects/particle-collision-simulation",
     tags: ["C++", "OpenMP", "OpenMPI"],
   },
   {
     title: "Food Item Classifier",
     caption: "A machine learning experiment to classify food items",
     technologies: "Python, sklearn",
-    content: `Developed a model to classify food items based on text questions using random forest, neural networks and linear regression models, achieving an accuracy of over 85% on the validation dataset and 80% on the test dataset.`,
+    contentKey: "projects/food-item-classifier",
     tags: ["Machine Learning", "Python", "sklearn"],
     githubLink: "https://github.com/raftay/ML_Challenge",
   },
@@ -334,7 +224,7 @@ const projects = [
       "Collaboration with morLab to build a cloud-based simulation service",
     technologies: "Python, Django, AWS",
     dates: "Jan 2023 - May 2023",
-    content: `Built a user-friendly web platform using React and Django to make a C++ pandemic simulation model accessible to epidemiologists. Implemented 10+ RESTful endpoints and architected an AWS SQS/Batch pipeline for scalable, concurrent simulations with automated PostgreSQL output.`,
+    contentKey: "projects/cloud-pandemic-sim",
     tags: ["Backend", "Python", "Django", "AWS", "PostgreSQL"],
   },
   {
@@ -342,7 +232,7 @@ const projects = [
     caption: "Visualizing Memory Management in Python",
     technologies: "Python, TypeScript",
     dates: "Sept 2021 - Dec 2021",
-    content: `Spearheaded the development of Webstepper, an interactive Python memory visualization tool adopted by 900+ students each semester in CS fundamentals courses at UofT to teach memory and reference concepts.`,
+    contentKey: "projects/memoryviz-pythonta",
     tags: ["Python", "TypeScript", "React"],
     githubLink: "https://github.com/pyta-uoft/pyta",
   },
@@ -351,7 +241,7 @@ const projects = [
     caption:
       "An internship review platform to connect recruiters and job-seekers",
     technologies: "React, Java, SprintBoot, PostgreSQL",
-    content: `Developed scalable Spring Boot endpoints following SOLID principles and achieved 80% code coverage with over 50 automated unit/integration tests in a Docker CI/CD pipeline on Github Actions.`,
+    contentKey: "projects/campfire",
     tags: [
       "Fullstack",
       "Frontend",
@@ -369,7 +259,7 @@ const projects = [
     caption: "Computer Game with Custom AI Algorithms",
     technologies: "Python, Pygame",
     dates: "Sept 2022 - Dec 2022",
-    content: `Implemented A* pathfinding algorithm for ghost movement with customized behavior patterns, creating a multi-level game with enhanced sound effects and user experience.`,
+    contentKey: "projects/pacman-ai",
     githubLink: "https://github.com/leowrites/Pacman",
   },
   {
@@ -377,7 +267,7 @@ const projects = [
     caption: "Engineering Project",
     technologies: "Arduino, 3D Printing",
     dates: "May 2022 - Aug 2022",
-    content: `Designed a custom thrust vectoring mechanism for enhanced flight control and programmed an Arduino-based flight controller with a telemetry system.`,
+    contentKey: "projects/model-rocket-vectored-thrust",
     githubLink: "https://github.com/leowrites/R1_Main",
   },
 ];
@@ -391,13 +281,7 @@ const volunteering = [
       "A student-led group that builds technology and software for social good",
     location: "Toronto, ON",
     dates: "Aug 2023 - May 2024",
-    content: `<img src="/bp.png" alt="BP" width="100" style="border-radius:50%"/>
-
-### Leadership & Strategy
-Led 40+ members in delivering pro-bono software solutions to 3 nonprofits, while establishing corporate partnerships with Manulife and Guidewire to facilitate internship preparation events for 100+ students.
-
-### Operational Excellence
-Established Project Lead Hub and comprehensive Handbook to standardize project management methodologies, client requirement scoping, and team engagement best practices.`,
+    contentKey: "volunteering/blueprint-president",
     tags: ["Leadership", "Club", "Project Management"],
     logo: "/bp.svg",
   },
@@ -409,20 +293,14 @@ Established Project Lead Hub and comprehensive Handbook to standardize project m
       "A student-led group that builds technology and software for social good",
     location: "Toronto, ON",
     dates: "Aug 2023 - Aug 2024",
-    content: `<img src="/bp.png" alt="BP" width="100" style="border-radius:50%"/>
-
-### Overview
-As a Project Lead for UofT Blueprint, I helped manage student teams dedicated to building technology for social good, collaborating with non-profit organizations to deliver high-impact software solutions.`,
+    contentKey: "volunteering/blueprint-project-lead",
 
     projects: [
       {
         projectName: "Period Purse",
         caption: "Educational Android period tracker for Canadian youth",
-        content: `### Impact
-Increased menstruation awareness by partnering with [The Period Purse](https://theperiodpurse.com/ "A non-profit organization aiming to achieve menstrual equity") and developing an educational Android period tracker for Canadian youth, available on Google Play Store with over 50 downloads.
-
-### Team Management
-Managed a 7-people development team through backlog refinement, prioritization and modularization, implementing all 8 use-cases as specified and completing 90+ tickets over 1 year.`,
+        contentKey: "volunteering/period-purse",
+        tags: ["Kotlin", "Android", "Leadership", "Product"],
       },
     ],
     tags: ["Leadership", "Project Management", "Kotlin", "Android"],

@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import { Box, Divider, Drawer, IconButton, Typography } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import OpenInFullIcon from "@mui/icons-material/OpenInFull";
-import { MarkdownRenderer } from "./Components";
+import { MarkdownRenderer, TechTagList } from "./Components";
 
 const ProjectBottomSheet = ({ project, open, onClose, onExpand }) => {
   // Keep last project alive during exit animation so content doesn't vanish mid-slide
@@ -56,15 +56,12 @@ const ProjectBottomSheet = ({ project, open, onClose, onExpand }) => {
                   {displayProject.caption}
                 </Typography>
               )}
-              {displayProject.technologies && (
-                <Typography
-                  variant="caption"
-                  color="text.disabled"
-                  sx={{ mt: 0.25, display: "block" }}
-                >
-                  {displayProject.technologies}
-                </Typography>
-              )}
+              <TechTagList
+                technologies={
+                  displayProject.tags || displayProject.technologies
+                }
+                sx={{ mt: 0.5 }}
+              />
             </Box>
             <Box sx={{ display: "flex", gap: 0.5, flexShrink: 0 }}>
               <IconButton onClick={onExpand} size="small" aria-label="expand">
@@ -80,8 +77,11 @@ const ProjectBottomSheet = ({ project, open, onClose, onExpand }) => {
 
           {/* Scrollable content */}
           <Box sx={{ overflowY: "auto", flex: 1 }}>
-            {displayProject.content && (
-              <MarkdownRenderer content={displayProject.content} />
+            {(displayProject.content || displayProject.contentKey) && (
+              <MarkdownRenderer
+                content={displayProject.content}
+                contentKey={displayProject.contentKey}
+              />
             )}
           </Box>
         </>

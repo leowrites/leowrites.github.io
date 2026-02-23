@@ -22,8 +22,11 @@ const SectionProjectItem = React.memo(
       if (onSelect) {
         onSelect(
           projId,
-          proj.content ? (
-            <MarkdownRenderer content={proj.content} />
+          proj.content || proj.contentKey ? (
+            <MarkdownRenderer
+              content={proj.content}
+              contentKey={proj.contentKey}
+            />
           ) : (
             <StructuredDetails details={proj.details} />
           ),
@@ -38,12 +41,16 @@ const SectionProjectItem = React.memo(
         id={projId}
         projectName={proj.projectName}
         caption={proj.caption}
+        technologies={proj.tags || proj.technologies || item.tags}
         selected={selectedId === projId}
         onSelect={onSelect ? handleSelect : undefined}
       >
         {!onSelect &&
-          (proj.content ? (
-            <MarkdownRenderer content={proj.content} />
+          (proj.content || proj.contentKey ? (
+            <MarkdownRenderer
+              content={proj.content}
+              contentKey={proj.contentKey}
+            />
           ) : (
             <StructuredDetails details={proj.details} />
           ))}
@@ -96,9 +103,15 @@ const SectionItem = React.memo(
 
     const handleParentSelect = React.useCallback(() => {
       if (onSelect) {
-        onSelect(id, <MarkdownRenderer content={item.content} />);
+        onSelect(
+          id,
+          <MarkdownRenderer
+            content={item.content}
+            contentKey={item.contentKey}
+          />
+        );
       }
-    }, [onSelect, id, item.content]);
+    }, [onSelect, id, item.content, item.contentKey]);
 
     const isParentSelected = selectedId === id;
     const isChildSelected =
@@ -119,6 +132,7 @@ const SectionItem = React.memo(
         date={item.dates}
         company={headerContent}
         caption={item.caption || ""}
+        technologies={item.tags || item.technologies}
         logo={item.logo}
         githubLink={item.githubLink}
         selected={isSelected}
@@ -133,14 +147,21 @@ const SectionItem = React.memo(
               gap: "0.25rem",
             }}
           >
-            {showOverviewInFolder && item.content && (
-              <Box sx={{ mb: 2 }}>
-                <MarkdownRenderer content={item.content} />
+            {showOverviewInFolder && (item.content || item.contentKey) && (
+              <Box>
+                <MarkdownRenderer
+                  content={item.content}
+                  contentKey={item.contentKey}
+                />
               </Box>
             )}
-            {item.projects.map((proj, pIndex) => (
+            {item.projects.map((proj) => (
               <SectionProjectItem
-                key={pIndex}
+                key={generateId({
+                  ...proj,
+                  title: proj.projectName,
+                  organization: item.organization,
+                })}
                 proj={proj}
                 item={item}
                 selectedId={selectedId}
@@ -149,7 +170,10 @@ const SectionItem = React.memo(
             ))}
           </Box>
         ) : (
-          <MarkdownRenderer content={item.content} />
+          <MarkdownRenderer
+            content={item.content}
+            contentKey={item.contentKey}
+          />
         )}
       </EntryContainer>
     );
@@ -166,9 +190,9 @@ const Section = ({
   return (
     <Box>
       <SectionHeading>{sectionTitle}</SectionHeading>
-      {items.map((item, index) => (
+      {items.map((item) => (
         <SectionItem
-          key={index}
+          key={generateId(item)}
           item={item}
           selectedId={selectedId}
           onSelect={onSelect}

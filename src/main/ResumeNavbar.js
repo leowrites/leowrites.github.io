@@ -5,7 +5,7 @@ import { useContext } from "react";
 import { ColorModeContext } from "../theme";
 import { NAVBAR_HEIGHT } from "./constants";
 
-export const ResumeNavbar = () => {
+export const TopNav = () => {
   const theme = useTheme();
   const colorMode = useContext(ColorModeContext);
 
@@ -37,3 +37,5 @@ export const ResumeNavbar = () => {
     </Box>
   );
 };
+
+export { TopNav as ResumeNavbar };

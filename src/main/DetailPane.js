@@ -3,7 +3,6 @@ import {
   Box,
   Breadcrumbs,
   IconButton,
-  Link,
   Typography,
   useTheme,
 } from "@mui/material";
@@ -21,6 +20,7 @@ const DetailPane = ({
   selectedContent,
   selectedProject,
   parentItem,
+  selectedItem,
   selectedId,
   onClose,
   onExpand,
@@ -37,20 +37,25 @@ const DetailPane = ({
   }
   if (selectedProject) {
     breadcrumbs.push(selectedProject.projectName);
-  } else if (parentItem && !selectedProject) {
-    // top-level item already pushed above, no extra crumb needed
+  } else if (selectedItem?.projects?.length) {
+    breadcrumbs.push(
+      selectedItem.organization ||
+        selectedItem.title ||
+        selectedItem.institution
+    );
   }
 
   return (
     <Box
       sx={{
-        width: isBlogMode ? "100%" : selectedContent ? "70%" : "0%",
-        opacity: selectedContent || isBlogMode ? 1 : 0,
-        visibility: selectedContent || isBlogMode ? "visible" : "hidden",
+        width: isBlogMode ? "100%" : "65%",
+        opacity: 1,
+        visibility: "visible",
         transition:
           "width 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease 0.2s",
         position: isBlogMode ? "relative" : "sticky",
         top: isBlogMode ? "auto" : "70px",
+        height: isBlogMode ? "auto" : "calc(100vh - 100px)",
         maxHeight: isBlogMode ? "none" : "calc(100vh - 100px)",
         overflowY: isBlogMode ? "visible" : "auto",
         "&::-webkit-scrollbar": { display: "none" },
@@ -67,7 +72,7 @@ const DetailPane = ({
         whiteSpace: "normal",
       }}
     >
-      {selectedContent && (
+      {selectedContent ? (
         <Box
           sx={{
             p: !isBlogMode && 4,
@@ -138,6 +143,18 @@ const DetailPane = ({
           )}
           {selectedContent}
         </Box>
+      ) : (
+        !isBlogMode && (
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              height: "100%",
+              p: 4,
+            }}
+          ></Box>
+        )
       )}
     </Box>
   );

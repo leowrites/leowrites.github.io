@@ -1,6 +1,7 @@
 import React from "react";
 import { Box, Typography, Breadcrumbs, Link } from "@mui/material";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
+import { TechTagList } from "./Components";
 
 /**
  * Blog-mode header: breadcrumbs + title + caption.
@@ -61,6 +62,9 @@ const BlogView = ({
           {selectedProject.caption}
         </Typography>
       )}
+      <TechTagList
+        technologies={selectedProject.tags || selectedProject.technologies}
+      />
     </Box>
   );
 };

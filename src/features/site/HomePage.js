@@ -1,54 +1,49 @@
 import React, { useState, Suspense, lazy } from "react";
-import ResumeHeader from "./Header";
-import EducationSection from "./Education";
-import Section from "./Section";
-import Contacts from "./Contacts";
+import SiteHeader from "main/SiteHeader";
+import EducationSection from "main/Education";
+import Section from "main/Section";
+import Contacts from "main/Contacts";
 import {
   Box,
   IconButton,
   Typography,
   useTheme,
   useMediaQuery,
+  Alert,
 } from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { ResumeNavbar } from "./ResumeNavbar";
+import { TopNav } from "main/TopNav";
 import {
   personalInfo,
   education,
   experience,
   projects,
   volunteering,
-} from "./data";
-import { useBlogMode } from "./useBlogMode";
-import { generateSlug, generateId } from "./utils";
+} from "content/site/siteData";
+import { TechTagList } from "main/Components";
+import { useContentMode } from "./hooks/useContentMode";
+import { generateSlug, generateId } from "main/utils";
 
-const DetailPane = lazy(() => import("./DetailPane"));
-const BlogView = lazy(() => import("./BlogView"));
-const ProjectBottomSheet = lazy(() => import("./ProjectBottomSheet"));
+const DetailPane = lazy(() => import("main/DetailPane"));
+const BlogView = lazy(() => import("main/BlogView"));
+const ProjectBottomSheet = lazy(() => import("main/ProjectBottomSheet"));
 
-export const allItems = [
-  ...education,
-  ...experience,
-  ...volunteering,
-  ...projects,
-];
-
-const Resume = () => {
+const HomePage = () => {
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up("md"));
 
   const {
-    isBlogMode,
+    isArticleMode,
     isStandaloneProject,
     selectedContent,
     selectedId,
     selectedProject,
     parentItem,
+    selectedItem,
     handleSelect,
-    getBlogUrl,
+    getArticleUrl,
     navigate,
-  } = useBlogMode();
+  } = useContentMode();
 
   const [bottomSheetProject, setBottomSheetProject] = useState(null);
 
@@ -58,20 +53,22 @@ const Resume = () => {
   };
 
   const handleClose = () => {
-    if (isBlogMode) {
+    if (isArticleMode) {
       navigate("/", {
         viewTransition: true,
         state: { restoreProjectId: selectedId },
       });
     } else {
-      handleSelect(null, null);
+      handleSelect(null);
     }
   };
 
   const handleExpand = () => {
-    navigate(getBlogUrl(selectedProject.projectName, parentItem), {
-      viewTransition: true,
-    });
+    if (!selectedProject) return;
+    const url = parentItem
+      ? getArticleUrl(selectedProject.projectName, parentItem)
+      : `/projects/${generateSlug(selectedProject.projectName)}`;
+    navigate(url, { viewTransition: true });
   };
 
   const handleMobileProjectSelect = (id, content, proj, parent) => {
@@ -81,22 +78,34 @@ const Resume = () => {
 
   return (
     <>
-      <ResumeNavbar />
+      <TopNav />
       <Box sx={{ p: matches ? "4rem" : "0 0.5rem", textAlign: "start" }}>
-        {!isBlogMode && <ResumeHeader personalInfo={personalInfo} />}
+        {!isArticleMode && (
+          <Alert
+            severity="warning"
+            sx={{
+              mb: 2,
+              borderRadius: "1rem",
+              alignItems: "center",
+            }}
+          >
+            This site is a work in progress — content and UI are actively being
+            updated.
+          </Alert>
+        )}
+        {!isArticleMode && <SiteHeader personalInfo={personalInfo} />}
         {matches ? (
           <Box
             sx={{
               display: "flex",
               alignItems: "flex-start",
-              gap: isBlogMode ? 0 : 4,
+              gap: isArticleMode ? 0 : 4,
             }}
           >
-            {/* Left Column: List */}
             <Box
               sx={{
-                display: isBlogMode ? "none" : "block",
-                width: selectedContent ? "35%" : "100%",
+                display: isArticleMode ? "none" : "block",
+                width: "35%",
                 transition: "width 0.5s cubic-bezier(0.4, 0, 0.2, 1)",
               }}
             >
@@ -125,25 +134,24 @@ const Resume = () => {
               />
             </Box>
 
-            {/* Right Column: Detail View */}
             <Suspense
               fallback={<Box sx={{ width: "65%", p: 4 }}>Loading...</Box>}
             >
               <DetailPane
-                isBlogMode={isBlogMode}
+                isBlogMode={isArticleMode}
                 selectedContent={selectedContent}
                 selectedProject={selectedProject}
                 parentItem={parentItem}
+                selectedItem={selectedItem}
                 selectedId={selectedId}
                 onClose={handleClose}
                 onExpand={handleExpand}
                 navigate={navigate}
-                getBlogUrl={getBlogUrl}
+                getBlogUrl={getArticleUrl}
               />
             </Suspense>
           </Box>
-        ) : isBlogMode && selectedContent ? (
-          /* Mobile Blog View */
+        ) : isArticleMode && selectedContent ? (
           <Box style={{ viewTransitionName: "project-modal" }}>
             <Box sx={{ position: "relative", pt: 1 }}>
               <IconButton
@@ -154,7 +162,6 @@ const Resume = () => {
                 <ArrowBackIcon fontSize="small" />
               </IconButton>
               {isStandaloneProject ? (
-                /* Standalone project header */
                 <Box sx={{ mb: 3 }}>
                   <Typography variant="h4" fontWeight="bold" gutterBottom>
                     {projects.find((p) => generateId(p) === selectedId)?.title}
@@ -178,6 +185,10 @@ const Resume = () => {
                             {p.technologies}
                           </Typography>
                         )}
+                        <TechTagList
+                          technologies={p?.tags || p?.technologies}
+                          sx={{ mt: 1 }}
+                        />
                       </>
                     );
                   })()}
@@ -189,7 +200,7 @@ const Resume = () => {
                     parentItem={parentItem}
                     selectedId={selectedId}
                     navigate={navigate}
-                    getBlogUrl={getBlogUrl}
+                    getBlogUrl={getArticleUrl}
                     variant="mobile"
                   />
                 </Suspense>
@@ -198,7 +209,6 @@ const Resume = () => {
             </Box>
           </Box>
         ) : (
-          /* Mobile View: Standard Stack */
           <>
             <EducationSection educationData={education} />
             <Section
@@ -220,7 +230,7 @@ const Resume = () => {
             />
           </>
         )}
-        {!isBlogMode && <Contacts personalInfo={personalInfo} />}
+        {!isArticleMode && <Contacts personalInfo={personalInfo} />}
       </Box>
       <Suspense fallback={null}>
         <ProjectBottomSheet
@@ -230,7 +240,7 @@ const Resume = () => {
           onExpand={() => {
             const { item, parent } = bottomSheetProject;
             const url = item.projectName
-              ? getBlogUrl(item.projectName, parent)
+              ? getArticleUrl(item.projectName, parent)
               : `/projects/${generateSlug(item.title)}`;
             navigate(url, { viewTransition: true });
             setBottomSheetProject(null);
@@ -241,4 +251,4 @@ const Resume = () => {
   );
 };
 
-export default Resume;
+export default HomePage;

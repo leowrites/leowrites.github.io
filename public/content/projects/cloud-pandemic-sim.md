@@ -1,0 +1,1 @@
+Built a user-friendly web platform using React and Django to make a C++ pandemic simulation model accessible to epidemiologists. Implemented 10+ RESTful endpoints and architected an AWS SQS/Batch pipeline for scalable, concurrent simulations with automated PostgreSQL output.

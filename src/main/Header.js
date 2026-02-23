@@ -2,7 +2,7 @@
 import React from "react";
 import { Box, Typography } from "@mui/material";
 
-const ClassicResumeHeader = ({ personalInfo }) => {
+const SiteHeader = ({ personalInfo }) => {
   return (
     <Box sx={{ mb: "2rem" }}>
       <Box
@@ -48,4 +48,4 @@ const ClassicResumeHeader = ({ personalInfo }) => {
   );
 };
 
-export default ClassicResumeHeader;
+export default SiteHeader;

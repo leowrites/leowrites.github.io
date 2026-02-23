@@ -4,7 +4,6 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import ThemeContext from "theme";
-import { Provider } from "react-redux";
 import { PostHogProvider } from "posthog-js/react";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
