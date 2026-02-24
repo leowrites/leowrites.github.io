@@ -18,6 +18,54 @@ import remarkGfm from "remark-gfm";
 import rehypeRaw from "rehype-raw";
 import StructuredVisual from "./StructuredVisual";
 
+const SANITY_PROJECT_ID = process.env.REACT_APP_SANITY_PROJECT_ID;
+const SANITY_DATASET = process.env.REACT_APP_SANITY_DATASET || "production";
+
+const parseSanityAssetRef = (rawSrc = "") => {
+  const trimmed = String(rawSrc || "").trim();
+  if (!trimmed) return null;
+
+  const normalized = trimmed
+    .replace(/^sanity:\/\//i, "")
+    .replace(/^sanity:/i, "");
+
+  const match = normalized.match(
+    /^image-([a-zA-Z0-9_]+)-(\d+x\d+)-([a-z0-9]+)$/i
+  );
+  if (!match) return null;
+
+  return {
+    assetId: match[1],
+    dimensions: match[2],
+    extension: match[3],
+  };
+};
+
+const resolveMarkdownImageSrc = (src = "") => {
+  const rawSrc = String(src || "").trim();
+  if (!rawSrc) return "";
+
+  if (
+    rawSrc.startsWith("http://") ||
+    rawSrc.startsWith("https://") ||
+    rawSrc.startsWith("/") ||
+    rawSrc.startsWith("data:")
+  ) {
+    return rawSrc;
+  }
+
+  if (!SANITY_PROJECT_ID || !SANITY_DATASET) {
+    return rawSrc;
+  }
+
+  const parsedRef = parseSanityAssetRef(rawSrc);
+  if (!parsedRef) {
+    return rawSrc;
+  }
+
+  return `https://cdn.sanity.io/images/${SANITY_PROJECT_ID}/${SANITY_DATASET}/${parsedRef.assetId}-${parsedRef.dimensions}.${parsedRef.extension}`;
+};
+
 SyntaxHighlighter.registerLanguage("javascript", javascript);
 SyntaxHighlighter.registerLanguage("js", javascript);
 SyntaxHighlighter.registerLanguage("typescript", typescript);
@@ -146,6 +194,8 @@ const MarkdownRendererImpl = ({ content }) => {
         );
       },
       img: ({ node, width, height, ...props }) => {
+        const resolvedSrc = resolveMarkdownImageSrc(props.src);
+
         if (width || height) {
           return (
             <Box sx={{ textAlign: "center", my: 2 }}>
@@ -156,11 +206,12 @@ const MarkdownRendererImpl = ({ content }) => {
                 alt={props.alt || ""}
                 style={{ display: "inline-block", borderRadius: "1rem" }}
                 {...props}
+                src={resolvedSrc}
               />
             </Box>
           );
         }
-        return <StructuredVisual src={props.src} alt={props.alt} />;
+        return <StructuredVisual src={resolvedSrc} alt={props.alt} />;
       },
     }),
     [inlineCodeBackground]

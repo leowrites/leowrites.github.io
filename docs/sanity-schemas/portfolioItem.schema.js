@@ -1,0 +1,85 @@
+export const portfolioItem = {
+  name: "portfolioItem",
+  title: "Portfolio Item",
+  type: "document",
+  fields: [
+    {
+      name: "section",
+      title: "Section",
+      type: "string",
+      options: {
+        list: ["education", "experience", "projects", "volunteering"],
+        layout: "radio",
+      },
+      validation: (rule) => rule.required(),
+    },
+    { name: "order", title: "Order", type: "number", initialValue: 100 },
+    { name: "title", title: "Title", type: "string" },
+    { name: "institution", title: "Institution", type: "string" },
+    { name: "organization", title: "Organization", type: "string" },
+    { name: "degree", title: "Degree", type: "string" },
+    { name: "dates", title: "Dates", type: "string" },
+    { name: "location", title: "Location", type: "string" },
+    { name: "caption", title: "Caption", type: "text", rows: 3 },
+    {
+      name: "technologies",
+      title: "Technologies",
+      description: "Comma-separated string, e.g. React, Node.js, PostgreSQL",
+      type: "string",
+    },
+    {
+      name: "tags",
+      title: "Tags",
+      type: "array",
+      of: [{ type: "string" }],
+    },
+    {
+      name: "logoImage",
+      title: "Logo Image",
+      type: "image",
+      options: { hotspot: true },
+    },
+    { name: "logo", title: "Logo URL", type: "string" },
+    { name: "url", title: "External URL", type: "url" },
+    { name: "tooltipText", title: "Tooltip Text", type: "string" },
+    { name: "githubLink", title: "GitHub Link", type: "url" },
+    {
+      name: "contentKey",
+      title: "Content Key",
+      description: "Must match a portfolioContent.contentKey",
+      type: "string",
+    },
+    {
+      name: "projects",
+      title: "Nested Projects",
+      type: "array",
+      of: [
+        {
+          type: "object",
+          fields: [
+            { name: "projectName", title: "Project Name", type: "string" },
+            { name: "caption", title: "Caption", type: "text", rows: 2 },
+            {
+              name: "technologies",
+              title: "Technologies",
+              type: "string",
+            },
+            {
+              name: "tags",
+              title: "Tags",
+              type: "array",
+              of: [{ type: "string" }],
+            },
+            { name: "githubLink", title: "GitHub Link", type: "url" },
+            {
+              name: "contentKey",
+              title: "Content Key",
+              description: "Must match a portfolioContent.contentKey",
+              type: "string",
+            },
+          ],
+        },
+      ],
+    },
+  ],
+};
