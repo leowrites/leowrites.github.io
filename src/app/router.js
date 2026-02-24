@@ -7,7 +7,7 @@ function Layout() {
   return (
     <div className="App">
       <CssBaseline />
-      <Container maxWidth="xl">
+      <Container maxWidth="xl" sx={{ my: 3 }}>
         <Outlet />
       </Container>
     </div>

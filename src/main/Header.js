@@ -1,6 +1,7 @@
 // filepath: /Users/leoliu/Documents/code/leowrites.github.io/src/Resume/ClassicResumeHeader.js
 import React from "react";
 import { Box, Chip, Stack, Typography } from "@mui/material";
+import PersonalImageSlicesCard from "./PersonalImageSlicesCard";
 
 const SiteHeader = ({ personalInfo, variant = "default" }) => {
   const isDetailPane = variant === "detailPane";
@@ -12,7 +13,6 @@ const SiteHeader = ({ personalInfo, variant = "default" }) => {
     <Box
       sx={{
         mb: isDetailPane ? 0 : "2rem",
-        p: isDetailPane ? 2 : 0,
       }}
     >
       <Box
@@ -54,6 +54,7 @@ const SiteHeader = ({ personalInfo, variant = "default" }) => {
           </Typography>
         );
       })}
+      <PersonalImageSlicesCard />
       {isDetailPane && (
         <Typography sx={{ mt: 2, color: "text.secondary" }}>
           👈 Select an experience, leadership role, or project on the left to

@@ -31,19 +31,6 @@ export const TopNav = () => {
           <Brightness4Icon />
         )}
       </IconButton>
-
-      {
-        <Alert
-          severity="warning"
-          sx={{
-            borderRadius: "1rem",
-            alignItems: "center",
-          }}
-        >
-          This site is a work in progress — content and UI are actively being
-          updated.
-        </Alert>
-      }
     </Box>
   );
 };

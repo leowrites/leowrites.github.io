@@ -25,7 +25,7 @@ import { generateSlug, generateId } from "main/utils";
 const DetailPane = lazy(() => import("main/DetailPane"));
 const BlogView = lazy(() => import("main/BlogView"));
 const ProjectBottomSheet = lazy(() => import("main/ProjectBottomSheet"));
-const DESKTOP_PANE_HEIGHT = "calc(100vh - 100px)";
+const DESKTOP_PANE_HEIGHT = "calc(100vh - 3rem)";
 
 const HomePage = () => {
   const theme = useTheme();
@@ -77,7 +77,7 @@ const HomePage = () => {
 
   return (
     <>
-      <TopNav />
+      {/* <TopNav /> */}
       <Box sx={{ textAlign: "start" }}>
         {!isArticleMode && !matches && (
           <SiteHeader personalInfo={personalInfo} />
@@ -87,7 +87,7 @@ const HomePage = () => {
             sx={{
               display: "flex",
               alignItems: "flex-start",
-              gap: isArticleMode ? 0 : 4,
+              gap: isArticleMode ? 0 : 2,
               height: isArticleMode ? "auto" : DESKTOP_PANE_HEIGHT,
               overflow: isArticleMode ? "visible" : "hidden",
               transition: theme.transitions.create(["gap", "height"], {
