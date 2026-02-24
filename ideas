@@ -1,2 +1,5 @@
+- Ensure consistent color scheme across the site
+- Whenever something is displayed in the right pane, it should always have breadcrumb
+- Better transition animations for all transitions
 - Write-up for each existing project
 - Search feature

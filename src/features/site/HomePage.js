@@ -1,4 +1,4 @@
-import React, { useState, Suspense, lazy, useMemo } from "react";
+import React, { useState, Suspense, lazy } from "react";
 import SiteHeader from "main/SiteHeader";
 import EducationSection from "main/Education";
 import Section from "main/Section";
@@ -11,12 +11,16 @@ import {
 } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { TopNav } from "main/TopNav";
-import { initialSiteData } from "content/site/siteData";
+import {
+  personalInfo,
+  education,
+  experience,
+  projects,
+  volunteering,
+} from "content/site/siteData";
 import { TechTagList } from "main/Components";
 import { useContentMode } from "./hooks/useContentMode";
 import { generateSlug, generateId } from "main/utils";
-import { useSiteData } from "./hooks/useSiteData";
-import { buildPageItems } from "content/site/model/contentModel";
 
 const DetailPane = lazy(() => import("main/DetailPane"));
 const BlogView = lazy(() => import("main/BlogView"));
@@ -26,21 +30,6 @@ const DESKTOP_PANE_HEIGHT = "calc(100vh - 100px)";
 const HomePage = () => {
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up("md"));
-  const { siteData } = useSiteData();
-
-  const { personalInfo, education, experience, projects, volunteering } =
-    siteData || initialSiteData;
-
-  const pageItems = useMemo(
-    () =>
-      buildPageItems({
-        education,
-        experience,
-        volunteering,
-        projects,
-      }),
-    [education, experience, volunteering, projects]
-  );
 
   const {
     isArticleMode,
@@ -53,7 +42,7 @@ const HomePage = () => {
     handleSelect,
     getArticleUrl,
     navigate,
-  } = useContentMode({ pageItems, projects });
+  } = useContentMode();
 
   const [bottomSheetProject, setBottomSheetProject] = useState(null);
 

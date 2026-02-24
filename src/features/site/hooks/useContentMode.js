@@ -1,10 +1,12 @@
 import { useState, useEffect, useMemo, useCallback } from "react";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
+import { pageItems } from "features/site/data/pageItems";
+import { projects } from "content/site/siteData";
 import { generateId, generateSlug } from "main/utils";
 import { MarkdownRenderer } from "main/Components";
 import { StructuredDetails } from "main/StructuredDetails";
 
-export const useContentMode = ({ pageItems, projects }) => {
+export const useContentMode = () => {
   const navigate = useNavigate();
   const { companySlug, projectSlug, standaloneSlug } = useParams();
   const location = useLocation();
@@ -74,7 +76,7 @@ export const useContentMode = ({ pageItems, projects }) => {
       companyProjectBySlug: companyProject,
       standaloneBySlug: standalone,
     };
-  }, [pageItems, projects]);
+  }, []);
 
   const selectedContent = useMemo(() => {
     if (!selectedId) return null;

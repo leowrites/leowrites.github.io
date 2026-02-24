@@ -18,7 +18,7 @@ const EducationItem = React.memo(({ edu, onSelect, selectedId }) => {
     <EntryContainer
       id={id}
       date={edu.dates}
-      company={`${edu.degree}, ${edu.institution || edu.organization || ""}`}
+      company={`${edu.degree}, ${edu.institution}`}
       selected={selectedId === id}
       onSelect={onSelect ? handleSelect : undefined}
     >
