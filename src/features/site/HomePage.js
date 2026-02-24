@@ -2,14 +2,12 @@ import React, { useState, Suspense, lazy } from "react";
 import SiteHeader from "main/SiteHeader";
 import EducationSection from "main/Education";
 import Section from "main/Section";
-import Contacts from "main/Contacts";
 import {
   Box,
   IconButton,
   Typography,
   useTheme,
   useMediaQuery,
-  Alert,
 } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { TopNav } from "main/TopNav";
@@ -27,6 +25,7 @@ import { generateSlug, generateId } from "main/utils";
 const DetailPane = lazy(() => import("main/DetailPane"));
 const BlogView = lazy(() => import("main/BlogView"));
 const ProjectBottomSheet = lazy(() => import("main/ProjectBottomSheet"));
+const DESKTOP_PANE_HEIGHT = "calc(100vh - 100px)";
 
 const HomePage = () => {
   const theme = useTheme();
@@ -79,64 +78,77 @@ const HomePage = () => {
   return (
     <>
       <TopNav />
-      <Box sx={{ p: matches ? "4rem" : "0 0.5rem", textAlign: "start" }}>
-        {!isArticleMode && (
-          <Alert
-            severity="warning"
-            sx={{
-              mb: 2,
-              borderRadius: "1rem",
-              alignItems: "center",
-            }}
-          >
-            This site is a work in progress — content and UI are actively being
-            updated.
-          </Alert>
+      <Box sx={{ textAlign: "start" }}>
+        {!isArticleMode && !matches && (
+          <SiteHeader personalInfo={personalInfo} />
         )}
-        {!isArticleMode && <SiteHeader personalInfo={personalInfo} />}
         {matches ? (
           <Box
             sx={{
               display: "flex",
               alignItems: "flex-start",
               gap: isArticleMode ? 0 : 4,
+              height: isArticleMode ? "auto" : DESKTOP_PANE_HEIGHT,
+              overflow: isArticleMode ? "visible" : "hidden",
+              transition: theme.transitions.create(["gap", "height"], {
+                duration: theme.transitions.duration.standard,
+                easing: theme.transitions.easing.easeInOut,
+              }),
             }}
           >
             <Box
               sx={{
                 display: isArticleMode ? "none" : "block",
                 width: "35%",
-                transition: "width 0.5s cubic-bezier(0.4, 0, 0.2, 1)",
+                height: isArticleMode ? "auto" : DESKTOP_PANE_HEIGHT,
+                transition: theme.transitions.create("width", {
+                  duration: theme.transitions.duration.complex,
+                  easing: theme.transitions.easing.easeInOut,
+                }),
               }}
             >
-              <EducationSection
-                educationData={education}
-                selectedId={selectedId}
-                onSelect={handleSelect}
-              />
-              <Section
-                sectionTitle="Experience"
-                items={experience}
-                selectedId={selectedId}
-                onSelect={handleSelect}
-              />
-              <Section
-                sectionTitle="Leadership"
-                items={volunteering}
-                selectedId={selectedId}
-                onSelect={handleSelect}
-              />
-              <Section
-                sectionTitle="Projects"
-                items={projects}
-                selectedId={selectedId}
-                onSelect={handleSelect}
-              />
+              <Box
+                sx={{
+                  p: 3,
+                  height: "100%",
+                  overflowY: "auto",
+                  overflowX: "hidden",
+                  borderRadius: "1rem",
+                  scrollbarWidth: "none",
+                  bgcolor: "background.paper",
+                  border: (theme) => `1px solid ${theme.palette.divider}`,
+                  "& .MuiTypography-h3": {
+                    mt: 4,
+                  },
+                }}
+              >
+                <EducationSection
+                  educationData={education}
+                  selectedId={selectedId}
+                  onSelect={handleSelect}
+                />
+                <Section
+                  sectionTitle="Experience"
+                  items={experience}
+                  selectedId={selectedId}
+                  onSelect={handleSelect}
+                />
+                <Section
+                  sectionTitle="Leadership"
+                  items={volunteering}
+                  selectedId={selectedId}
+                  onSelect={handleSelect}
+                />
+                <Section
+                  sectionTitle="Projects"
+                  items={projects}
+                  selectedId={selectedId}
+                  onSelect={handleSelect}
+                />
+              </Box>
             </Box>
 
-            <Suspense
-              fallback={<Box sx={{ width: "65%", p: 4 }}>Loading...</Box>}
-            >
+            <Suspense fallback={<Box sx={{ width: "65%", p: 4 }}></Box>}>
               <DetailPane
                 isBlogMode={isArticleMode}
                 selectedContent={selectedContent}
@@ -148,6 +160,15 @@ const HomePage = () => {
                 onExpand={handleExpand}
                 navigate={navigate}
                 getBlogUrl={getArticleUrl}
+                desktopHeight={DESKTOP_PANE_HEIGHT}
+                emptyState={
+                  !isArticleMode ? (
+                    <SiteHeader
+                      personalInfo={personalInfo}
+                      variant="detailPane"
+                    />
+                  ) : null
+                }
               />
             </Suspense>
           </Box>
@@ -230,7 +251,6 @@ const HomePage = () => {
             />
           </>
         )}
-        {!isArticleMode && <Contacts personalInfo={personalInfo} />}
       </Box>
       <Suspense fallback={null}>
         <ProjectBottomSheet

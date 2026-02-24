@@ -2,9 +2,11 @@ import React, { useRef } from "react";
 import { Box, Divider, Drawer, IconButton, Typography } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import OpenInFullIcon from "@mui/icons-material/OpenInFull";
+import { useTheme } from "@mui/material/styles";
 import { MarkdownRenderer, TechTagList } from "./Components";
 
 const ProjectBottomSheet = ({ project, open, onClose, onExpand }) => {
+  const theme = useTheme();
   // Keep last project alive during exit animation so content doesn't vanish mid-slide
   const lastProject = useRef(null);
   if (project) lastProject.current = project;
@@ -15,11 +17,14 @@ const ProjectBottomSheet = ({ project, open, onClose, onExpand }) => {
       anchor="bottom"
       open={open}
       onClose={onClose}
-      transitionDuration={{ enter: 380, exit: 380 }}
+      transitionDuration={{
+        enter: theme.transitions.duration.enteringScreen,
+        exit: theme.transitions.duration.leavingScreen,
+      }}
       SlideProps={{
         easing: {
-          enter: "cubic-bezier(0.32, 0.72, 0, 1)",
-          exit: "ease-out",
+          enter: theme.transitions.easing.sharp,
+          exit: theme.transitions.easing.easeOut,
         },
       }}
       PaperProps={{

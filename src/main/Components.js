@@ -12,9 +12,56 @@ import {
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForwardIos";
 import GitHubIcon from "@mui/icons-material/GitHub";
+import { alpha } from "@mui/material/styles";
 import { loadContentByKey } from "content/site/loaders/markdownContentLoader";
 
 const LazyMarkdownRenderer = React.lazy(() => import("./MarkdownRendererImpl"));
+
+const iconCircleSx = {
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  padding: "0.5rem",
+  borderRadius: "50%",
+};
+
+const IconCircle = ({ children, sx }) => (
+  <Box sx={{ ...iconCircleSx, ...sx }}>{children}</Box>
+);
+
+const getCardContainerSx = ({
+  baseLight,
+  baseDark,
+  selectedLight,
+  selectedDark,
+  isHighlighted,
+  margin,
+}) => {
+  return (theme) => {
+    const resolve = (value) =>
+      typeof value === "function" ? value(theme) : value;
+    const baseBg =
+      theme.palette.mode === "light" ? resolve(baseLight) : resolve(baseDark);
+    const selectedBg =
+      theme.palette.mode === "light"
+        ? resolve(selectedLight)
+        : resolve(selectedDark);
+
+    return {
+      ...(margin ? { margin } : {}),
+      borderRadius: "1rem",
+      overflow: "hidden",
+      backgroundColor: isHighlighted ? selectedBg : baseBg,
+      transition: theme.transitions.create(["background-color", "transform"], {
+        duration: theme.transitions.duration.short,
+        easing: theme.transitions.easing.easeInOut,
+      }),
+      "&:hover": {
+        backgroundColor: selectedBg,
+      },
+    };
+  };
+};
 
 const normalizeTechTags = (technologies) => {
   if (!technologies) return [];
@@ -61,7 +108,7 @@ export const SectionHeading = ({ children, sx }) => {
       variant="h3"
       sx={{
         fontWeight: "bold",
-        mt: "3rem",
+        mt: "2rem",
         ...sx,
       }}
     >
@@ -85,8 +132,9 @@ export const EntryContainer = React.memo(
     isFolder = false,
   }) => {
     const [expanded, setExpanded] = useState(false);
-    const isSelectionMode = !!onSelect;
-    const showContent = isSelectionMode ? selected : expanded;
+    const isSelectionMode = typeof onSelect === "function";
+    const canExpand = isFolder || !isSelectionMode;
+    const isHighlighted = isSelectionMode ? selected : expanded;
 
     // Auto-expand when a child is selected (e.g. restored from blog mode)
     useEffect(() => {
@@ -98,41 +146,22 @@ export const EntryContainer = React.memo(
     const handleCardClick = () => {
       if (isSelectionMode) {
         onSelect();
-        if (isFolder) {
-          if (!expanded) {
-            setExpanded(true);
-          }
-        }
-      } else {
-        setExpanded(!expanded);
       }
-    };
-
-    const handleExpandClick = (e) => {
-      e.stopPropagation();
-      setExpanded(!expanded);
+      if (canExpand) {
+        setExpanded((prev) => !prev);
+      }
     };
 
     return (
       <Box
         id={id}
-        sx={(theme) => ({
+        sx={getCardContainerSx({
+          baseLight: (theme) => theme.palette.grey[100],
+          baseDark: (theme) => theme.palette.grey[900],
+          selectedLight: (theme) => theme.palette.grey[200],
+          selectedDark: (theme) => alpha(theme.palette.common.white, 0.14),
+          isHighlighted,
           margin: "1rem 0",
-          borderRadius: "1rem",
-          overflow: "hidden",
-          backgroundColor: showContent
-            ? theme.palette.action.selected
-            : theme.palette.mode === "light"
-            ? theme.palette.grey[100]
-            : theme.palette.background.paper,
-          transition: "background-color 0.2s ease",
-          "&:hover": {
-            backgroundColor:
-              !showContent &&
-              (theme.palette.mode === "light"
-                ? theme.palette.grey[300]
-                : theme.palette.action.hover),
-          },
         })}
       >
         <Box
@@ -146,7 +175,10 @@ export const EntryContainer = React.memo(
             color: theme.palette.text.primary,
             "& .logo-image": {
               filter: theme.palette.mode === "dark" ? "invert(1)" : "none",
-              transition: "filter 0.1s ease",
+              transition: theme.transitions.create("filter", {
+                duration: theme.transitions.duration.shorter,
+                easing: theme.transitions.easing.easeInOut,
+              }),
             },
           })}
         >
@@ -177,7 +209,7 @@ export const EntryContainer = React.memo(
             )}
             <TechTagList technologies={technologies} />
           </Box>
-          <Box sx={{ display: "flex", alignItems: "center", gap: "0.25rem" }}>
+          <Box sx={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
             {githubLink && (
               <Box
                 component="a"
@@ -193,7 +225,7 @@ export const EntryContainer = React.memo(
                   borderRadius: "50%",
                   color: "text.secondary",
                   "&:hover": {
-                    backgroundColor: "rgba(0,0,0,0.05)",
+                    backgroundColor: "action.hover",
                     color: "text.primary",
                   },
                 }}
@@ -201,34 +233,30 @@ export const EntryContainer = React.memo(
                 <GitHubIcon sx={{ fontSize: "1.2rem" }} />
               </Box>
             )}
-            {(isFolder || !isSelectionMode) && (
-              <Box
-                onClick={isFolder ? handleExpandClick : undefined}
+            {canExpand && (
+              <IconCircle
                 sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  padding: "0.5rem",
-                  borderRadius: "50%",
                   "&:hover": {
-                    backgroundColor: isFolder
-                      ? "rgba(0,0,0,0.05)"
-                      : "transparent",
+                    backgroundColor: "transparent",
                   },
                 }}
               >
                 <ExpandMoreIcon
                   sx={{
                     transform: expanded ? "rotate(180deg)" : "rotate(0deg)",
-                    transition: "transform 0.1s ease",
+                    transition: (theme) =>
+                      theme.transitions.create("transform", {
+                        duration: theme.transitions.duration.short,
+                        easing: theme.transitions.easing.easeInOut,
+                      }),
                     color: (theme) => theme.palette.text.primary,
                   }}
                 />
-              </Box>
+              </IconCircle>
             )}
           </Box>
         </Box>
-        {(isFolder || !isSelectionMode) && (
+        {canExpand && (
           <Collapse in={expanded} timeout={300}>
             <Divider sx={{ mb: "0.5rem", mx: "1rem" }} />
             <Box
@@ -269,13 +297,12 @@ export const ProjectEntry = React.memo(
     return (
       <Box
         id={id}
-        sx={(theme) => ({
-          borderRadius: "1rem",
-          overflow: "hidden",
-          backgroundColor: selected
-            ? theme.palette.action.selected
-            : "transparent",
-          transition: "all 0.2s ease",
+        sx={getCardContainerSx({
+          baseLight: (theme) => alpha(theme.palette.common.white, 0.4),
+          baseDark: (theme) => alpha(theme.palette.common.white, 0.06),
+          selectedLight: (theme) => alpha(theme.palette.common.white, 0.7),
+          selectedDark: (theme) => alpha(theme.palette.common.white, 0.16),
+          isHighlighted: selected,
         })}
       >
         <Box
@@ -286,13 +313,6 @@ export const ProjectEntry = React.memo(
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
-            "&:hover": {
-              backgroundColor:
-                !selected &&
-                (theme.palette.mode === "light"
-                  ? theme.palette.grey[200]
-                  : theme.palette.background.paper),
-            },
           })}
         >
           <Box>
@@ -312,15 +332,7 @@ export const ProjectEntry = React.memo(
             <TechTagList technologies={technologies} sx={{ mt: 0.75 }} />
           </Box>
           {isSelectionMode ? (
-            <Box
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                padding: "0.5rem",
-                borderRadius: "50%",
-              }}
-            >
+            <IconCircle>
               <ArrowForwardIcon
                 sx={{
                   fontSize: "1rem",
@@ -328,25 +340,21 @@ export const ProjectEntry = React.memo(
                   opacity: selected ? 1 : 0.5,
                 }}
               />
-            </Box>
+            </IconCircle>
           ) : (
-            <Box
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                padding: "0.5rem",
-                borderRadius: "50%",
-              }}
-            >
+            <IconCircle>
               <ExpandMoreIcon
                 sx={{
                   transform: expanded ? "rotate(180deg)" : "rotate(0deg)",
-                  transition: "transform 0.3s ease",
+                  transition: (theme) =>
+                    theme.transitions.create("transform", {
+                      duration: theme.transitions.duration.standard,
+                      easing: theme.transitions.easing.easeInOut,
+                    }),
                   color: (theme) => theme.palette.text.primary,
                 }}
               />
-            </Box>
+            </IconCircle>
           )}
         </Box>
         {!isSelectionMode && (
@@ -417,22 +425,26 @@ export const TooltipLink = ({
 
 export const MarkdownRenderer = React.memo(({ content, contentKey }) => {
   const [resolvedContent, setResolvedContent] = useState(content || null);
+  const loadingFallback = (
+    <Typography variant="body2" color="text.secondary">
+      Loading content...
+    </Typography>
+  );
 
   useEffect(() => {
     let cancelled = false;
+    const cleanup = () => {
+      cancelled = true;
+    };
 
     if (content) {
       setResolvedContent(content);
-      return () => {
-        cancelled = true;
-      };
+      return cleanup;
     }
 
     if (!contentKey) {
       setResolvedContent(null);
-      return () => {
-        cancelled = true;
-      };
+      return cleanup;
     }
 
     setResolvedContent(null);
@@ -448,25 +460,15 @@ export const MarkdownRenderer = React.memo(({ content, contentKey }) => {
         }
       });
 
-    return () => {
-      cancelled = true;
-    };
+    return cleanup;
   }, [content, contentKey]);
 
   if (!content && !contentKey) return null;
 
   return (
-    <Suspense
-      fallback={
-        <Typography variant="body2" color="text.secondary">
-          Loading content...
-        </Typography>
-      }
-    >
+    <Suspense fallback={loadingFallback}>
       {resolvedContent === null ? (
-        <Typography variant="body2" color="text.secondary">
-          Loading content...
-        </Typography>
+        loadingFallback
       ) : (
         <LazyMarkdownRenderer content={resolvedContent} />
       )}

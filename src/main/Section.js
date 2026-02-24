@@ -144,7 +144,7 @@ const SectionItem = React.memo(
             sx={{
               display: "flex",
               flexDirection: "column",
-              gap: "0.25rem",
+              gap: "0.5rem",
             }}
           >
             {showOverviewInFolder && (item.content || item.contentKey) && (

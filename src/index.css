@@ -2,14 +2,26 @@ input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
-  -webkit-text-fill-color: white;
-  -webkit-box-shadow: 0 0 0px 1000px #000 inset;
+  -webkit-text-fill-color: inherit;
+  -webkit-box-shadow: 0 0 0px 1000px transparent inset;
 
   background-clip: content-box !important;
 }
 
 html {
   color-scheme: light dark;
+}
+
+:root {
+  --selection-text: #0b2239;
+  --selection-bg: #d9e8ff;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --selection-text: #f3f6fa;
+    --selection-bg: #2f6fb0;
+  }
 }
 
 body {

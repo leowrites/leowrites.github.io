@@ -43,7 +43,7 @@ const CodeBlock = ({ language = "javascript", code }) => {
         my: 2,
         border: "1px solid",
         borderColor: theme.palette.divider,
-        backgroundColor: isDark ? "#1e1e1e" : "#f5f5f5",
+        backgroundColor: theme.palette.background.paper,
         overflow: "hidden",
       }}
     >
@@ -70,6 +70,7 @@ const CodeBlock = ({ language = "javascript", code }) => {
 
 const MarkdownRendererImpl = ({ content }) => {
   const theme = useTheme();
+  const inlineCodeBackground = theme.palette.action.hover;
 
   const components = React.useMemo(
     () => ({
@@ -115,7 +116,7 @@ const MarkdownRendererImpl = ({ content }) => {
           variant="h6"
           fontWeight="bold"
           gutterBottom
-          sx={{ mt: 4 }}
+          sx={{ mt: 2 }}
           {...props}
         />
       ),
@@ -134,8 +135,7 @@ const MarkdownRendererImpl = ({ content }) => {
           <code
             className={className}
             style={{
-              backgroundColor:
-                theme.palette.mode === "dark" ? "#333" : "#f5f5f5",
+              backgroundColor: inlineCodeBackground,
               padding: "0.2rem 0.4rem",
               borderRadius: "0.25rem",
             }}
@@ -163,7 +163,7 @@ const MarkdownRendererImpl = ({ content }) => {
         return <StructuredVisual src={props.src} alt={props.alt} />;
       },
     }),
-    [theme.palette.mode]
+    [inlineCodeBackground]
   );
 
   return (

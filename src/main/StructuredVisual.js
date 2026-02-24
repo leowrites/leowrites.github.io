@@ -8,7 +8,7 @@ const StructuredVisual = ({ src, alt, type = "image" }) => {
         width: { xs: "100%", md: "90%" },
         maxWidth: { sm: "500px" },
         overflow: "hidden",
-        py: 4,
+        borderRadius: "1rem",
         mx: "auto",
         boxShadow: "0 8px 24px rgba(0,0,0,0.08)",
       }}
@@ -21,7 +21,6 @@ const StructuredVisual = ({ src, alt, type = "image" }) => {
           style={{
             width: "100%",
             display: "block",
-            borderRadius: "1rem",
           }}
         />
       )}

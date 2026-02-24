@@ -2,6 +2,7 @@ import React from "react";
 import {
   Box,
   Breadcrumbs,
+  Stack,
   IconButton,
   Typography,
   useTheme,
@@ -26,22 +27,23 @@ const DetailPane = ({
   onExpand,
   navigate,
   getBlogUrl,
+  desktopHeight,
+  emptyState,
 }) => {
   const theme = useTheme();
 
-  const breadcrumbs = [];
+  const breadcrumbs = ["Home"];
+  const currentItemLabel =
+    selectedProject?.projectName ||
+    selectedItem?.title ||
+    selectedItem?.organization ||
+    selectedItem?.institution ||
+    selectedItem?.degree ||
+    "Details";
+
   if (parentItem) {
     breadcrumbs.push(
       parentItem.organization || parentItem.title || parentItem.institution
-    );
-  }
-  if (selectedProject) {
-    breadcrumbs.push(selectedProject.projectName);
-  } else if (selectedItem?.projects?.length) {
-    breadcrumbs.push(
-      selectedItem.organization ||
-        selectedItem.title ||
-        selectedItem.institution
     );
   }
 
@@ -51,24 +53,22 @@ const DetailPane = ({
         width: isBlogMode ? "100%" : "65%",
         opacity: 1,
         visibility: "visible",
-        transition:
-          "width 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease 0.2s",
-        position: isBlogMode ? "relative" : "sticky",
-        top: isBlogMode ? "auto" : "70px",
-        height: isBlogMode ? "auto" : "calc(100vh - 100px)",
-        maxHeight: isBlogMode ? "none" : "calc(100vh - 100px)",
+        transition: theme.transitions.create(["width", "opacity"], {
+          duration: theme.transitions.duration.complex,
+          easing: theme.transitions.easing.easeInOut,
+        }),
+        position: "relative",
+        top: "auto",
+        height: isBlogMode ? "auto" : desktopHeight || "calc(100vh - 100px)",
+        maxHeight: isBlogMode ? "none" : desktopHeight || "calc(100vh - 100px)",
         overflowY: isBlogMode ? "visible" : "auto",
         "&::-webkit-scrollbar": { display: "none" },
         msOverflowStyle: "none",
         scrollbarWidth: "none",
         borderRadius: "1rem",
+        border: !isBlogMode && `1px solid ${theme.palette.divider}`,
         boxShadow: 0,
-        bgcolor: isBlogMode
-          ? "transparent"
-          : (theme) =>
-              theme.palette.mode === "light"
-                ? theme.palette.grey[100]
-                : theme.palette.background.paper,
+        bgcolor: isBlogMode ? "transparent" : "background.paper",
         whiteSpace: "normal",
       }}
     >
@@ -78,58 +78,67 @@ const DetailPane = ({
             p: !isBlogMode && 4,
             position: "relative",
             borderRadius: "1rem",
-            backgroundColor: isBlogMode
-              ? "transparent"
-              : theme.palette.mode === "light"
-              ? theme.palette.grey[100]
-              : theme.palette.background.paper,
-            height: "100%",
           }}
           style={{
             viewTransitionName: selectedProject ? "project-modal" : "none",
           }}
         >
-          <Box
-            sx={{
-              position: "absolute",
-              top: 8,
-              right: 8,
-              zIndex: 1,
-              display: "flex",
-              gap: 1,
-            }}
-          >
-            {selectedProject && !isBlogMode && (
-              <IconButton onClick={onExpand}>
-                <OpenInFullIcon fontSize="small" />
-              </IconButton>
-            )}
-            <IconButton onClick={onClose}>
-              {isBlogMode ? <CloseFullScreen /> : <CloseIcon />}
-            </IconButton>
-          </Box>
-          {!isBlogMode && breadcrumbs.length > 0 && (
-            <Breadcrumbs
-              sx={{ mb: 2, color: "text.secondary", fontSize: "0.85rem" }}
+          {!isBlogMode && (
+            <Stack
+              direction="row"
+              alignItems="center"
+              justifyContent="space-between"
+              sx={{ mb: 2, gap: 1 }}
             >
-              {breadcrumbs.map((crumb, i) => {
-                const isLast = i === breadcrumbs.length - 1;
-                return isLast ? (
-                  <Typography
-                    key={i}
-                    fontSize="0.85rem"
-                    color="text.primary"
-                    fontWeight="bold"
-                  >
-                    {crumb}
-                  </Typography>
-                ) : (
-                  <Typography key={i} fontSize="0.85rem" color="text.secondary">
-                    {crumb}
-                  </Typography>
-                );
-              })}
-            </Breadcrumbs>
+              <Breadcrumbs
+                sx={{ color: "text.secondary", fontSize: "0.85rem" }}
+              >
+                {[...breadcrumbs, currentItemLabel].map((crumb, i, arr) => {
+                  const isLast = i === arr.length - 1;
+                  return isLast ? (
+                    <Typography
+                      key={i}
+                      fontSize="0.85rem"
+                      color="text.primary"
+                      fontWeight="bold"
+                    >
+                      {crumb}
+                    </Typography>
+                  ) : (
+                    <Typography
+                      key={i}
+                      fontSize="0.85rem"
+                      color="text.secondary"
+                    >
+                      {crumb}
+                    </Typography>
+                  );
+                })}
+              </Breadcrumbs>
+              <Box sx={{ display: "flex", gap: 1, flexShrink: 0 }}>
+                {selectedProject && (
+                  <IconButton onClick={onExpand} size="small">
+                    <OpenInFullIcon fontSize="small" />
+                  </IconButton>
+                )}
+                <IconButton onClick={onClose} size="small">
+                  <CloseIcon />
+                </IconButton>
+              </Box>
+            </Stack>
+          )}
+          {isBlogMode && (
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "flex-end",
+                mb: 1,
+              }}
+            >
+              <IconButton onClick={onClose}>
+                <CloseFullScreen />
+              </IconButton>
+            </Box>
           )}
           {isBlogMode && (
             <BlogView
@@ -147,13 +156,12 @@ const DetailPane = ({
         !isBlogMode && (
           <Box
             sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              height: "100%",
+              height: "fit-content",
               p: 4,
             }}
-          ></Box>
+          >
+            {emptyState || null}
+          </Box>
         )
       )}
     </Box>

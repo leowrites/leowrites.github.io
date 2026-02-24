@@ -1,4 +1,4 @@
-import { Box, IconButton, useTheme } from "@mui/material";
+import { Alert, Box, IconButton, useTheme } from "@mui/material";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
 import { useContext } from "react";
@@ -12,9 +12,6 @@ export const TopNav = () => {
   return (
     <Box
       sx={{
-        position: "sticky",
-        top: 0,
-        zIndex: 100,
         height: NAVBAR_HEIGHT,
         my: "1rem",
         boxSizing: "border-box",
@@ -34,6 +31,19 @@ export const TopNav = () => {
           <Brightness4Icon />
         )}
       </IconButton>
+
+      {
+        <Alert
+          severity="warning"
+          sx={{
+            borderRadius: "1rem",
+            alignItems: "center",
+          }}
+        >
+          This site is a work in progress — content and UI are actively being
+          updated.
+        </Alert>
+      }
     </Box>
   );
 };

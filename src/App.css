@@ -39,36 +39,36 @@
 }
 
 ::selection {
-  color: #051e36;
-  background: rgb(215, 227, 51);
+  color: var(--selection-text, #0b2239);
+  background: var(--selection-bg, #d9e8ff);
 }
 
 .marker {
-  color: #051e36;
-  background: rgb(215, 227, 51);
+  color: var(--selection-text, #0b2239);
+  background: var(--selection-bg, #d9e8ff);
 }
 
 /* View Transitions API: smooth morph for project-modal */
 ::view-transition-group(project-modal) {
-  animation-duration: 0.35s;
-  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  animation-duration: 0.45s;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 ::view-transition-old(project-modal) {
-  animation-duration: 0.2s;
-  animation-timing-function: ease-out;
+  animation-duration: 0.25s;
+  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 ::view-transition-new(project-modal) {
-  animation-duration: 0.2s;
-  animation-timing-function: ease-in;
+  animation-duration: 0.3s;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 /* Default page cross-fade */
 ::view-transition-old(root) {
-  animation-duration: 0.2s;
+  animation-duration: 0.25s;
 }
 
 ::view-transition-new(root) {
-  animation-duration: 0.2s;
+  animation-duration: 0.3s;
 }
