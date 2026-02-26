@@ -2,11 +2,11 @@
 
 Often, data movement is the most significant constraint on computation performance as opposed to the raw compute capabilities. In a deep learning model, data is moved to and from shared memory many times in each layer. For example for one MLP layer, we need to load the input matrix, the weights and the biases. We may then have some activation function that operates on the dot product. After the activation function, the output is sparse and we want to compress the data into 2:4 sparsity. The current workflow looks like this:
 
-![Reference compression workflow](/triton/ref_compress.png)
+![Reference compression workflow](/triton/ref_compress.png#responsive)
 
 If we can performance the pruning and compression step directly within the Triton kernel, we can avoid the costly step of moving data.
 
-![Compress kernel](/triton/compress_kernel.png)
+![Compress kernel](/triton/compress_kernel.png#responsive)
 
 ### Kernel Implementation
 
