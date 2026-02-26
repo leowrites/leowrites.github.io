@@ -8,8 +8,12 @@ Deep Learning, Intro to ML, Intro to AI
 
 ### Software Engineering & Theory
 
-Algorithms Design and Complexity, Software Engineering, Software Design, Functional Programming, Data Structures & Analysis, Web Development, Computer Graphics
+Algorithms Design and Complexity, Software Engineering, Software Design, Functional Programming, Data Structures & Analysis, Web Development, Computer Graphics, Intro to Theory of Computation
 
 ### Math
 
 Probability, Multivariable Calculus, Linear Algebra
+
+### Others
+
+Intro to Psychology, Meditation, Computers & Society

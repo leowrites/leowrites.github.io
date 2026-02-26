@@ -1,6 +1,6 @@
 ### The Problem
 
-Enhanced Tracking Protection (ETP) is great for privacy, but 'Strict' mode often breaks websites that rely on trackers for functionality (e.g., login flows, payment gateways). Users would enable Strict mode, encounter broken sites, and confusingly disable ETP entirely, leaving them unprotected.
+[Enhanced Tracking Protection (ETP)](https://support.mozilla.org/en-US/kb/enhanced-tracking-protection-firefox-desktop) is great for privacy, but 'Strict' mode often breaks websites that rely on trackers for functionality (e.g., login flows, payment gateways). Users would enable Strict mode, encounter broken sites, and confusingly disable ETP entirely, leaving them unprotected.
 
 ### Implementation
 

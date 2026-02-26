@@ -1,4 +1,4 @@
-<img src="/firefox.png" alt="Firefox" width="100" />
+<img src="/fx/firefox.png" alt="Firefox" width="100" />
 
 ### Overview
 
