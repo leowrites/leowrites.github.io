@@ -19,4 +19,3 @@ Led 40+ members in delivering pro-bono software solutions to 3 nonprofits, while
 ### Operational Excellence
 
 Established Project Lead Hub and comprehensive Handbook to standardize project management methodologies, client requirement scoping, and team engagement best practices. -->
-
