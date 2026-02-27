@@ -1,5 +1,6 @@
 import React from "react";
 import { Box, Link, Tooltip, Typography, useTheme } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 import { PrismLight as SyntaxHighlighter } from "react-syntax-highlighter";
 import {
   vscDarkPlus,
@@ -117,22 +118,39 @@ const ResponsiveImage = ({ src, alt, width, height, ...props }) => {
 
 const MarkdownRendererImpl = ({ content }) => {
   const theme = useTheme();
+  const navigate = useNavigate();
   const inlineCodeBackground = theme.palette.action.hover;
 
   const components = React.useMemo(
     () => ({
-      a: ({ node, title, ...props }) => (
-        <Tooltip title={title || ""} followCursor placement="bottom">
-          <Link
-            href={props.href}
-            color="secondary"
-            underline="hover"
-            target="_blank"
-            rel="noopener"
-            {...props}
-          />
-        </Tooltip>
-      ),
+      a: ({ node, title, ...props }) => {
+        const href = props.href || "";
+        const isInternalHashLink = href.startsWith("#");
+        const linkTargetId = href.replace(/^#/, "").replace(/^\//, "");
+
+        const handleInternalClick = (event) => {
+          props.onClick?.(event);
+          if (event.defaultPrevented) return;
+          if (!isInternalHashLink || !linkTargetId) return;
+
+          event.preventDefault();
+          navigate(`/item/${linkTargetId}`);
+        };
+
+        return (
+          <Tooltip title={title || ""} followCursor placement="bottom">
+            <Link
+              {...props}
+              href={href}
+              color="secondary"
+              underline="hover"
+              onClick={isInternalHashLink ? handleInternalClick : props.onClick}
+              target={isInternalHashLink ? undefined : "_blank"}
+              rel={isInternalHashLink ? undefined : "noopener"}
+            />
+          </Tooltip>
+        );
+      },
       p: ({ node, ...props }) => {
         const paragraphChildren = (node?.children || []).filter((child) => {
           return !(
@@ -252,7 +270,7 @@ const MarkdownRendererImpl = ({ content }) => {
         return <StructuredVisual src={src} alt={props.alt} />;
       },
     }),
-    [inlineCodeBackground]
+    [inlineCodeBackground, navigate]
   );
 
   return (

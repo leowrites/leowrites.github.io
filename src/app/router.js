@@ -5,7 +5,7 @@ import {
   Outlet,
   useRouteError,
 } from "react-router-dom";
-import { Container, CssBaseline, Box, Typography, Button } from "@mui/material";
+import { CssBaseline, Box, Typography, Button } from "@mui/material";
 import { HomePage } from "features/site";
 
 function Layout() {
@@ -58,11 +58,7 @@ export const router = createHashRouter([
     errorElement: <GlobalErrorBoundary />,
     children: [
       { path: "/", element: <HomePage /> },
-      {
-        path: "/experience/:companySlug/projects/:projectSlug",
-        element: <HomePage />,
-      },
-      { path: "/projects/:standaloneSlug", element: <HomePage /> },
+      { path: "/item/:itemId", element: <HomePage /> },
       { path: "*", element: <HomePage /> },
     ],
   },

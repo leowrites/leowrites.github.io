@@ -38,6 +38,12 @@ const personalInfo = {
   phone: "(778) 990-6015",
   github: "github.com/leowrites",
   linkedin: "linkedin.com/in/leowrites/",
+  now: {
+    focus:
+      "Finishing my Computer Science degree and sharpening systems design depth.",
+    learning: "Topics in deep learning and psychology.",
+    building: "Refining this portfolio’s interaction and storytelling flow.",
+  },
 };
 
 const education = [
@@ -235,7 +241,7 @@ const projects = [
     caption:
       "Collaboration with morLab to build a cloud-based simulation service",
     technologies: "Python, Django, AWS",
-    dates: "Jan 2023 - May 2023",
+    dates: "2023",
     contentKey: "projects/cloud-pandemic-sim",
     tags: ["Backend", "Python", "Django", "AWS", "PostgreSQL"],
   },
@@ -243,7 +249,6 @@ const projects = [
     title: "MemoryViz & PythonTA",
     caption: "Visualizing Memory Management in Python",
     technologies: "Python, TypeScript",
-    dates: "Sept 2021 - Dec 2021",
     contentKey: "projects/memoryviz-pythonta",
     tags: ["Python", "TypeScript", "React"],
     githubLink: "https://github.com/pyta-uoft/pyta",
@@ -267,20 +272,20 @@ const projects = [
     githubLink: "https://github.com/leowrites/Campfire",
   },
   {
-    title: "Pacman Game with AI",
-    caption: "Computer Game with Custom AI Algorithms",
-    technologies: "Python, Pygame",
-    dates: "Sept 2022 - Dec 2022",
-    contentKey: "projects/pacman-ai",
-    githubLink: "https://github.com/leowrites/Pacman",
-  },
-  {
     title: "Model Rocket with Vectored Thrust",
     caption: "Engineering Project",
     technologies: "Arduino, 3D Printing",
-    dates: "May 2022 - Aug 2022",
+    dates: "2021",
     contentKey: "projects/model-rocket-vectored-thrust",
     githubLink: "https://github.com/leowrites/R1_Main",
+  },
+  {
+    title: "Pacman Game with AI",
+    caption: "Computer Game with Custom AI Algorithms",
+    technologies: "Python, Pygame",
+    dates: "2020",
+    contentKey: "projects/pacman-ai",
+    githubLink: "https://github.com/leowrites/Pacman",
   },
 ];
 

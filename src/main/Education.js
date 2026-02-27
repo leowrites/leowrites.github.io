@@ -27,9 +27,14 @@ const EducationItem = React.memo(({ edu, onSelect, selectedId }) => {
   );
 });
 
-const ClassicEducationSection = ({ educationData, onSelect, selectedId }) => {
+const ClassicEducationSection = ({
+  educationData,
+  onSelect,
+  selectedId,
+  sectionId,
+}) => {
   return (
-    <Box>
+    <Box id={sectionId} sx={{ scrollMarginTop: "4.5rem" }}>
       <SectionHeading>Education</SectionHeading>
       {educationData.map((edu) => (
         <EducationItem

@@ -11,7 +11,7 @@ import {
 } from "./Components";
 
 const SectionProjectItem = React.memo(
-  ({ proj, item, selectedId, onSelect }) => {
+  ({ proj, item, selectedId, onSelect, isFirst = false }) => {
     const projId = generateId({
       ...proj,
       title: proj.projectName,
@@ -44,6 +44,8 @@ const SectionProjectItem = React.memo(
         technologies={proj.tags || proj.technologies}
         selected={selectedId === projId}
         onSelect={onSelect ? handleSelect : undefined}
+        nested
+        isFirst={isFirst}
       >
         {!onSelect &&
           (proj.content || proj.contentKey ? (
@@ -77,29 +79,19 @@ const SectionItem = React.memo(
         item.title
       );
 
-    const orgContent = item.organization ? (
-      <span>
-        {" @ "}
-        {item.url ? (
-          <TooltipLink
-            href={item.url}
-            onClick={(e) => e.stopPropagation()}
-            tooltipText={item.tooltipText}
-          >
-            {item.organization}
-          </TooltipLink>
-        ) : (
-          item.organization
-        )}
-      </span>
+    const companyContent = item.organization ? (
+      item.url ? (
+        <TooltipLink
+          href={item.url}
+          onClick={(e) => e.stopPropagation()}
+          tooltipText={item.tooltipText}
+        >
+          {item.organization}
+        </TooltipLink>
+      ) : (
+        item.organization
+      )
     ) : null;
-
-    const headerContent = (
-      <span>
-        {titleContent}
-        {orgContent}
-      </span>
-    );
 
     const handleParentSelect = React.useCallback(() => {
       if (onSelect) {
@@ -130,7 +122,8 @@ const SectionItem = React.memo(
       <EntryContainer
         id={id}
         date={item.dates}
-        company={headerContent}
+        title={titleContent}
+        company={companyContent}
         caption={item.caption || ""}
         technologies={item.tags || item.technologies}
         logo={item.logo}
@@ -144,7 +137,6 @@ const SectionItem = React.memo(
             sx={{
               display: "flex",
               flexDirection: "column",
-              gap: "0.5rem",
             }}
           >
             {showOverviewInFolder && (item.content || item.contentKey) && (
@@ -155,7 +147,7 @@ const SectionItem = React.memo(
                 />
               </Box>
             )}
-            {item.projects.map((proj) => (
+            {item.projects.map((proj, index) => (
               <SectionProjectItem
                 key={generateId({
                   ...proj,
@@ -166,6 +158,7 @@ const SectionItem = React.memo(
                 item={item}
                 selectedId={selectedId}
                 onSelect={onSelect}
+                isFirst={index === 0}
               />
             ))}
           </Box>
@@ -186,9 +179,10 @@ const Section = ({
   onSelect,
   selectedId,
   showOverviewInFolder = false,
+  sectionId,
 }) => {
   return (
-    <Box>
+    <Box id={sectionId} sx={{ scrollMarginTop: "4.5rem" }}>
       <SectionHeading>{sectionTitle}</SectionHeading>
       {items.map((item) => (
         <SectionItem

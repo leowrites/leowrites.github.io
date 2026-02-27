@@ -1,19 +1,15 @@
 import { useState, useEffect, useMemo, useCallback } from "react";
-import { useParams, useLocation, useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { pageItems } from "features/site/data/pageItems";
 import { projects } from "content/site/siteData";
-import { generateId, generateSlug } from "main/utils";
+import { generateId } from "main/utils";
 import { MarkdownRenderer } from "main/Components";
 import { StructuredDetails } from "main/StructuredDetails";
 
 export const useContentMode = () => {
   const navigate = useNavigate();
-  const { companySlug, projectSlug, standaloneSlug } = useParams();
-  const location = useLocation();
-  const isArticleMode = Boolean((companySlug && projectSlug) || standaloneSlug);
-  const isStandaloneProject = Boolean(standaloneSlug && !companySlug);
-
-  const [selectedId, setSelectedId] = useState("leo-liu");
+  const { itemId } = useParams();
+  const selectedId = itemId || null;
 
   const renderContent = useCallback((item) => {
     return item.content || item.contentKey ? (
@@ -28,22 +24,17 @@ export const useContentMode = () => {
     nestedProjectById,
     standaloneProjectById,
     parentByProjectId,
-    companyProjectBySlug,
-    standaloneBySlug,
   } = useMemo(() => {
     const byId = new Map();
     const nestedById = new Map();
     const standaloneById = new Map();
     const parentByNestedId = new Map();
-    const companyProject = new Map();
-    const standalone = new Map();
 
     for (const item of pageItems) {
       const id = generateId(item);
       byId.set(id, item);
 
       if (item.projects?.length) {
-        const company = generateSlug(item.organization || item.title || "");
         for (const proj of item.projects) {
           const projId = generateId({
             ...proj,
@@ -53,17 +44,12 @@ export const useContentMode = () => {
           byId.set(projId, proj);
           nestedById.set(projId, proj);
           parentByNestedId.set(projId, item);
-          companyProject.set(
-            `${company}::${generateSlug(proj.projectName)}`,
-            projId
-          );
         }
       }
     }
 
     for (const proj of projects) {
       const standaloneId = generateId(proj);
-      standalone.set(generateSlug(proj.title), standaloneId);
       byId.set(standaloneId, proj);
       standaloneById.set(standaloneId, proj);
     }
@@ -73,8 +59,6 @@ export const useContentMode = () => {
       nestedProjectById: nestedById,
       standaloneProjectById: standaloneById,
       parentByProjectId: parentByNestedId,
-      companyProjectBySlug: companyProject,
-      standaloneBySlug: standalone,
     };
   }, []);
 
@@ -92,70 +76,15 @@ export const useContentMode = () => {
     return renderContent(selectedItem);
   }, [selectedId, itemById, renderContent]);
 
-  const scrollToHash = (hash) => {
-    setTimeout(() => {
-      const element = document.getElementById(hash);
-      if (element) {
-        element.scrollIntoView({ behavior: "smooth", block: "center" });
-      }
-    }, 100);
-  };
-
-  useEffect(() => {
-    const hash = window.location.hash.substring(1);
-    if (!hash) return;
-
-    const match = itemById.get(hash);
-    if (match && (match.content || match.contentKey || match.details)) {
-      setSelectedId(hash);
-      scrollToHash(hash);
-    }
-  }, [itemById]);
-
-  useEffect(() => {
-    if (!companySlug || !projectSlug) return;
-    window.scrollTo(0, 0);
-
-    const projectId = companyProjectBySlug.get(
-      `${companySlug}::${projectSlug}`
-    );
-    if (projectId) {
-      setSelectedId(projectId);
-    }
-  }, [companySlug, projectSlug, companyProjectBySlug]);
-
-  useEffect(() => {
-    if (!standaloneSlug) return;
-    window.scrollTo(0, 0);
-
-    const projectId = standaloneBySlug.get(standaloneSlug);
-    if (projectId) {
-      setSelectedId(projectId);
-    }
-  }, [standaloneSlug, standaloneBySlug]);
-
-  useEffect(() => {
-    const restoreId = location.state?.restoreProjectId;
-    if (!companySlug && !projectSlug && restoreId) {
-      if (nestedProjectById.has(restoreId)) {
-        setSelectedId(restoreId);
-        scrollToHash(restoreId);
-      }
-      window.history.replaceState({}, "");
-    }
-  }, [location.state, companySlug, projectSlug, nestedProjectById]);
-
   const handleSelect = useCallback(
-    (id) => {
+    (id, options = {}) => {
+      const { replace = false } = options;
       if (id === null) {
-        setSelectedId(null);
-        navigate("/", { replace: true });
+        navigate("/", { replace });
       } else if (selectedId === id) {
-        setSelectedId(null);
-        navigate("/", { replace: true });
+        navigate("/", { replace });
       } else {
-        setSelectedId(id);
-        window.history.replaceState(null, "", "#" + id);
+        navigate(`/item/${id}`, { replace });
       }
     },
     [navigate, selectedId]
@@ -185,22 +114,12 @@ export const useContentMode = () => {
     return itemById.get(selectedId) || null;
   }, [selectedId, itemById]);
 
-  const getArticleUrl = useCallback((projName, parent) => {
-    const company = generateSlug(parent?.organization || parent?.title || "");
-    const project = generateSlug(projName);
-    return `/experience/${company}/projects/${project}`;
-  }, []);
-
   return {
-    isArticleMode,
-    isStandaloneProject,
     selectedContent,
     selectedId,
     selectedProject,
     parentItem,
     selectedItem,
     handleSelect,
-    getArticleUrl,
-    navigate,
   };
 };

@@ -1,42 +1,61 @@
 import React from "react";
 import {
+  Container,
   Box,
   Breadcrumbs,
   Stack,
   IconButton,
   Typography,
+  Link,
   useTheme,
+  keyframes,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import OpenInFullIcon from "@mui/icons-material/OpenInFull";
-import CloseFullScreen from "@mui/icons-material/CloseFullscreen";
-import BlogView from "./BlogView";
+import GitHubIcon from "@mui/icons-material/GitHub";
+import { TechTagList } from "./Components";
 
 /**
  * Right-column detail view (desktop split-view).
  * Handles expand/close buttons, viewTransitionName, and blog header.
  */
 const DetailPane = ({
-  isBlogMode,
   selectedContent,
   selectedProject,
   parentItem,
   selectedItem,
   selectedId,
   onClose,
-  onExpand,
-  navigate,
-  getBlogUrl,
   desktopHeight,
   emptyState,
+  disableContainerGutters = false,
+  contentPadding,
 }) => {
   const theme = useTheme();
 
+  const fadeSlideUp = keyframes`
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  `;
+
   const breadcrumbs = ["Home"];
+  const detailCaption = selectedProject?.caption || selectedItem?.caption;
+  const detailTags =
+    selectedProject?.tags ||
+    selectedProject?.technologies ||
+    selectedItem?.tags ||
+    selectedItem?.technologies;
+  const detailGithubLink =
+    selectedProject?.githubLink || selectedItem?.githubLink;
   const currentItemLabel =
+    selectedItem?.organization ||
     selectedProject?.projectName ||
     selectedItem?.title ||
-    selectedItem?.organization ||
     selectedItem?.institution ||
     selectedItem?.degree ||
     "Details";
@@ -48,9 +67,14 @@ const DetailPane = ({
   }
 
   return (
-    <Box
+    <Container
+      maxWidth="xl"
+      disableGutters={disableContainerGutters}
       sx={{
-        width: isBlogMode ? "100%" : "65%",
+        width: {
+          xs: "100%",
+          md: "75%",
+        },
         opacity: 1,
         visibility: "visible",
         transition: theme.transitions.create(["width", "opacity"], {
@@ -59,117 +83,114 @@ const DetailPane = ({
         }),
         position: "relative",
         top: "auto",
-        height: isBlogMode ? "auto" : desktopHeight || "calc(100vh - 100px)",
-        maxHeight: isBlogMode ? "none" : desktopHeight || "calc(100vh - 100px)",
-        overflowY: isBlogMode ? "visible" : "auto",
-        "&::-webkit-scrollbar": { display: "none" },
+        height: desktopHeight || "calc(100vh - 100px)",
+        maxHeight: desktopHeight || "calc(100vh - 100px)",
+        overflowY: "auto",
         msOverflowStyle: "none",
-        scrollbarWidth: "none",
-        borderRadius: "1rem",
-        border: !isBlogMode && `1px solid ${theme.palette.divider}`,
+        borderRadius: 0,
+        border: "none",
         boxShadow: 0,
-        bgcolor: isBlogMode ? "transparent" : "background.paper",
+        bgcolor: "transparent",
         whiteSpace: "normal",
       }}
     >
       {selectedContent ? (
         <Box
+          key={selectedId || "content"}
           sx={{
-            p: !isBlogMode && 4,
+            p: contentPadding !== undefined ? contentPadding : { md: 4 },
             position: "relative",
             borderRadius: "1rem",
+            animation: `${fadeSlideUp} ${theme.transitions.duration.standard}ms ${theme.transitions.easing.easeInOut} forwards`,
           }}
           style={{
             viewTransitionName: selectedProject ? "project-modal" : "none",
           }}
         >
-          {!isBlogMode && (
-            <Stack
-              direction="row"
-              alignItems="center"
-              justifyContent="space-between"
-              sx={{ mb: 2, gap: 1 }}
-            >
-              <Breadcrumbs
-                sx={{ color: "text.secondary", fontSize: "0.85rem" }}
-              >
-                {[...breadcrumbs, currentItemLabel].map((crumb, i, arr) => {
-                  const isLast = i === arr.length - 1;
-                  return isLast ? (
-                    <Typography
-                      key={i}
-                      fontSize="0.85rem"
-                      color="text.primary"
-                      fontWeight="bold"
-                    >
-                      {crumb}
-                    </Typography>
-                  ) : (
-                    <Typography
-                      key={i}
-                      fontSize="0.85rem"
-                      color="text.secondary"
-                    >
-                      {crumb}
-                    </Typography>
-                  );
-                })}
-              </Breadcrumbs>
-              <Box sx={{ display: "flex", gap: 1, flexShrink: 0 }}>
-                {selectedProject && (
-                  <IconButton onClick={onExpand} size="small">
-                    <OpenInFullIcon fontSize="small" />
-                  </IconButton>
-                )}
-                <IconButton onClick={onClose} size="small">
-                  <CloseIcon />
-                </IconButton>
-              </Box>
-            </Stack>
-          )}
-          {isBlogMode && (
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "flex-end",
-                mb: 1,
-              }}
-            >
-              <IconButton onClick={onClose}>
-                <CloseFullScreen />
+          <Stack
+            direction="row"
+            alignItems="center"
+            justifyContent="space-between"
+            sx={{ mb: 2, gap: 1 }}
+          >
+            <Breadcrumbs sx={{ color: "text.secondary", fontSize: "0.85rem" }}>
+              {[...breadcrumbs, currentItemLabel].map((crumb, i, arr) => {
+                const isLast = i === arr.length - 1;
+                return isLast ? (
+                  <Typography
+                    key={i}
+                    fontSize="0.85rem"
+                    color="text.primary"
+                    fontWeight="bold"
+                  >
+                    {crumb}
+                  </Typography>
+                ) : (
+                  <Typography key={i} fontSize="0.85rem" color="text.secondary">
+                    {crumb}
+                  </Typography>
+                );
+              })}
+            </Breadcrumbs>
+            <Box sx={{ display: "flex", gap: 1, flexShrink: 0 }}>
+              <IconButton onClick={onClose} size="small">
+                <CloseIcon />
               </IconButton>
             </Box>
-          )}
-          {isBlogMode && (
-            <BlogView
-              selectedProject={selectedProject}
-              parentItem={parentItem}
-              selectedId={selectedId}
-              navigate={navigate}
-              getBlogUrl={getBlogUrl}
-              variant="desktop"
-            />
+          </Stack>
+          {(detailCaption || detailTags || detailGithubLink) && (
+            <Box
+              sx={{
+                mb: 2,
+                pb: 1.5,
+                borderBottom: (theme) => `1px solid ${theme.palette.divider}`,
+              }}
+            >
+              {detailCaption && (
+                <Typography variant="body1" color="text.secondary">
+                  {detailCaption}
+                </Typography>
+              )}
+              <Stack
+                direction="row"
+                alignItems="center"
+                justifyContent="space-between"
+                spacing={1}
+                sx={{ mt: detailCaption ? 1 : 0 }}
+              >
+                <TechTagList technologies={detailTags} sx={{ mt: 0 }} />
+                {detailGithubLink ? (
+                  <Link
+                    href={detailGithubLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    color="text.secondary"
+                    sx={{ display: "inline-flex", alignItems: "center" }}
+                  >
+                    <GitHubIcon fontSize="small" />
+                  </Link>
+                ) : null}
+              </Stack>
+            </Box>
           )}
           {selectedContent}
         </Box>
       ) : (
-        !isBlogMode && (
-          <Box
-            sx={{
-              height: "100%",
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
-              gap: 3,
-              p: 4,
-            }}
-          >
-            {emptyState || null}
-          </Box>
-        )
+        <Box
+          sx={{
+            height: "100%",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: 1,
+            p: 4,
+          }}
+        >
+          {emptyState || null}
+        </Box>
       )}
-    </Box>
+    </Container>
   );
 };
 

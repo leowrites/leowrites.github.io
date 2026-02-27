@@ -55,6 +55,55 @@ const SiteHeader = ({ personalInfo, variant = "default" }) => {
         );
       })}
       <PersonalImageSlicesCard />
+      {personalInfo.now && (
+        <Box
+          sx={{
+            mt: 2,
+            p: 2,
+            borderRadius: "1rem",
+            bgcolor: isDetailPane ? "action.selected" : "action.hover",
+          }}
+        >
+          <Typography sx={{ mb: 1, color: "text.secondary", fontWeight: 600 }}>
+            Now
+          </Typography>
+          <Stack spacing={0.75}>
+            {personalInfo.now.focus && (
+              <Typography variant="body2" color="text.secondary">
+                <Box
+                  component="span"
+                  sx={{ color: "text.primary", fontWeight: 600 }}
+                >
+                  Focus:
+                </Box>{" "}
+                {personalInfo.now.focus}
+              </Typography>
+            )}
+            {personalInfo.now.learning && (
+              <Typography variant="body2" color="text.secondary">
+                <Box
+                  component="span"
+                  sx={{ color: "text.primary", fontWeight: 600 }}
+                >
+                  Learning:
+                </Box>{" "}
+                {personalInfo.now.learning}
+              </Typography>
+            )}
+            {personalInfo.now.building && (
+              <Typography variant="body2" color="text.secondary">
+                <Box
+                  component="span"
+                  sx={{ color: "text.primary", fontWeight: 600 }}
+                >
+                  Building:
+                </Box>{" "}
+                {personalInfo.now.building}
+              </Typography>
+            )}
+          </Stack>
+        </Box>
+      )}
       <Box
         sx={{
           mt: 2,

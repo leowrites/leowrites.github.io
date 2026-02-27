@@ -1,14 +1,6 @@
 import React from "react";
-import {
-  Box,
-  Typography,
-  IconButton,
-  Modal,
-  Fade,
-  Backdrop,
-} from "@mui/material";
+import { Box, Typography, IconButton, Portal } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import OpenInFullIcon from "@mui/icons-material/OpenInFull";
 import { gsap } from "gsap";
 
@@ -55,15 +47,6 @@ const PersonalImageSlicesCard = ({ slices = defaultSlices }) => {
   const displayIndex = expandedIndex ?? closingIndex;
   const isExpandedLayerVisible = isExpanded || closingIndex !== null;
   const activeSlice = displayIndex !== null ? slices[displayIndex] : null;
-  const activeImageDimensions =
-    displayIndex !== null ? imageDimensions[displayIndex] : null;
-  const activeImageAspectRatio =
-    activeImageDimensions?.width && activeImageDimensions?.height
-      ? activeImageDimensions.width / activeImageDimensions.height
-      : 1;
-  const activeImageWidth = Math.round(
-    EXPANDED_CARD_HEIGHT * activeImageAspectRatio
-  );
 
   const collapsedRef = React.useRef(null);
   const expandedRef = React.useRef(null);
@@ -576,64 +559,66 @@ const PersonalImageSlicesCard = ({ slices = defaultSlices }) => {
         </Box>
       </Box>
 
-      <Box
-        ref={fullscreenContainerRef}
-        sx={{
-          position: "fixed",
-          inset: 0,
-          zIndex: 1300,
-          opacity: 0,
-          pointerEvents: "none",
-          display: fullScreenImageIndex ? "block" : "none",
-        }}
-      >
+      <Portal>
         <Box
-          onClick={handleCloseFullScreen}
+          ref={fullscreenContainerRef}
           sx={{
-            position: "absolute",
+            position: "fixed",
             inset: 0,
-            bgcolor: "rgba(0, 0, 0, 0.85)",
-            cursor: "pointer",
+            zIndex: 1300,
+            opacity: 0,
+            pointerEvents: "none",
+            display: fullScreenImageIndex ? "block" : "none",
           }}
-        />
+        >
+          <Box
+            onClick={handleCloseFullScreen}
+            sx={{
+              position: "absolute",
+              inset: 0,
+              bgcolor: "rgba(0, 0, 0, 0.85)",
+              cursor: "pointer",
+            }}
+          />
 
-        {fullScreenImageIndex && (
-          <>
-            <img
-              ref={fullscreenImageRef}
-              src={slices[fullScreenImageIndex.index]?.image}
-              alt={
-                slices[fullScreenImageIndex.index]?.caption ||
-                "Full screen view"
-              }
-              style={{
-                position: "absolute",
-                display: "block",
-                objectFit: "cover",
-                boxShadow: "0 8px 32px rgba(0, 0, 0, 0.3)",
-                willChange: "top, left, width, height, border-radius",
-              }}
-            />
-            <IconButton
-              onClick={handleCloseFullScreen}
-              sx={{
-                position: "absolute",
-                top: 16,
-                right: 16,
-                color: "white",
-                bgcolor: "rgba(0, 0, 0, 0.3)",
-                zIndex: 1301,
-                "&:hover": {
-                  bgcolor: "rgba(0, 0, 0, 0.6)",
-                },
-              }}
-              aria-label="Close full screen view"
-            >
-              <CloseIcon />
-            </IconButton>
-          </>
-        )}
-      </Box>
+          {fullScreenImageIndex && (
+            <>
+              <img
+                ref={fullscreenImageRef}
+                src={slices[fullScreenImageIndex.index]?.image}
+                alt={
+                  slices[fullScreenImageIndex.index]?.caption ||
+                  "Full screen view"
+                }
+                style={{
+                  position: "absolute",
+                  display: "block",
+                  objectFit: "cover",
+                  boxShadow: "0 8px 32px rgba(0, 0, 0, 0.3)",
+                  willChange: "top, left, width, height, border-radius",
+                }}
+              />
+              <IconButton
+                onClick={handleCloseFullScreen}
+                sx={{
+                  position: "absolute",
+                  top: 16,
+                  right: 16,
+                  color: "white",
+                  bgcolor: "rgba(0, 0, 0, 0.3)",
+                  zIndex: 1301,
+                  "&:hover": {
+                    bgcolor: "rgba(0, 0, 0, 0.6)",
+                  },
+                }}
+                aria-label="Close full screen view"
+              >
+                <CloseIcon />
+              </IconButton>
+            </>
+          )}
+        </Box>
+      </Portal>
     </Box>
   );
 };
