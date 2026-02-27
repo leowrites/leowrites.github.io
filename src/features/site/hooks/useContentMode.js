@@ -13,7 +13,7 @@ export const useContentMode = () => {
   const isArticleMode = Boolean((companySlug && projectSlug) || standaloneSlug);
   const isStandaloneProject = Boolean(standaloneSlug && !companySlug);
 
-  const [selectedId, setSelectedId] = useState(null);
+  const [selectedId, setSelectedId] = useState("leo-liu");
 
   const renderContent = useCallback((item) => {
     return item.content || item.contentKey ? (
@@ -147,15 +147,18 @@ export const useContentMode = () => {
 
   const handleSelect = useCallback(
     (id) => {
-      if (selectedId === id) {
+      if (id === null) {
         setSelectedId(null);
-        window.history.replaceState(null, "", " ");
+        navigate("/", { replace: true });
+      } else if (selectedId === id) {
+        setSelectedId(null);
+        navigate("/", { replace: true });
       } else {
         setSelectedId(id);
         window.history.replaceState(null, "", "#" + id);
       }
     },
-    [selectedId]
+    [navigate, selectedId]
   );
 
   const selectedProject = useMemo(() => {

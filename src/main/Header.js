@@ -28,7 +28,7 @@ const SiteHeader = ({ personalInfo, variant = "default" }) => {
           variant={isDetailPane ? "h1" : "h1"}
           sx={{ fontWeight: "bold", color: "text.primary" }}
         >
-          Hello, I'm Leo
+          Hello!
         </Typography>
         <Box
           component="img"
@@ -55,13 +55,6 @@ const SiteHeader = ({ personalInfo, variant = "default" }) => {
         );
       })}
       <PersonalImageSlicesCard />
-      {isDetailPane && (
-        <Typography sx={{ mt: 2, color: "text.secondary" }}>
-          👈 Select an experience, leadership role, or project on the left to
-          view details.
-        </Typography>
-      )}
-
       <Box
         sx={{
           mt: 2,

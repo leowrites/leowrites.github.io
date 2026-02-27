@@ -5,7 +5,7 @@ import {
   responsiveFontSizes,
 } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import "@fontsource/dm-sans";
+import "@fontsource/sora";
 
 export const ColorModeContext = createContext({ toggleColorMode: () => {} });
 
@@ -67,7 +67,7 @@ export default function ThemeProviderWrapper({ children }) {
         },
       },
       typography: {
-        fontFamily: "DM Sans, sans-serif",
+        fontFamily: "Sora, sans-serif",
       },
       components: {
         MuiLink: {

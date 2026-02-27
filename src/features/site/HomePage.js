@@ -75,6 +75,15 @@ const HomePage = () => {
     setBottomSheetProject({ item: proj, parent });
   };
 
+  const aboutItem = { title: "Leo Liu" };
+
+  const detailPaneContent =
+    selectedId === "leo-liu" ? (
+      <SiteHeader personalInfo={personalInfo} variant="detailPane" />
+    ) : (
+      selectedContent
+    );
+
   return (
     <>
       {/* <TopNav /> */}
@@ -122,6 +131,12 @@ const HomePage = () => {
                   },
                 }}
               >
+                <Section
+                  sectionTitle="About Me"
+                  items={[aboutItem]}
+                  selectedId={selectedId}
+                  onSelect={handleSelect}
+                />
                 <EducationSection
                   educationData={education}
                   selectedId={selectedId}
@@ -151,7 +166,7 @@ const HomePage = () => {
             <Suspense fallback={<Box sx={{ width: "65%", p: 4 }}></Box>}>
               <DetailPane
                 isBlogMode={isArticleMode}
-                selectedContent={selectedContent}
+                selectedContent={detailPaneContent}
                 selectedProject={selectedProject}
                 parentItem={parentItem}
                 selectedItem={selectedItem}
@@ -163,10 +178,41 @@ const HomePage = () => {
                 desktopHeight={DESKTOP_PANE_HEIGHT}
                 emptyState={
                   !isArticleMode ? (
-                    <SiteHeader
-                      personalInfo={personalInfo}
-                      variant="detailPane"
-                    />
+                    <>
+                      <Typography
+                        sx={{
+                          color: "text.primary",
+                          textAlign: "center",
+                          fontWeight: 700,
+                        }}
+                      >
+                        👈 Select an experience, leadership role, or project on
+                        the left to view details
+                      </Typography>
+                      <Box>
+                        <Box
+                          sx={{
+                            width: "460px",
+                            height: "260px",
+                            backgroundImage:
+                              "url(/photos/optimized/IMG_0206.jpg)",
+                            backgroundSize: "cover",
+                            backgroundPosition: "center",
+                            borderRadius: "1rem",
+                            overflow: "hidden",
+                          }}
+                        ></Box>
+                        <Typography
+                          variant="body1"
+                          paragraph
+                          color="text.secondary"
+                          textAlign="end"
+                          sx={{ mt: "0.5rem" }}
+                        >
+                          Kelowna, BC
+                        </Typography>
+                      </Box>
+                    </>
                   ) : null
                 }
               />

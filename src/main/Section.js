@@ -41,7 +41,7 @@ const SectionProjectItem = React.memo(
         id={projId}
         projectName={proj.projectName}
         caption={proj.caption}
-        technologies={proj.tags || proj.technologies || item.tags}
+        technologies={proj.tags || proj.technologies}
         selected={selectedId === projId}
         onSelect={onSelect ? handleSelect : undefined}
       >

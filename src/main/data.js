@@ -65,15 +65,23 @@ const experience = [
     projects: [
       {
         projectName: "Sparse Matrix Multiplication Support",
-        caption:
-          "Adding block-sparse support to Triton via decoupled scheduling",
         contentKey: "experience/paramathics-sparse-matrix",
-        tags: ["Triton", "Compiler", "CUDA", "Sparse Kernels", "MLIR"],
+      },
+      {
+        projectName: "Kernels",
+        contentKey: "wip",
+      },
+      {
+        projectName: "Autotuning",
+        contentKey: "wip",
       },
       {
         projectName: "Fused matmul-compress kernel",
         contentKey: "experience/paramathics-fused-matmul-compress",
-        tags: ["Triton", "GPU", "Kernel Fusion", "Compression", "Python"],
+      },
+      {
+        projectName: "Pipelining",
+        contentKey: "wip",
       },
     ],
     tags: ["Research", "Compiler", "LLVM", "MLIR", "Machine Learning", "C++"],
@@ -93,11 +101,15 @@ const experience = [
         projectName: "Enhanced Tracking Protection",
         caption: "Granular configuration options for ETP-Strict users",
         contentKey: "experience/mozilla-etp",
-        tags: ["Firefox", "Privacy", "ETP", "C++", "JavaScript"],
+      },
+      {
+        projectName: "Tracker debugger",
+        caption: "Devtool to speed up debugging web-compatibility issues",
+        contentKey: "experience/mozilla-devtools",
       },
     ],
     tags: ["C++", "JavaScript"],
-    logo: "/mozilla.svg",
+    logo: "/fx/mozilla.svg",
   },
   {
     title: "Software Engineer Intern",
@@ -138,7 +150,7 @@ const experience = [
       "Backend",
       "Node.js",
     ],
-    logo: "/seismic.svg",
+    logo: "/seismic/seismic.svg",
   },
   {
     title: "Software Development Intern",
@@ -148,7 +160,7 @@ const experience = [
       "A digital innovation consultancy specializing in digital strategy, design, and execution",
     location: "Toronto, ON",
     dates: "May 2024 - Aug 2024",
-    caption: "",
+    caption: "Digital agency",
     contentKey: "experience/konrad-overview",
 
     projects: [
@@ -169,7 +181,7 @@ const experience = [
       "Node.js",
       "Express",
     ],
-    logo: "/kg.svg",
+    logo: "/kg/kg.svg",
   },
   {
     title: "Software Developer Intern",
@@ -283,7 +295,25 @@ const volunteering = [
     dates: "Aug 2023 - May 2024",
     contentKey: "volunteering/blueprint-president",
     tags: ["Leadership", "Club", "Project Management"],
-    logo: "/bp.svg",
+    logo: "/bp/bp.svg",
+    projects: [
+      {
+        projectName: "Operations",
+        contentKey: "volunteering/blueprint-president-operations",
+      },
+      {
+        projectName: "Process and Standardization",
+        contentKey: "wip",
+      },
+      {
+        projectName: "Outreach",
+        contentKey: "wip",
+      },
+      {
+        projectName: "Innovations",
+        contentKey: "wip",
+      },
+    ],
   },
   {
     title: "Project Lead",
@@ -304,7 +334,7 @@ const volunteering = [
       },
     ],
     tags: ["Leadership", "Project Management", "Kotlin", "Android"],
-    logo: "/bp.svg",
+    logo: "/bp/bp.svg",
   },
 ];
 

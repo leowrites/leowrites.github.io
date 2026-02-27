@@ -68,6 +68,53 @@ const CodeBlock = ({ language = "javascript", code }) => {
   );
 };
 
+const useContainerWidth = () => {
+  const [width, setWidth] = React.useState(0);
+  const ref = React.useRef(null);
+
+  React.useEffect(() => {
+    if (!ref.current) return;
+    const observer = new ResizeObserver((entries) => {
+      for (const entry of entries) {
+        setWidth(entry.contentRect.width);
+      }
+    });
+    observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, []);
+
+  return [ref, width];
+};
+
+const ResponsiveImage = ({ src, alt, width, height, ...props }) => {
+  const [ref, containerWidth] = useContainerWidth();
+  const isWide = containerWidth > 900;
+
+  return (
+    <Box
+      ref={ref}
+      sx={{ textAlign: "center", my: 2, width: "90%", mx: "auto" }}
+    >
+      <img
+        width={width}
+        height={height}
+        loading="lazy"
+        alt={alt || ""}
+        {...props}
+        src={src}
+        style={{
+          width: isWide ? "60%" : "100%",
+          height: "auto",
+          display: "block",
+          borderRadius: "1rem",
+          margin: "0 auto",
+          transition: "width 0.3s ease-in-out",
+        }}
+      />
+    </Box>
+  );
+};
+
 const MarkdownRendererImpl = ({ content }) => {
   const theme = useTheme();
   const inlineCodeBackground = theme.palette.action.hover;
@@ -120,6 +167,20 @@ const MarkdownRendererImpl = ({ content }) => {
           {...props}
         />
       ),
+      blockquote: ({ node, ...props }) => (
+        <Box
+          component="blockquote"
+          sx={{
+            borderLeft: "4px solid",
+            borderColor: "secondary.main",
+            bgcolor: "action.hover",
+            p: 2,
+            mx: 0,
+            borderRadius: "0 8px 8px 0",
+          }}
+          {...props}
+        />
+      ),
       code({ node, inline, className, children, ...props }) {
         const match = /language-(\w+)/.exec(className || "");
         if (!inline && match) {
@@ -146,6 +207,33 @@ const MarkdownRendererImpl = ({ content }) => {
         );
       },
       img: ({ node, width, height, ...props }) => {
+        const classNames = String(props.className || "").split(/\s+/);
+        const isImageRowItem = classNames.includes("md-image-row__item");
+
+        let src = props.src || "";
+        const isResponsive = src.includes("#responsive");
+        if (isResponsive) {
+          src = src.replace("#responsive", "");
+        }
+
+        if (isImageRowItem) {
+          return (
+            <img loading="lazy" alt={props.alt || ""} {...props} src={src} />
+          );
+        }
+
+        if (isResponsive) {
+          return (
+            <ResponsiveImage
+              width={width}
+              height={height}
+              alt={props.alt}
+              src={src}
+              {...props}
+            />
+          );
+        }
+
         if (width || height) {
           return (
             <Box sx={{ textAlign: "center", my: 2 }}>
@@ -156,24 +244,27 @@ const MarkdownRendererImpl = ({ content }) => {
                 alt={props.alt || ""}
                 style={{ display: "inline-block", borderRadius: "1rem" }}
                 {...props}
+                src={src}
               />
             </Box>
           );
         }
-        return <StructuredVisual src={props.src} alt={props.alt} />;
+        return <StructuredVisual src={src} alt={props.alt} />;
       },
     }),
     [inlineCodeBackground]
   );
 
   return (
-    <ReactMarkdown
-      remarkPlugins={[remarkGfm]}
-      rehypePlugins={[rehypeRaw]}
-      components={components}
-    >
-      {content}
-    </ReactMarkdown>
+    <Box>
+      <ReactMarkdown
+        remarkPlugins={[remarkGfm]}
+        rehypePlugins={[rehypeRaw]}
+        components={components}
+      >
+        {content}
+      </ReactMarkdown>
+    </Box>
   );
 };
 

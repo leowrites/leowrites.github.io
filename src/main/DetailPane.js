@@ -156,7 +156,12 @@ const DetailPane = ({
         !isBlogMode && (
           <Box
             sx={{
-              height: "fit-content",
+              height: "100%",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: 3,
               p: 4,
             }}
           >

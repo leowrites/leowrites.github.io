@@ -1,4 +1,4 @@
-<img src="/bp.png" alt="BP" width="100" style="border-radius:50%"/>
+<img src="/bp/bp.webp" alt="BP" width="100" style="border-radius:50%"/>
 
 ### Overview
 

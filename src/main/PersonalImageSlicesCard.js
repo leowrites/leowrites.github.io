@@ -403,7 +403,7 @@ const PersonalImageSlicesCard = ({ slices = defaultSlices }) => {
           },
           borderRadius: "1rem",
           overflow: "hidden",
-          border: (theme) => `1px solid ${theme.palette.divider}`,
+          border: (theme) => isExpanded && `1px solid ${theme.palette.divider}`,
           bgcolor: "action.hover",
           transition: "height 320ms ease",
         }}
@@ -550,7 +550,6 @@ const PersonalImageSlicesCard = ({ slices = defaultSlices }) => {
               flexDirection: "column",
               justifyContent: "space-between",
               p: 2,
-              gap: 1.5,
               bgcolor: "background.paper",
             }}
           >

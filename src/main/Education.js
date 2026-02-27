@@ -30,7 +30,7 @@ const EducationItem = React.memo(({ edu, onSelect, selectedId }) => {
 const ClassicEducationSection = ({ educationData, onSelect, selectedId }) => {
   return (
     <Box>
-      <SectionHeading sx={{ mt: 0 }}>Education</SectionHeading>
+      <SectionHeading>Education</SectionHeading>
       {educationData.map((edu) => (
         <EducationItem
           key={generateId(edu)}

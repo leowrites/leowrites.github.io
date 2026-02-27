@@ -105,7 +105,7 @@ export const TechTagList = ({ technologies = [], size = "small", sx }) => {
 export const SectionHeading = ({ children, sx }) => {
   return (
     <Typography
-      variant="h3"
+      variant="h4"
       sx={{
         fontWeight: "bold",
         mt: "2rem",
@@ -185,25 +185,15 @@ export const EntryContainer = React.memo(
           <Box sx={{ flexGrow: 1 }}>
             <Typography>{date}</Typography>
             <Typography
-              variant="h6"
               sx={{ fontWeight: "bold", display: "inline", mr: "1rem" }}
             >
               {company}
             </Typography>
-            {logo && (
-              <img
-                src={logo}
-                alt="Logo"
-                className="logo-image"
-                loading="lazy"
-                style={{
-                  display: "inline",
-                  height: "1rem",
-                }}
-              />
-            )}
             {caption && (
-              <Typography sx={{ fontSize: "1rem", color: "text.secondary" }}>
+              <Typography
+                variant="caption"
+                sx={{ color: "text.secondary", display: "block", mt: 0.5 }}
+              >
                 {caption}
               </Typography>
             )}
@@ -236,6 +226,7 @@ export const EntryContainer = React.memo(
             {canExpand && (
               <IconCircle
                 sx={{
+                  p: 0,
                   "&:hover": {
                     backgroundColor: "transparent",
                   },
@@ -317,19 +308,16 @@ export const ProjectEntry = React.memo(
         >
           <Box>
             <Box sx={{ display: "flex", alignItems: "center" }}>
-              <Typography
-                variant="subtitle1"
-                sx={{ fontWeight: "bold", mr: "1rem" }}
-              >
+              <Typography variant="subtitle1" sx={{ mr: "1rem" }}>
                 {projectName}
               </Typography>
             </Box>
             {caption && (
-              <Typography variant="body2" color="text.secondary">
+              <Typography variant="caption" color="text.secondary">
                 {caption}
               </Typography>
             )}
-            <TechTagList technologies={technologies} sx={{ mt: 0.75 }} />
+            <TechTagList technologies={technologies} />
           </Box>
           {isSelectionMode ? (
             <IconCircle>
