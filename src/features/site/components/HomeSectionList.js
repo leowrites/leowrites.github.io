@@ -36,7 +36,7 @@ const HomeSectionList = ({
               flexWrap: "nowrap",
               alignItems: "center",
               gap: 0.25,
-              overflowX: "scroll",
+              overflowX: "auto",
             }}
           >
             {SECTION_LINKS.map((section) => (

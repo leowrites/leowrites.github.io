@@ -6,7 +6,6 @@ export const SectionHeading = ({ children, sx, compact = true }) => {
     <Typography
       variant="h6"
       sx={(theme) => ({
-        ...theme.typography.h6,
         fontWeight: compact ? 700 : 800,
         color: compact ? "text.secondary" : "text.primary",
         letterSpacing: compact ? "0.01em" : "0",

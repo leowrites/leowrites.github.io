@@ -1,18 +1,15 @@
 import React from "react";
 import { Box } from "@mui/material";
-import { SectionHeading, EntryContainer, MarkdownRenderer } from "./Components";
+import { SectionHeading, EntryContainer, ContentRenderer } from "./Components";
 import { generateId } from "./utils";
 
 const EducationItem = React.memo(({ edu, onSelect, selectedId }) => {
   const id = generateId(edu);
   const handleSelect = React.useCallback(() => {
     if (onSelect) {
-      onSelect(
-        id,
-        <MarkdownRenderer content={edu.content} contentKey={edu.contentKey} />
-      );
+      onSelect(id, <ContentRenderer item={edu} />);
     }
-  }, [id, edu.content, edu.contentKey, onSelect]);
+  }, [id, edu, onSelect]);
 
   return (
     <EntryContainer
@@ -22,7 +19,7 @@ const EducationItem = React.memo(({ edu, onSelect, selectedId }) => {
       selected={selectedId === id}
       onSelect={onSelect ? handleSelect : undefined}
     >
-      <MarkdownRenderer content={edu.content} contentKey={edu.contentKey} />
+      <ContentRenderer item={edu} />
     </EntryContainer>
   );
 });

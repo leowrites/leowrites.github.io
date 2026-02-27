@@ -1,9 +1,6 @@
 import React from "react";
 import { Box, Typography } from "@mui/material";
 import { MarkdownRenderer } from "./Components";
-import StructuredVisual from "./StructuredVisual";
-
-export { StructuredVisual };
 
 export const StructuredDetails = ({ details }) => {
   return (
