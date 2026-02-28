@@ -39,17 +39,6 @@ Handles photo data constants, collapsed slice animations, expanded clip-path tra
 
 ---
 
-## P3 — Dead Code & Unused Exports
-
-| What                                                                               | Where                                                                              |
-| ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
-| `logo` prop — accepted but never rendered                                          | `src/main/components/EntryContainer.js`                                            |
-| `compact={false}` — no caller ever passes it, making all non-compact branches dead | `EntryContainer`, `ProjectEntry`, `SectionHeading`                                 |
-| `type` prop on `StructuredVisual` — only `"image"` is handled                      | `src/main/StructuredVisual.js` (line 4)                                            |
-| `buildPageItems` — trivial array concat, over-abstraction                          | `src/content/site/model/contentModel.js`                                           |
-
----
-
 ## P3 — Consistency & Minor Issues
 
 ### 13. Inconsistent default vs named exports
@@ -96,5 +85,4 @@ In `src/main/Section.js`, `generateId` is called redundantly: once for the `key`
 | -------- | -------------------------------------------------- | -------- | ------ |
 | 1        | Move data out of JSX, fix dependency inversion     | #9, #10  | Medium |
 | 2        | Split `PersonalImageSlicesCard` into smaller pieces | #12      | High   |
-| 3        | Delete dead code (unused exports, props, imports)  | P3 table | Low    |
-| 4        | Fix minor consistency issues                       | #13–#25  | Low    |
+| 3        | Fix minor consistency issues                       | #13–#25  | Low    |
