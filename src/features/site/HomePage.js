@@ -11,7 +11,7 @@ import {
 } from "content/site/siteData";
 import { useContentMode } from "./hooks/useContentMode";
 import { useHomePageInteractions } from "./hooks/useHomePageInteractions";
-import { DESKTOP_PANE_HEIGHT } from "./constants/layout";
+import { DESKTOP_PANE_HEIGHT, ABOUT_ID } from "./constants/layout";
 import { generateId } from "main/utils";
 import { ContentRenderer } from "main/Components";
 import DetailPaneLoading from "./components/DetailPaneLoading";
@@ -20,7 +20,7 @@ import HomeSectionList from "./components/HomeSectionList";
 
 const DetailPane = lazy(() => import("main/DetailPane"));
 
-const ABOUT_ITEM = { title: "Leo Liu" };
+const ABOUT_ITEM = { title: "Leo Liu", id: ABOUT_ID };
 const LATEST_EXPERIENCE_ID = generateId(experience[0]);
 
 const HomePage = () => {

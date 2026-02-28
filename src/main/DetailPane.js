@@ -186,4 +186,5 @@ const DetailPane = ({
   );
 };
 
+export { DetailPane };
 export default DetailPane;

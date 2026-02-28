@@ -103,3 +103,4 @@ export const ProjectEntry = React.memo(
     );
   }
 );
+ProjectEntry.displayName = "ProjectEntry";

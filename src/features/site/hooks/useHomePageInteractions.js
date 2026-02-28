@@ -1,6 +1,6 @@
 import React from "react";
 import { generateId } from "main/utils";
-import { SECTION_LINKS } from "features/site/constants/layout";
+import { SECTION_LINKS, ABOUT_ID } from "features/site/constants/layout";
 
 const SECTION_RESTORE_KEY = "mobile-list-restore";
 
@@ -31,7 +31,7 @@ export const useHomePageInteractions = ({
     return { parentIdByNestedProjectId: idMap, parentFolderIdSet: folderSet };
   }, [parentByProjectId]);
 
-  const isAboutSelected = selectedId === "leo-liu";
+  const isAboutSelected = selectedId === ABOUT_ID;
   const hasContent =
     selectedItem &&
     (selectedItem.content || selectedItem.contentKey || selectedItem.details);
@@ -75,7 +75,7 @@ export const useHomePageInteractions = ({
         }
 
         const selected =
-          id === "leo-liu" || parentIdByNestedProjectId.has(id)
+          id === ABOUT_ID || parentIdByNestedProjectId.has(id)
             ? parentIdByNestedProjectId.get(id) || id
             : id;
 
@@ -114,7 +114,7 @@ export const useHomePageInteractions = ({
     if (hasAutoOpenedDesktopRef.current) return;
     hasAutoOpenedDesktopRef.current = true;
 
-    handleSelect("leo-liu", { replace: true });
+    handleSelect(ABOUT_ID, { replace: true });
   }, [matches, selectedId, handleSelect, location.pathname]);
 
   React.useEffect(() => {
