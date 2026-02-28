@@ -1,4 +1,4 @@
-import React, { Suspense, lazy, useMemo } from "react";
+import React, { Suspense, lazy } from "react";
 import SiteHeader from "main/SiteHeader";
 import { Box, useMediaQuery, useTheme } from "@mui/material";
 import { useLocation } from "react-router-dom";
@@ -20,6 +20,7 @@ import HomeSectionList from "./components/HomeSectionList";
 const DetailPane = lazy(() => import("main/DetailPane"));
 
 const ABOUT_ITEM = { title: "Leo Liu" };
+const LATEST_EXPERIENCE_ID = generateId(experience[0]);
 
 const HomePage = () => {
   const theme = useTheme();
@@ -35,13 +36,6 @@ const HomePage = () => {
     handleSelect,
     parentByProjectId,
   } = useContentMode();
-
-  const latestExperienceId = useMemo(
-    () => generateId(experience[0]),
-    // experience is static data; this only needs to run once
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
-  );
 
   const {
     activeSectionId,
@@ -137,7 +131,7 @@ const HomePage = () => {
               desktopHeight={DESKTOP_PANE_HEIGHT}
               emptyState={
                 <HomeEmptyState
-                  latestExperienceId={latestExperienceId}
+                  latestExperienceId={LATEST_EXPERIENCE_ID}
                   onSelect={handleSelectWithRoute}
                 />
               }
