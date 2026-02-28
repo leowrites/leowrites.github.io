@@ -10,6 +10,8 @@ import {
   ContentRenderer,
 } from "./Components";
 
+const FOLDER_OVERVIEW_MAX_HEIGHT = "7rem";
+
 const SectionProjectItem = React.memo(
   ({ proj, projId, selectedId, onSelect, isFirst = false }) => {
     const handleSelect = React.useCallback(() => {
@@ -107,7 +109,16 @@ const SectionItem = React.memo(
             }}
           >
             {showOverviewInFolder && (item.content || item.contentKey) && (
-              <Box>
+              <Box
+                sx={{
+                  maxHeight: FOLDER_OVERVIEW_MAX_HEIGHT,
+                  overflow: "hidden",
+                  maskImage:
+                    "linear-gradient(to bottom, black 30%, transparent 100%)",
+                  WebkitMaskImage:
+                    "linear-gradient(to bottom, black 30%, transparent 100%)",
+                }}
+              >
                 <MarkdownRenderer
                   content={item.content}
                   contentKey={item.contentKey}
