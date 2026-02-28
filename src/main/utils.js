@@ -15,3 +15,6 @@ export const generateId = (item) => {
     .trim()
     .replace(/\s+/g, "-");
 };
+
+export const withProtocol = (url) =>
+  !url ? "#" : /^https?:\/\//i.test(url) ? url : `https://${url}`;

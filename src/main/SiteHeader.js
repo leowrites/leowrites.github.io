@@ -2,12 +2,10 @@ import React from "react";
 import { Box, Chip, Stack, Typography } from "@mui/material";
 import PersonalImageSlicesCard from "./PersonalImageSlicesCard";
 import { MarkdownRenderer } from "./Components";
+import { withProtocol } from "./utils";
 
 const SiteHeader = ({ personalInfo, variant = "default" }) => {
   const isDetailPane = variant === "detailPane";
-
-  const withProtocol = (url) =>
-    !url ? "#" : /^https?:\/\//i.test(url) ? url : `https://${url}`;
 
   return (
     <Box
@@ -32,7 +30,7 @@ const SiteHeader = ({ personalInfo, variant = "default" }) => {
         </Typography>
         <Box
           component="img"
-          src="/IMG_1822.JPG"
+          src={personalInfo.portrait || "/portrait.jpg"}
           alt="Portrait of Leo"
           sx={{
             width: isDetailPane ? 160 : 200,

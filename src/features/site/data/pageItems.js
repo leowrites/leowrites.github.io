@@ -1,13 +1,3 @@
-import {
-  education,
-  experience,
-  projects,
-  volunteering,
-} from "content/site/siteData";
+import { education, experience, volunteering } from "content/site/siteData";
 
-export const pageItems = [
-  ...education,
-  ...experience,
-  ...volunteering,
-  ...projects,
-];
+export const pageItems = [...education, ...experience, ...volunteering];

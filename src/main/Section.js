@@ -14,9 +14,9 @@ const SectionProjectItem = React.memo(
   ({ proj, projId, item, selectedId, onSelect, isFirst = false }) => {
     const handleSelect = React.useCallback(() => {
       if (onSelect) {
-        onSelect(projId, <ContentRenderer item={proj} />, proj, item);
+        onSelect(projId);
       }
-    }, [onSelect, projId, proj, item]);
+    }, [onSelect, projId]);
 
     return (
       <ProjectEntry
@@ -80,15 +80,9 @@ const SectionItem = React.memo(
 
     const handleParentSelect = React.useCallback(() => {
       if (onSelect) {
-        onSelect(
-          itemId,
-          <MarkdownRenderer
-            content={item.content}
-            contentKey={item.contentKey}
-          />
-        );
+        onSelect(itemId);
       }
-    }, [onSelect, itemId, item.content, item.contentKey]);
+    }, [onSelect, itemId]);
 
     const isParentSelected = selectedId === itemId;
     const isChildSelected =

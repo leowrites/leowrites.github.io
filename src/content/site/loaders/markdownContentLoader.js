@@ -1,3 +1,5 @@
+export const COMING_SOON_KEY = "coming-soon";
+
 const contentCache = new Map();
 
 export const loadContentByKey = async (contentKey) => {

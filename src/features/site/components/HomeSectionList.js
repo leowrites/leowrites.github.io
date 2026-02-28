@@ -2,20 +2,24 @@ import React from "react";
 import { Box, Button } from "@mui/material";
 import Section from "main/Section";
 import {
+  education,
+  experience,
+  projects,
+  volunteering,
+} from "content/site/siteData";
+import {
   SECTION_LINKS,
   SECTION_ABOUT_ID,
   SECTION_EDUCATION_ID,
   SECTION_EXPERIENCE_ID,
   SECTION_LEADERSHIP_ID,
   SECTION_PROJECTS_ID,
+  ABOUT_ID,
 } from "../constants/layout";
 
+const ABOUT_ITEM = { title: "Leo Liu", id: ABOUT_ID };
+
 const HomeSectionList = ({
-  aboutItem,
-  education,
-  experience,
-  volunteering,
-  projects,
   selectedId,
   onSelect,
   activeSectionId,
@@ -80,7 +84,7 @@ const HomeSectionList = ({
       )}
       <Section
         sectionTitle="About Me"
-        items={[aboutItem]}
+        items={[ABOUT_ITEM]}
         selectedId={selectedId}
         onSelect={onSelect}
         sectionId={SECTION_ABOUT_ID}
