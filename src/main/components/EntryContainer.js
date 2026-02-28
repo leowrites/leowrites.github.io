@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Box, Collapse, Divider, Typography } from "@mui/material";
+import { Box, Divider, Typography } from "@mui/material";
 import { alpha } from "@mui/material/styles";
 import {
   IconCircle,
@@ -138,21 +138,30 @@ export const EntryContainer = React.memo(
           </Box>
         </Box>
         {canExpand && (
-          <Collapse in={expanded} timeout={300}>
-            <Divider
-              sx={{
-                mb: "0",
-                mx: "0.85rem",
-              }}
-            />
-            <Box
-              sx={{
-                padding: "0 0.65rem 0.65rem 0.65rem",
-              }}
-            >
-              {children}
+          <Box
+            sx={{
+              display: "grid",
+              gridTemplateRows: expanded ? "1fr" : "0fr",
+              transition:
+                "grid-template-rows 240ms cubic-bezier(0.22, 1, 0.36, 1)",
+            }}
+          >
+            <Box sx={{ overflow: "hidden" }}>
+              <Divider
+                sx={{
+                  mb: "0",
+                  mx: "0.85rem",
+                }}
+              />
+              <Box
+                sx={{
+                  padding: "0 0.65rem 0.65rem 0.65rem",
+                }}
+              >
+                {children}
+              </Box>
             </Box>
-          </Collapse>
+          </Box>
         )}
       </Box>
     );
