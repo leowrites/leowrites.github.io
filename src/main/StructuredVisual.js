@@ -1,7 +1,7 @@
 import React from "react";
 import { Box } from "@mui/material";
 
-const StructuredVisual = ({ src, alt, type = "image" }) => {
+const StructuredVisual = ({ src, alt }) => {
   return (
     <Box
       sx={{
@@ -13,17 +13,15 @@ const StructuredVisual = ({ src, alt, type = "image" }) => {
         boxShadow: "0 8px 24px rgba(0,0,0,0.08)",
       }}
     >
-      {type === "image" && (
-        <img
-          src={src}
-          alt={alt}
-          loading="lazy"
-          style={{
-            width: "100%",
-            display: "block",
-          }}
-        />
-      )}
+      <img
+        src={src}
+        alt={alt}
+        loading="lazy"
+        style={{
+          width: "100%",
+          display: "block",
+        }}
+      />
     </Box>
   );
 };

@@ -1,8 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Box, Collapse, Divider, Typography } from "@mui/material";
-import GitHubIcon from "@mui/icons-material/GitHub";
 import { alpha } from "@mui/material/styles";
-import { TechTagList } from "./TechTagList";
 import {
   IconCircle,
   getCardContainerSx,
@@ -14,16 +12,11 @@ export const EntryContainer = React.memo(
     date,
     title,
     company,
-    caption = "",
-    logo,
-    githubLink,
-    technologies,
     children,
     onSelect,
     selected = false,
     id,
     isFolder = false,
-    compact = true,
   }) => {
     const [expanded, setExpanded] = useState(false);
     const suppressAutoExpandRef = useRef(false);
@@ -59,31 +52,21 @@ export const EntryContainer = React.memo(
       <Box
         id={id}
         sx={getCardContainerSx({
-          baseLight: (theme) => theme.palette.grey[100],
-          baseDark: (theme) => theme.palette.grey[900],
           selectedLight: (theme) => theme.palette.grey[200],
           selectedDark: (theme) => alpha(theme.palette.common.white, 0.14),
           isHighlighted,
-          margin: compact ? "0.25rem 0" : "1rem 0",
-          compact,
+          margin: "0.25rem 0",
         })}
       >
         <Box
           onClick={handleCardClick}
           sx={(theme) => ({
-            padding: compact ? "0.55rem 0.65rem" : "1rem",
+            padding: "0.55rem 0.65rem",
             cursor: "pointer",
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
             color: theme.palette.text.primary,
-            "& .logo-image": {
-              filter: theme.palette.mode === "dark" ? "invert(1)" : "none",
-              transition: theme.transitions.create("filter", {
-                duration: theme.transitions.duration.shorter,
-                easing: theme.transitions.easing.easeInOut,
-              }),
-            },
           })}
         >
           <Box sx={{ flexGrow: 1 }}>
@@ -92,14 +75,14 @@ export const EntryContainer = React.memo(
               sx={{
                 color: "text.secondary",
                 display: "block",
-                fontSize: compact ? "0.68rem" : undefined,
+                fontSize: "0.68rem",
               }}
             >
               {date}
             </Typography>
             {title ? (
               <Typography
-                variant={compact ? "subtitle1" : "h6"}
+                variant="subtitle1"
                 sx={{
                   fontWeight: 700,
                   display: "block",
@@ -111,7 +94,7 @@ export const EntryContainer = React.memo(
             ) : null}
             {company ? (
               <Typography
-                variant={title ? "body2" : compact ? "subtitle1" : "h6"}
+                variant={title ? "body2" : "subtitle1"}
                 sx={{
                   color: title ? "text.secondary" : "text.primary",
                   fontWeight: title ? 600 : 700,
@@ -123,57 +106,25 @@ export const EntryContainer = React.memo(
                 {company}
               </Typography>
             ) : null}
-            {!compact && caption && (
-              <Typography
-                variant="body2"
-                sx={{ color: "text.secondary", display: "block", mt: 0.5 }}
-              >
-                {caption}
-              </Typography>
-            )}
-            {!compact && <TechTagList technologies={technologies} />}
           </Box>
           <Box
             sx={{
               display: "flex",
               alignItems: "center",
-              gap: compact ? "0.2rem" : "0.5rem",
+              gap: "0.2rem",
             }}
           >
-            {!compact && githubLink && (
-              <Box
-                component="a"
-                href={githubLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={(e) => e.stopPropagation()}
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  padding: "0.5rem",
-                  borderRadius: "50%",
-                  color: "text.secondary",
-                  "&:hover": {
-                    backgroundColor: "action.hover",
-                    color: "text.primary",
-                  },
-                }}
-              >
-                <GitHubIcon sx={{ fontSize: "1.2rem" }} />
-              </Box>
-            )}
             {canExpand && (
               <IconCircle
                 sx={{
                   p: 0,
-                  borderRadius: compact ? "0.45rem" : "50%",
+                  borderRadius: "0.45rem",
                   "&:hover": {
-                    backgroundColor: compact ? "action.hover" : "transparent",
+                    backgroundColor: "action.hover",
                   },
                 }}
               >
-                <RotatingExpandIcon expanded={expanded} compact={compact} />
+                <RotatingExpandIcon expanded={expanded} />
               </IconCircle>
             )}
           </Box>
@@ -182,15 +133,13 @@ export const EntryContainer = React.memo(
           <Collapse in={expanded} timeout={300}>
             <Divider
               sx={{
-                mb: compact ? "0" : "0.5rem",
-                mx: compact ? "0.85rem" : "1rem",
+                mb: "0",
+                mx: "0.85rem",
               }}
             />
             <Box
               sx={{
-                padding: compact
-                  ? "0 0.65rem 0.65rem 0.65rem"
-                  : "0 1rem 1rem 1rem",
+                padding: "0 0.65rem 0.65rem 0.65rem",
               }}
             >
               {children}
