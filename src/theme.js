@@ -12,15 +12,18 @@ export const ColorModeContext = createContext({ toggleColorMode: () => {} });
 export default function ThemeProviderWrapper({ children }) {
   const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
   const [mode, setMode] = useState(prefersDarkMode ? "dark" : "light");
+  const hasManuallyToggledRef = React.useRef(false);
 
   // Update mode when system preference changes, but only if user hasn't toggled manually
   React.useEffect(() => {
+    if (hasManuallyToggledRef.current) return;
     setMode(prefersDarkMode ? "dark" : "light");
   }, [prefersDarkMode]);
 
   const colorMode = useMemo(
     () => ({
       toggleColorMode: () => {
+        hasManuallyToggledRef.current = true;
         setMode((prevMode) => (prevMode === "light" ? "dark" : "light"));
       },
     }),

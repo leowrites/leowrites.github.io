@@ -14,6 +14,17 @@ import CloseIcon from "@mui/icons-material/Close";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import { TechTagList } from "./Components";
 
+const fadeSlideUp = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`;
+
 /**
  * Right-column detail view (desktop split-view).
  * Handles expand/close buttons, viewTransitionName, and blog header.
@@ -31,17 +42,6 @@ const DetailPane = ({
   contentPadding,
 }) => {
   const theme = useTheme();
-
-  const fadeSlideUp = keyframes`
-    from {
-      opacity: 0;
-      transform: translateY(8px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  `;
 
   const breadcrumbs = ["Home"];
   const detailCaption = selectedProject?.caption || selectedItem?.caption;

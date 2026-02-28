@@ -1,5 +1,4 @@
 import { generateId } from "./utils";
-import { StructuredDetails } from "./StructuredDetails";
 import React from "react";
 import { Box } from "@mui/material";
 import {
@@ -8,6 +7,7 @@ import {
   ProjectEntry,
   TooltipLink,
   MarkdownRenderer,
+  ContentRenderer,
 } from "./Components";
 
 const SectionProjectItem = React.memo(
@@ -20,19 +20,7 @@ const SectionProjectItem = React.memo(
 
     const handleSelect = React.useCallback(() => {
       if (onSelect) {
-        onSelect(
-          projId,
-          proj.content || proj.contentKey ? (
-            <MarkdownRenderer
-              content={proj.content}
-              contentKey={proj.contentKey}
-            />
-          ) : (
-            <StructuredDetails details={proj.details} />
-          ),
-          proj,
-          item
-        );
+        onSelect(projId, <ContentRenderer item={proj} />, proj, item);
       }
     }, [onSelect, projId, proj, item]);
 
@@ -47,15 +35,7 @@ const SectionProjectItem = React.memo(
         nested
         isFirst={isFirst}
       >
-        {!onSelect &&
-          (proj.content || proj.contentKey ? (
-            <MarkdownRenderer
-              content={proj.content}
-              contentKey={proj.contentKey}
-            />
-          ) : (
-            <StructuredDetails details={proj.details} />
-          ))}
+        {!onSelect && <ContentRenderer item={proj} />}
       </ProjectEntry>
     );
   }
@@ -163,10 +143,7 @@ const SectionItem = React.memo(
             ))}
           </Box>
         ) : (
-          <MarkdownRenderer
-            content={item.content}
-            contentKey={item.contentKey}
-          />
+          <ContentRenderer item={item} />
         )}
       </EntryContainer>
     );

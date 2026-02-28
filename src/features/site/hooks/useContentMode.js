@@ -1,10 +1,9 @@
-import { useState, useEffect, useMemo, useCallback } from "react";
+import { useMemo, useCallback } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { pageItems } from "features/site/data/pageItems";
 import { projects } from "content/site/siteData";
 import { generateId } from "main/utils";
-import { MarkdownRenderer } from "main/Components";
-import { StructuredDetails } from "main/StructuredDetails";
+import { ContentRenderer } from "main/Components";
 
 export const useContentMode = () => {
   const navigate = useNavigate();
@@ -12,11 +11,7 @@ export const useContentMode = () => {
   const selectedId = itemId || null;
 
   const renderContent = useCallback((item) => {
-    return item.content || item.contentKey ? (
-      <MarkdownRenderer content={item.content} contentKey={item.contentKey} />
-    ) : (
-      <StructuredDetails details={item.details} />
-    );
+    return <ContentRenderer item={item} />;
   }, []);
 
   const {

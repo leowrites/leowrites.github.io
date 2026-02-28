@@ -20,7 +20,7 @@ export const ProjectEntry = React.memo(
     isFirst = false,
   }) => {
     const [expanded, setExpanded] = useState(false);
-    const isSelectionMode = !!onSelect;
+    const isSelectionMode = typeof onSelect === "function";
 
     const handleClick = (e) => {
       if (isSelectionMode) {
