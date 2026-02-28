@@ -42,24 +42,16 @@ const experience = [
 
     projects: [
       {
-        projectName: "Sparse Matrix Multiplication Support",
-        contentKey: "experience/paramathics-sparse-matrix",
-      },
-      {
         projectName: "Kernels",
-        contentKey: "wip",
+        contentKey: "experience/paramathics-kernels",
       },
       {
         projectName: "Autotuning",
-        contentKey: "wip",
+        contentKey: "experience/paramathics-autotuning",
       },
       {
         projectName: "Fused matmul-compress kernel",
         contentKey: "experience/paramathics-fused-matmul-compress",
-      },
-      {
-        projectName: "Pipelining",
-        contentKey: "wip",
       },
     ],
     tags: ["Research", "Compiler", "LLVM", "MLIR", "Machine Learning", "C++"],
