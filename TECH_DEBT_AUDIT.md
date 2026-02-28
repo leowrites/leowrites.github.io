@@ -9,32 +9,6 @@ The app is a CRA-based React 18 SPA using MUI, react-router-dom v7, react-markdo
 
 ---
 
-## P1 — Duplicated Logic (High-Impact)
-
-### 4. Parent/project ID mapping computed three separate times
-
-The same iteration pattern — loop over `experience`/`volunteering`, call `generateId({...proj, title: proj.projectName, organization: item.organization})` — appears in:
-
-- `src/features/site/hooks/useContentMode.js` (lines 30–57): builds `itemById`, `nestedProjectById`, `parentByProjectId`
-- `src/features/site/hooks/useHomePageInteractions.js` (lines 30–50): builds `parentIdByNestedProjectId`
-- `src/features/site/hooks/useHomePageInteractions.js` (lines 52–59): builds `parentFolderIdSet`
-
-All three could be one shared lookup computed once and passed through.
-
-### 6. `tags || technologies` fallback repeated
-
-`item.tags || item.technologies` appears in `Section.js` (lines 44 and 128) and a 4-way fallback chain in `DetailPane.js`. The data layer uses both `tags` (array) and `technologies` (string) for the same concept. Should be normalized to a single field name at the data layer.
-
-### 7. `EntryContainer` and `ProjectEntry` — duplicated expand/collapse card pattern
-
-Both components independently implement: `useState(false)` for expand, `Collapse` with `timeout={300}`, `ExpandMoreIcon` with rotation, `getCardContainerSx` from `uiHelpers`, `TechTagList`, and compact mode gating. ~60% structural overlap that should be a shared base component.
-
-### 8. `Education.js` is a simplified copy of `Section.js`
-
-Same `generateId` → `EntryContainer` → `MarkdownRenderer` pattern. Education items could flow through `Section` with the right data shape rather than maintaining a parallel component.
-
----
-
 ## P2 — Separation of Concerns / Architecture
 
 ### 9. JSX embedded in data definitions
@@ -120,10 +94,7 @@ In `src/main/Section.js`, `generateId` is called redundantly: once for the `key`
 
 | Priority | Action                                             | Issues   | Effort |
 | -------- | -------------------------------------------------- | -------- | ------ |
-| 1        | Consolidate project ID mapping into shared utility | #4       | Medium |
-| 2        | Move data out of JSX, fix dependency inversion     | #9, #10  | Medium |
-| 3        | Split `PersonalImageSlicesCard` into smaller pieces | #12      | High   |
-| 4        | Delete dead code (unused exports, props, imports)  | P3 table | Low    |
-| 5        | Extract shared expandable card base component      | #7       | Medium |
-| 6        | Normalize `tags`/`technologies` at data layer      | #6       | Low    |
-| 7        | Fix minor consistency issues                       | #13–#25  | Low    |
+| 1        | Move data out of JSX, fix dependency inversion     | #9, #10  | Medium |
+| 2        | Split `PersonalImageSlicesCard` into smaller pieces | #12      | High   |
+| 3        | Delete dead code (unused exports, props, imports)  | P3 table | Low    |
+| 4        | Fix minor consistency issues                       | #13–#25  | Low    |
