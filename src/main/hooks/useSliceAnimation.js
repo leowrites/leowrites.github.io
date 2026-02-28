@@ -181,7 +181,8 @@ export const useSliceAnimation = ({ slicesLength }) => {
     }
   }, [expandedIndex, closingIndex, applyHoverLayout]);
 
-  // Cleanup GSAP tweens on unmount
+  // Cleanup GSAP tweens. Re-runs when slicesLength changes so the captured
+  // element snapshots always reflect the current set of refs.
   useEffect(() => {
     const collapsedEl = collapsedRef.current;
     const expandedEl = expandedRef.current;
@@ -193,7 +194,7 @@ export const useSliceAnimation = ({ slicesLength }) => {
       gsap.killTweensOf(sliceEls);
       gsap.killTweensOf(imageEls);
     };
-  }, []);
+  }, [slicesLength]);
 
   // Reset GSAP state when slices change
   useEffect(() => {

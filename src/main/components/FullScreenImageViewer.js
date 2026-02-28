@@ -23,7 +23,9 @@ const FullScreenImageViewer = ({
   const fullscreenImageRef = React.useRef(null);
 
   React.useEffect(() => {
-    if (!fullscreenContainerRef.current || !fullscreenImageRef.current) return;
+    const containerEl = fullscreenContainerRef.current;
+    const imageEl = fullscreenImageRef.current;
+    if (!containerEl || !imageEl) return;
 
     if (
       fullScreenImageIndex &&
@@ -50,19 +52,16 @@ const FullScreenImageViewer = ({
       const targetLeft = (window.innerWidth - targetWidth) / 2;
       const targetTop = (window.innerHeight - targetHeight) / 2;
 
-      gsap.killTweensOf([
-        fullscreenContainerRef.current,
-        fullscreenImageRef.current,
-      ]);
+      gsap.killTweensOf([containerEl, imageEl]);
 
       gsap.fromTo(
-        fullscreenContainerRef.current,
+        containerEl,
         { opacity: 0, pointerEvents: "none" },
         { opacity: 1, pointerEvents: "auto", duration: 0.4, ease: "power3.out" }
       );
 
       gsap.fromTo(
-        fullscreenImageRef.current,
+        imageEl,
         {
           top: rect.top,
           left: rect.left,
@@ -83,19 +82,16 @@ const FullScreenImageViewer = ({
     } else if (fullScreenImageIndex?.isClosing) {
       const { rect } = fullScreenImageIndex;
 
-      gsap.killTweensOf([
-        fullscreenContainerRef.current,
-        fullscreenImageRef.current,
-      ]);
+      gsap.killTweensOf([containerEl, imageEl]);
 
-      gsap.to(fullscreenContainerRef.current, {
+      gsap.to(containerEl, {
         opacity: 0,
         pointerEvents: "none",
         duration: 0.4,
         ease: "power3.inOut",
       });
 
-      gsap.to(fullscreenImageRef.current, {
+      gsap.to(imageEl, {
         top: rect.top,
         left: rect.left,
         width: rect.width,
@@ -106,6 +102,10 @@ const FullScreenImageViewer = ({
         onComplete: onCloseComplete,
       });
     }
+
+    return () => {
+      gsap.killTweensOf([containerEl, imageEl]);
+    };
   }, [fullScreenImageIndex, imageDimensions, onCloseComplete]);
 
   return (
