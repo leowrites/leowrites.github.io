@@ -1,4 +1,4 @@
-import React, { useMemo, useCallback, useRef } from "react";
+import { useMemo, useCallback, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { pageItems } from "features/site/data/pageItems";
 import { projects } from "content/site/siteData";

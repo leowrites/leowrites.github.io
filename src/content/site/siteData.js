@@ -1,4 +1,7 @@
+import { COMING_SOON_KEY } from "./loaders/markdownContentLoader";
+
 const personalInfo = {
+  portrait: "/portrait.jpg",
   description: [
     'I\'m a final year Computer Science student at the [University of Toronto](https://web.cs.toronto.edu/ "My alma mater, where I study Computer Science").',
     `I have an interest in systems, performance optimization and machine learning.
@@ -257,15 +260,15 @@ const volunteering = [
       },
       {
         projectName: "Process and Standardization",
-        contentKey: "wip",
+        contentKey: COMING_SOON_KEY,
       },
       {
         projectName: "Outreach",
-        contentKey: "wip",
+        contentKey: COMING_SOON_KEY,
       },
       {
         projectName: "Innovations",
-        contentKey: "wip",
+        contentKey: COMING_SOON_KEY,
       },
     ],
   },

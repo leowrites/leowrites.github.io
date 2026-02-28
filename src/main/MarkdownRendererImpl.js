@@ -199,9 +199,9 @@ const MarkdownRendererImpl = ({ content }) => {
           {...props}
         />
       ),
-      code({ node, inline, className, children, ...props }) {
+      code({ node, className, children, ...props }) {
         const match = /language-(\w+)/.exec(className || "");
-        if (!inline && match) {
+        if (match) {
           return (
             <CodeBlock
               language={match[1]}

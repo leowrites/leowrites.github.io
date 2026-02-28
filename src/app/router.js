@@ -15,8 +15,6 @@ function Layout() {
       <Box sx={{ m: 3 }}>
         <Outlet />
       </Box>
-      {/* <Container maxWidth="xl" sx={{ my: 3 }}>
-      </Container> */}
     </div>
   );
 }

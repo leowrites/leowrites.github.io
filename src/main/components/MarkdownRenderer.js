@@ -1,22 +1,28 @@
 import React, { Suspense, useEffect, useState } from "react";
-import { Box, Skeleton } from "@mui/material";
-import { loadContentByKey } from "content/site/loaders/markdownContentLoader";
+import { Box, Skeleton, Typography } from "@mui/material";
+import {
+  loadContentByKey,
+  COMING_SOON_KEY,
+} from "content/site/loaders/markdownContentLoader";
+
+export { COMING_SOON_KEY };
 
 const LazyMarkdownRenderer = React.lazy(() =>
   import("../MarkdownRendererImpl")
 );
 
+const loadingFallback = (
+  <Box sx={{ mt: 1 }}>
+    <Skeleton variant="text" height={34} width="62%" />
+    <Skeleton variant="text" height={24} width="100%" />
+    <Skeleton variant="text" height={24} width="98%" />
+    <Skeleton variant="text" height={24} width="95%" />
+    <Skeleton variant="text" height={24} width="90%" />
+  </Box>
+);
+
 export const MarkdownRenderer = React.memo(({ content, contentKey }) => {
   const [resolvedContent, setResolvedContent] = useState(content || null);
-  const loadingFallback = (
-    <Box sx={{ mt: 1 }}>
-      <Skeleton variant="text" height={34} width="62%" />
-      <Skeleton variant="text" height={24} width="100%" />
-      <Skeleton variant="text" height={24} width="98%" />
-      <Skeleton variant="text" height={24} width="95%" />
-      <Skeleton variant="text" height={24} width="90%" />
-    </Box>
-  );
 
   useEffect(() => {
     let cancelled = false;
@@ -28,7 +34,7 @@ export const MarkdownRenderer = React.memo(({ content, contentKey }) => {
       };
     }
 
-    if (!contentKey) {
+    if (!contentKey || contentKey === COMING_SOON_KEY) {
       setResolvedContent(null);
       return () => {
         cancelled = true;
@@ -52,6 +58,18 @@ export const MarkdownRenderer = React.memo(({ content, contentKey }) => {
       cancelled = true;
     };
   }, [content, contentKey]);
+
+  if (contentKey === COMING_SOON_KEY) {
+    return (
+      <Typography
+        variant="body2"
+        color="text.secondary"
+        sx={{ fontStyle: "italic", mt: 1 }}
+      >
+        Content coming soon.
+      </Typography>
+    );
+  }
 
   if (!content && !contentKey) return null;
 

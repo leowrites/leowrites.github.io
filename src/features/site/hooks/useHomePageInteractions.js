@@ -1,4 +1,4 @@
-import React from "react";
+import { useState, useEffect, useCallback, useMemo, useRef } from "react";
 import { generateId } from "main/utils";
 import { SECTION_LINKS, ABOUT_ID } from "features/site/constants/layout";
 
@@ -12,15 +12,12 @@ export const useHomePageInteractions = ({
   handleSelect,
   parentByProjectId,
 }) => {
-  const [activeSectionId, setActiveSectionId] = React.useState(
-    SECTION_LINKS[0].id
-  );
-  const [mobileListSelectedId, setMobileListSelectedId] = React.useState(null);
+  const [activeSectionId, setActiveSectionId] = useState(SECTION_LINKS[0].id);
+  const [mobileListSelectedId, setMobileListSelectedId] = useState(null);
 
-  const hasAutoOpenedDesktopRef = React.useRef(false);
-  const hasExplicitDesktopCloseRef = React.useRef(false);
+  const autoOpenDoneRef = useRef(false);
 
-  const { parentIdByNestedProjectId, parentFolderIdSet } = React.useMemo(() => {
+  const { parentIdByNestedProjectId, parentFolderIdSet } = useMemo(() => {
     const idMap = new Map();
     const folderSet = new Set();
     for (const [projId, parentItem] of parentByProjectId) {
@@ -41,20 +38,20 @@ export const useHomePageInteractions = ({
       (Boolean(hasContent) && !selectedItem?.projects?.length));
   const isMobileListMode = !matches && !isMobileSelectedDetailMode;
 
-  const handleClose = React.useCallback(() => {
+  const handleClose = useCallback(() => {
     if (!matches && window.history.length > 1) {
       window.history.back();
       return;
     }
 
     if (matches) {
-      hasExplicitDesktopCloseRef.current = true;
+      autoOpenDoneRef.current = true;
     }
 
     handleSelect(null, { replace: true });
   }, [handleSelect, matches]);
 
-  const handleSelectWithRoute = React.useCallback(
+  const handleSelectWithRoute = useCallback(
     (id) => {
       if (id === null) {
         setMobileListSelectedId(null);
@@ -101,28 +98,27 @@ export const useHomePageInteractions = ({
     ]
   );
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!matches) return;
-    if (hasExplicitDesktopCloseRef.current) return;
+    if (autoOpenDoneRef.current) return;
     if (location.pathname !== "/") return;
 
     if (selectedId) {
-      hasAutoOpenedDesktopRef.current = true;
+      autoOpenDoneRef.current = true;
       return;
     }
 
-    if (hasAutoOpenedDesktopRef.current) return;
-    hasAutoOpenedDesktopRef.current = true;
+    autoOpenDoneRef.current = true;
 
     handleSelect(ABOUT_ID, { replace: true });
   }, [matches, selectedId, handleSelect, location.pathname]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (matches || !isMobileSelectedDetailMode) return;
     window.scrollTo({ top: 0, behavior: "auto" });
   }, [matches, isMobileSelectedDetailMode, selectedId]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (matches || !isMobileListMode) return;
 
     const stored = sessionStorage.getItem(SECTION_RESTORE_KEY);
@@ -146,7 +142,7 @@ export const useHomePageInteractions = ({
       ? mobileListSelectedId
       : selectedId;
 
-  const handleJumpToSection = React.useCallback((sectionId) => {
+  const handleJumpToSection = useCallback((sectionId) => {
     setActiveSectionId(sectionId);
     const section = document.getElementById(sectionId);
     if (section) {

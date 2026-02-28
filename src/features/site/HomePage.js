@@ -2,16 +2,10 @@ import React, { Suspense, lazy } from "react";
 import SiteHeader from "main/SiteHeader";
 import { Box, useMediaQuery, useTheme } from "@mui/material";
 import { useLocation } from "react-router-dom";
-import {
-  personalInfo,
-  education,
-  experience,
-  projects,
-  volunteering,
-} from "content/site/siteData";
+import { personalInfo, experience } from "content/site/siteData";
 import { useContentMode } from "./hooks/useContentMode";
 import { useHomePageInteractions } from "./hooks/useHomePageInteractions";
-import { DESKTOP_PANE_HEIGHT, ABOUT_ID } from "./constants/layout";
+import { DESKTOP_PANE_HEIGHT } from "./constants/layout";
 import { generateId } from "main/utils";
 import { ContentRenderer } from "main/Components";
 import DetailPaneLoading from "./components/DetailPaneLoading";
@@ -20,8 +14,38 @@ import HomeSectionList from "./components/HomeSectionList";
 
 const DetailPane = lazy(() => import("main/DetailPane"));
 
-const ABOUT_ITEM = { title: "Leo Liu", id: ABOUT_ID };
 const LATEST_EXPERIENCE_ID = generateId(experience[0]);
+
+const DetailPaneWithSuspense = ({
+  selectedContent,
+  selectedProject,
+  parentItem,
+  selectedItem,
+  selectedId,
+  onClose,
+  desktopHeight,
+  emptyState,
+  disableContainerGutters,
+}) => (
+  <Suspense
+    fallback={
+      <DetailPaneLoading width={disableContainerGutters ? "100%" : undefined} />
+    }
+  >
+    <DetailPane
+      isBlogMode={false}
+      selectedContent={selectedContent}
+      selectedProject={selectedProject}
+      parentItem={parentItem}
+      selectedItem={selectedItem}
+      selectedId={selectedId}
+      onClose={onClose}
+      desktopHeight={desktopHeight}
+      emptyState={emptyState}
+      disableContainerGutters={disableContainerGutters}
+    />
+  </Suspense>
+);
 
 const HomePage = () => {
   const theme = useTheme();
@@ -111,11 +135,6 @@ const HomePage = () => {
               }}
             >
               <HomeSectionList
-                aboutItem={ABOUT_ITEM}
-                education={education}
-                experience={experience}
-                volunteering={volunteering}
-                projects={projects}
                 selectedId={listSelectedId}
                 onSelect={handleSelectWithRoute}
                 activeSectionId={activeSectionId}
@@ -126,46 +145,35 @@ const HomePage = () => {
             </Box>
           </Box>
 
-          <Suspense fallback={<DetailPaneLoading />}>
-            <DetailPane
-              isBlogMode={false}
-              selectedContent={detailPaneContent}
-              selectedProject={selectedProject}
-              parentItem={parentItem}
-              selectedItem={selectedItem}
-              selectedId={selectedId}
-              onClose={handleClose}
-              desktopHeight={DESKTOP_PANE_HEIGHT}
-              emptyState={
-                <HomeEmptyState
-                  latestExperienceId={LATEST_EXPERIENCE_ID}
-                  onSelect={handleSelectWithRoute}
-                />
-              }
-            />
-          </Suspense>
-        </Box>
-      ) : isMobileSelectedDetailMode && detailPaneContent ? (
-        <Suspense fallback={<DetailPaneLoading width="100%" />}>
-          <DetailPane
-            isBlogMode={false}
+          <DetailPaneWithSuspense
             selectedContent={detailPaneContent}
             selectedProject={selectedProject}
             parentItem={parentItem}
             selectedItem={selectedItem}
             selectedId={selectedId}
             onClose={handleClose}
-            desktopHeight="auto"
-            disableContainerGutters
+            desktopHeight={DESKTOP_PANE_HEIGHT}
+            emptyState={
+              <HomeEmptyState
+                latestExperienceId={LATEST_EXPERIENCE_ID}
+                onSelect={handleSelectWithRoute}
+              />
+            }
           />
-        </Suspense>
+        </Box>
+      ) : isMobileSelectedDetailMode && detailPaneContent ? (
+        <DetailPaneWithSuspense
+          selectedContent={detailPaneContent}
+          selectedProject={selectedProject}
+          parentItem={parentItem}
+          selectedItem={selectedItem}
+          selectedId={selectedId}
+          onClose={handleClose}
+          desktopHeight="auto"
+          disableContainerGutters
+        />
       ) : (
         <HomeSectionList
-          aboutItem={ABOUT_ITEM}
-          education={education}
-          experience={experience}
-          volunteering={volunteering}
-          projects={projects}
           selectedId={listSelectedId}
           onSelect={handleSelectWithRoute}
           activeSectionId={activeSectionId}
