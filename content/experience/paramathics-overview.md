@@ -17,5 +17,8 @@ feeding it into our kernels.
 ![Matrix Decomposition](/triton/matrix_decomposition.png)
 
 My contribution to the project is mainly on the frontend of the compiler.
-This includes experimenting with new matmul kernels
-to optimize performance, implementing clean APIs for autotuning, as well as benchmarking the speedup.
+This includes experimenting with [new matmul kernels](#kernels-paramathics-lab-university-of-toronto)
+to optimize performance, implementing clean APIs for [autotuning](#autotuning-paramathics-lab-university-of-toronto),
+building a [fused matmul-compress kernel](#fused-matmul-compress-kernel-paramathics-lab-university-of-toronto),
+developing [sparse matrix multiplication support](#sparse-matrix-multiplication-support-paramathics-lab-university-of-toronto),
+and improving [pipelining](#pipelining-paramathics-lab-university-of-toronto) while benchmarking the speedup.

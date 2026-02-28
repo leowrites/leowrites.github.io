@@ -1,9 +1,9 @@
 {
   "files": {
     "main.css": "/static/css/main.8889fffe.css",
-    "main.js": "/static/js/main.c74b8c56.js",
-    "static/js/38.9ff81e68.chunk.js": "/static/js/38.9ff81e68.chunk.js",
-    "static/js/746.cacd2db0.chunk.js": "/static/js/746.cacd2db0.chunk.js",
+    "main.js": "/static/js/main.2e16e2d8.js",
+    "static/js/38.c58a978e.chunk.js": "/static/js/38.c58a978e.chunk.js",
+    "static/js/465.b1d25ba7.chunk.js": "/static/js/465.b1d25ba7.chunk.js",
     "static/js/787.fa3c4679.chunk.js": "/static/js/787.fa3c4679.chunk.js",
     "static/js/876.0491f7e7.chunk.js": "/static/js/876.0491f7e7.chunk.js",
     "static/media/sora-latin-400-normal.woff": "/static/media/sora-latin-400-normal.3d2dd7af201d0b5cef99.woff",
@@ -12,14 +12,14 @@
     "static/media/sora-latin-ext-400-normal.woff2": "/static/media/sora-latin-ext-400-normal.24149ae8b91ae9128fa3.woff2",
     "index.html": "/index.html",
     "main.8889fffe.css.map": "/static/css/main.8889fffe.css.map",
-    "main.c74b8c56.js.map": "/static/js/main.c74b8c56.js.map",
-    "38.9ff81e68.chunk.js.map": "/static/js/38.9ff81e68.chunk.js.map",
-    "746.cacd2db0.chunk.js.map": "/static/js/746.cacd2db0.chunk.js.map",
+    "main.2e16e2d8.js.map": "/static/js/main.2e16e2d8.js.map",
+    "38.c58a978e.chunk.js.map": "/static/js/38.c58a978e.chunk.js.map",
+    "465.b1d25ba7.chunk.js.map": "/static/js/465.b1d25ba7.chunk.js.map",
     "787.fa3c4679.chunk.js.map": "/static/js/787.fa3c4679.chunk.js.map",
     "876.0491f7e7.chunk.js.map": "/static/js/876.0491f7e7.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.8889fffe.css",
-    "static/js/main.c74b8c56.js"
+    "static/js/main.2e16e2d8.js"
   ]
 }
