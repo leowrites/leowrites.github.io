@@ -11,31 +11,42 @@ The app is a CRA-based React 18 SPA using MUI, react-router-dom v7, react-markdo
 
 ## P2 — Separation of Concerns / Architecture
 
-### 9. JSX embedded in data definitions
+> **Status:** All P2 issues resolved.
 
-**File:** `src/main/data.js`
+### ~~9. JSX embedded in data definitions~~ ✅
 
-`data.js` imports `TooltipLink` and puts JSX directly into `personalInfo.description` and `experience[2].caption`. This makes the data non-serializable, untestable without React, and tightly couples content to UI components. Prefer markdown strings rendered by `MarkdownRenderer`.
+**File:** ~~`src/main/data.js`~~
 
-### 10. Inverted dependency: `content/site/siteData.js` → `main/data.js`
+~~`data.js` imports `TooltipLink` and puts JSX directly into `personalInfo.description` and `experience[2].caption`. This makes the data non-serializable, untestable without React, and tightly couples content to UI components. Prefer markdown strings rendered by `MarkdownRenderer`.~~
 
-`siteData.js` (the "content" layer) re-exports from `main/data.js` (the "UI" layer). The dependency should flow the other direction — data should be defined in `content/` and consumed by `main/`.
+**Resolution:** JSX replaced with plain markdown strings (using link title syntax for tooltips). `SiteHeader.js` and `DetailPane.js` now render these fields via `MarkdownRenderer`.
 
-### 11. Hook returns JSX
+### ~~10. Inverted dependency: `content/site/siteData.js` → `main/data.js`~~ ✅
 
-**File:** `src/features/site/hooks/useContentMode.js` (lines 14–20)
+~~`siteData.js` (the "content" layer) re-exports from `main/data.js` (the "UI" layer). The dependency should flow the other direction — data should be defined in `content/` and consumed by `main/`.~~
 
-`renderContent` returns `<MarkdownRenderer>` or `<StructuredDetails>` elements, making the hook tightly coupled to the view layer. Hooks should return data; the component should decide rendering.
+**Resolution:** All data moved into `content/site/siteData.js`. `main/data.js` deleted.
 
-### 12. `PersonalImageSlicesCard.js` — 631-line monolith
+### ~~11. Hook returns JSX~~ ✅
 
-**File:** `src/main/PersonalImageSlicesCard.js`
+**File:** ~~`src/features/site/hooks/useContentMode.js` (lines 14–20)~~
 
-Handles photo data constants, collapsed slice animations, expanded clip-path transitions, full-screen portal overlay with GSAP, image preloading, and dimension tracking — all in one file. Should be decomposed into:
+~~`renderContent` returns `<MarkdownRenderer>` or `<StructuredDetails>` elements, making the hook tightly coupled to the view layer. Hooks should return data; the component should decide rendering.~~
 
-- A `FullScreenImageViewer` component
-- A `useSliceAnimation` hook
-- Photo data moved to a separate file
+**Resolution:** `renderContent` and `selectedContent` removed from `useContentMode`. `HomePage.js` now computes the rendered JSX from `selectedItem` via `<ContentRenderer>`.
+
+### ~~12. `PersonalImageSlicesCard.js` — 631-line monolith~~ ✅
+
+**File:** ~~`src/main/PersonalImageSlicesCard.js`~~
+
+~~Handles photo data constants, collapsed slice animations, expanded clip-path transitions, full-screen portal overlay with GSAP, image preloading, and dimension tracking — all in one file.~~
+
+**Resolution:** Decomposed into:
+
+- `src/main/data/photoSlices.js` — photo data constants
+- `src/main/hooks/useSliceAnimation.js` — GSAP slice animation hook
+- `src/main/components/FullScreenImageViewer.js` — fullscreen portal overlay
+- `PersonalImageSlicesCard.js` reduced from ~630 to ~240 lines
 
 ---
 
@@ -81,8 +92,8 @@ In `src/main/Section.js`, `generateId` is called redundantly: once for the `key`
 
 ## Recommended Action Priority
 
-| Priority | Action                                             | Issues   | Effort |
-| -------- | -------------------------------------------------- | -------- | ------ |
-| 1        | Move data out of JSX, fix dependency inversion     | #9, #10  | Medium |
-| 2        | Split `PersonalImageSlicesCard` into smaller pieces | #12      | High   |
-| 3        | Fix minor consistency issues                       | #13–#25  | Low    |
+| Priority | Action                                              | Issues  | Effort | Status  |
+| -------- | --------------------------------------------------- | ------- | ------ | ------- |
+| 1        | Move data out of JSX, fix dependency inversion      | #9, #10 | Medium | ✅ Done |
+| 2        | Split `PersonalImageSlicesCard` into smaller pieces | #12     | High   | ✅ Done |
+| 3        | Fix minor consistency issues                        | #13–#25 | Low    | Open    |
