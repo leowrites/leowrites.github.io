@@ -4,7 +4,7 @@ Often, data movement is the most significant constraint on computation performan
 
 ![Reference compression workflow](/triton/ref_compress.png#responsive)
 
-If we can performance the pruning and compression step directly within the Triton kernel, we can avoid the costly step of moving data.
+If we can perform the pruning and compression step directly within the Triton kernel, we can avoid the costly step of moving data.
 
 ![Compress kernel](/triton/compress_kernel.png#responsive)
 

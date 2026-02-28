@@ -14,7 +14,7 @@ streamline this process and drastically improve engineers' and QAs' productivity
 
 The new devtool panel cleanly displays all of the blocked requests while displaying the reason for
 blocking. Engineers can easily unblock one or more requests, or even use a built-in debugger to programtically
-narrow down which set of blocked requests are casuing the site to break.
+narrow down which set of blocked requests are causing the site to break.
 ![Devtools Panel](/fx/devtool.png#responsive)
 
 > **💡 Want to try it out yourself?**
