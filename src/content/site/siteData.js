@@ -38,20 +38,20 @@ const experience = [
     dates: "May 2025 - Present",
     caption:
       "Adding support for structured sparsity matrix multiplication to Triton",
-    contentKey: "experience/paramathics-overview",
+    contentKey: "experience/paramathics/overview",
 
     projects: [
       {
         projectName: "Kernels",
-        contentKey: "experience/paramathics-kernels",
+        contentKey: "experience/paramathics/kernels",
       },
       {
         projectName: "Autotuning",
-        contentKey: "experience/paramathics-autotuning",
+        contentKey: "experience/paramathics/autotuning",
       },
       {
         projectName: "Fused matmul-compress kernel",
-        contentKey: "experience/paramathics-fused-matmul-compress",
+        contentKey: "experience/paramathics/fused-matmul-compress",
       },
     ],
     tags: ["Research", "Compiler", "LLVM", "MLIR", "Machine Learning", "C++"],
@@ -64,18 +64,18 @@ const experience = [
     location: "Toronto, ON",
     dates: "May 2025 - Sep 2025",
     caption: "Firefox Privacy",
-    contentKey: "experience/mozilla-overview",
+    contentKey: "experience/mozilla/overview",
 
     projects: [
       {
         projectName: "Enhanced Tracking Protection",
         caption: "Granular configuration options for ETP-Strict users",
-        contentKey: "experience/mozilla-etp",
+        contentKey: "experience/mozilla/etp",
       },
       {
         projectName: "Tracker debugger",
         caption: "Devtool to speed up debugging web-compatibility issues",
-        contentKey: "experience/mozilla-devtools",
+        contentKey: "experience/mozilla/devtools",
       },
     ],
     tags: ["C++", "JavaScript"],
@@ -90,14 +90,14 @@ const experience = [
     dates: "Sep 2024 - Dec 2024",
     caption:
       'Full-Stack developer for [Seismic LiveSocial](https://www.seismic.com/customer-stories/seismic-livesocial/ "A platform for curating and distributing personalized content")',
-    contentKey: "experience/seismic-overview",
+    contentKey: "experience/seismic/overview",
 
     projects: [
       {
         projectName: "LiveSocial",
         caption:
           "Full-Stack developer on LiveSocial, a platform for curating personalized content for sales teams.",
-        contentKey: "experience/seismic-livesocial",
+        contentKey: "experience/seismic/livesocial",
         tags: ["React", "Express", "MongoDB", "TypeScript", "Fullstack"],
       },
     ],
@@ -122,14 +122,14 @@ const experience = [
     location: "Toronto, ON",
     dates: "May 2024 - Aug 2024",
     caption: "Digital agency",
-    contentKey: "experience/konrad-overview",
+    contentKey: "experience/konrad/overview",
 
     projects: [
       {
         projectName: "Internal Gaming Analytics Tool",
         caption:
           "Backend development for scraping, processing, and serving game statistics.",
-        contentKey: "experience/konrad-gaming-analytics",
+        contentKey: "experience/konrad/gaming-analytics",
         tags: ["Backend", "GraphQL", "Apollo", "Node.js", "TypeScript"],
       },
     ],
@@ -152,13 +152,13 @@ const experience = [
       "A leader in aerospace satellite communications and intelligent connectivity",
     location: "Ottawa, ON",
     dates: "May 2023 - Aug 2023",
-    contentKey: "experience/skytrac-overview",
+    contentKey: "experience/skytrac/overview",
 
     projects: [
       {
         projectName: "Flight Data Systems",
         caption: "Automated tooling and visualization for flight logs.",
-        contentKey: "experience/skytrac-flight-data",
+        contentKey: "experience/skytrac/flight-data",
         tags: ["BackboneJS", "Python", "MySQL", "Data Tooling"],
       },
     ],
