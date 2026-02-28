@@ -119,7 +119,7 @@ const SiteHeader = ({ personalInfo, variant = "default" }) => {
             clickable
             component="a"
             href={`mailto:${personalInfo.email}`}
-            label=" Email"
+            label="Email"
             sx={{ borderRadius: "999px" }}
           />
           <Chip

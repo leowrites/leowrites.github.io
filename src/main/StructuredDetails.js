@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, Typography } from "@mui/material";
-import { MarkdownRenderer } from "./Components";
+import { MarkdownRenderer } from "./components/MarkdownRenderer";
 
 export const StructuredDetails = ({ details }) => {
   return (
