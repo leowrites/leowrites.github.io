@@ -64,9 +64,9 @@ export const useContentMode = () => {
     (id, options = {}) => {
       const { replace = false } = options;
       if (id === null || id === selectedIdRef.current) {
-        navigate("/", { replace });
+        navigate("/", { replace, viewTransition: true });
       } else {
-        navigate(`/item/${id}`, { replace });
+        navigate(`/item/${id}`, { replace, viewTransition: true });
       }
     },
     [navigate]

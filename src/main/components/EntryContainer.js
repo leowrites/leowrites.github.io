@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Box, Collapse, Divider, Typography } from "@mui/material";
+import { Box, Divider, Typography } from "@mui/material";
 import { alpha } from "@mui/material/styles";
 import {
   IconCircle,
@@ -17,6 +17,7 @@ export const EntryContainer = React.memo(
     selected = false,
     id,
     isFolder = false,
+    animationDelay,
   }) => {
     const [expanded, setExpanded] = useState(false);
     const suppressAutoExpandRef = useRef(false);
@@ -51,12 +52,19 @@ export const EntryContainer = React.memo(
     return (
       <Box
         id={id}
-        sx={getCardContainerSx({
-          selectedLight: (theme) => theme.palette.grey[200],
-          selectedDark: (theme) => alpha(theme.palette.common.white, 0.14),
-          isHighlighted,
-          margin: "0.25rem 0",
-        })}
+        sx={[
+          getCardContainerSx({
+            selectedLight: (theme) => theme.palette.grey[200],
+            selectedDark: (theme) => alpha(theme.palette.common.white, 0.14),
+            isHighlighted,
+            margin: "0.25rem 0",
+          }),
+          animationDelay !== undefined && {
+            animation:
+              "siteItemFadeIn 280ms cubic-bezier(0.22, 1, 0.36, 1) both",
+            animationDelay: `${animationDelay}ms`,
+          },
+        ]}
       >
         <Box
           onClick={handleCardClick}
@@ -130,21 +138,30 @@ export const EntryContainer = React.memo(
           </Box>
         </Box>
         {canExpand && (
-          <Collapse in={expanded} timeout={300}>
-            <Divider
-              sx={{
-                mb: "0",
-                mx: "0.85rem",
-              }}
-            />
-            <Box
-              sx={{
-                padding: "0 0.65rem 0.65rem 0.65rem",
-              }}
-            >
-              {children}
+          <Box
+            sx={{
+              display: "grid",
+              gridTemplateRows: expanded ? "1fr" : "0fr",
+              transition:
+                "grid-template-rows 240ms cubic-bezier(0.22, 1, 0.36, 1)",
+            }}
+          >
+            <Box sx={{ overflow: "hidden" }}>
+              <Divider
+                sx={{
+                  mb: "0",
+                  mx: "0.85rem",
+                }}
+              />
+              <Box
+                sx={{
+                  padding: "0 0.65rem 0.65rem 0.65rem",
+                }}
+              >
+                {children}
+              </Box>
             </Box>
-          </Collapse>
+          </Box>
         )}
       </Box>
     );

@@ -14,10 +14,10 @@ import CloseIcon from "@mui/icons-material/Close";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import { TechTagList, MarkdownRenderer } from "./Components";
 
-const fadeSlideUp = keyframes`
+const fadeSlideIn = keyframes`
   from {
     opacity: 0;
-    transform: translateY(8px);
+    transform: translateY(6px);
   }
   to {
     opacity: 1;
@@ -97,10 +97,10 @@ const DetailPane = ({
             p: contentPadding !== undefined ? contentPadding : { md: 4 },
             position: "relative",
             borderRadius: "1rem",
-            animation: `${fadeSlideUp} ${theme.transitions.duration.standard}ms ${theme.transitions.easing.easeInOut} forwards`,
+            animation: `${fadeSlideIn} ${theme.transitions.duration.standard}ms ${theme.transitions.easing.easeOut} both`,
           }}
           style={{
-            viewTransitionName: selectedProject ? "project-modal" : "none",
+            viewTransitionName: "detail-content",
           }}
         >
           <Stack

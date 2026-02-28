@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Collapse, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForwardIos";
 import { alpha } from "@mui/material/styles";
 import {
@@ -62,7 +62,9 @@ export const ProjectEntry = React.memo(
             justifyContent: "space-between",
             alignItems: "center",
             borderLeft: nested
-              ? `${selected ? 2 : 0}px solid ${theme.palette.text.primary}`
+              ? `2px solid ${
+                  selected ? theme.palette.text.primary : "transparent"
+                }`
               : "none",
           })}
         >
@@ -95,9 +97,18 @@ export const ProjectEntry = React.memo(
           )}
         </Box>
         {!isSelectionMode && (
-          <Collapse in={expanded} timeout={300}>
-            <Box sx={{ padding: "0 1rem 1rem 1rem" }}>{children}</Box>
-          </Collapse>
+          <Box
+            sx={{
+              display: "grid",
+              gridTemplateRows: expanded ? "1fr" : "0fr",
+              transition:
+                "grid-template-rows 240ms cubic-bezier(0.22, 1, 0.36, 1)",
+            }}
+          >
+            <Box sx={{ overflow: "hidden", padding: "0 1rem 1rem 1rem" }}>
+              {children}
+            </Box>
+          </Box>
         )}
       </Box>
     );

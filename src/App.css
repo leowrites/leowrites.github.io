@@ -48,19 +48,20 @@
   background: var(--selection-bg, #d9e8ff);
 }
 
-/* View Transitions API: smooth morph for project-modal */
-::view-transition-group(project-modal) {
-  animation-duration: 0.45s;
+/* View Transitions API: smooth morph for detail content */
+::view-transition-group(detail-content) {
+  animation-duration: 0.4s;
   animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-::view-transition-old(project-modal) {
-  animation-duration: 0.25s;
+::view-transition-old(detail-content) {
+  animation-duration: 0.18s;
   animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  opacity: 0;
 }
 
-::view-transition-new(project-modal) {
-  animation-duration: 0.3s;
+::view-transition-new(detail-content) {
+  animation-duration: 0.32s;
   animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
@@ -71,4 +72,32 @@
 
 ::view-transition-new(root) {
   animation-duration: 0.3s;
+}
+
+/* Stagger entrance animation for section items */
+@keyframes siteItemFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Respect reduced-motion preference */
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation-duration: 0.01ms !important;
+  }
+
+  @keyframes siteItemFadeIn {
+    from {
+      opacity: 1;
+      transform: none;
+    }
+  }
 }
