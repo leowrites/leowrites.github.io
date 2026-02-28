@@ -11,7 +11,7 @@ import {
 } from "./Components";
 
 const SectionProjectItem = React.memo(
-  ({ proj, projId, item, selectedId, onSelect, isFirst = false }) => {
+  ({ proj, projId, selectedId, onSelect, isFirst = false }) => {
     const handleSelect = React.useCallback(() => {
       if (onSelect) {
         onSelect(projId);
@@ -119,7 +119,6 @@ const SectionItem = React.memo(
                 key={projectIds[index]}
                 proj={proj}
                 projId={projectIds[index]}
-                item={item}
                 selectedId={selectedId}
                 onSelect={onSelect}
                 isFirst={index === 0}
