@@ -1,5 +1,6 @@
 import React from "react";
 import { Box } from "@mui/material";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 const iconCircleSx = {
   display: "flex",
@@ -11,6 +12,21 @@ const iconCircleSx = {
 
 export const IconCircle = ({ children, sx }) => (
   <Box sx={{ ...iconCircleSx, ...sx }}>{children}</Box>
+);
+
+export const RotatingExpandIcon = ({ expanded, compact }) => (
+  <ExpandMoreIcon
+    sx={{
+      transform: expanded ? "rotate(180deg)" : "rotate(0deg)",
+      transition: (theme) =>
+        theme.transitions.create("transform", {
+          duration: theme.transitions.duration.short,
+          easing: theme.transitions.easing.easeInOut,
+        }),
+      color: (theme) => theme.palette.text.primary,
+      fontSize: compact ? "1.05rem" : undefined,
+    }}
+  />
 );
 
 export const getCardContainerSx = ({

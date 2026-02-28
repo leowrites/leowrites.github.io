@@ -11,8 +11,7 @@ export const useHomePageInteractions = ({
   selectedContent,
   selectedItem,
   handleSelect,
-  experience,
-  volunteering,
+  parentByProjectId,
 }) => {
   const [activeSectionId, setActiveSectionId] = React.useState(
     SECTION_LINKS[0].id
@@ -22,38 +21,16 @@ export const useHomePageInteractions = ({
   const hasAutoOpenedDesktopRef = React.useRef(false);
   const hasExplicitDesktopCloseRef = React.useRef(false);
 
-  const latestExperienceId = React.useMemo(
-    () => generateId(experience[0]),
-    [experience]
-  );
-
-  const parentIdByNestedProjectId = React.useMemo(() => {
-    const map = new Map();
-
-    for (const item of [...experience, ...volunteering]) {
-      const parentId = generateId(item);
-      for (const project of item.projects || []) {
-        const projectId = generateId({
-          ...project,
-          title: project.projectName,
-          organization: item.organization,
-        });
-        map.set(projectId, parentId);
-      }
+  const { parentIdByNestedProjectId, parentFolderIdSet } = React.useMemo(() => {
+    const idMap = new Map();
+    const folderSet = new Set();
+    for (const [projId, parentItem] of parentByProjectId) {
+      const parentId = generateId(parentItem);
+      idMap.set(projId, parentId);
+      folderSet.add(parentId);
     }
-
-    return map;
-  }, [experience, volunteering]);
-
-  const parentFolderIdSet = React.useMemo(() => {
-    const set = new Set();
-    for (const item of [...experience, ...volunteering]) {
-      if (item.projects?.length) {
-        set.add(generateId(item));
-      }
-    }
-    return set;
-  }, [experience, volunteering]);
+    return { parentIdByNestedProjectId: idMap, parentFolderIdSet: folderSet };
+  }, [parentByProjectId]);
 
   const isAboutSelected = selectedId === "leo-liu";
   const isMobileSelectedDetailMode =
@@ -176,7 +153,6 @@ export const useHomePageInteractions = ({
   }, []);
 
   return {
-    latestExperienceId,
     activeSectionId,
     isAboutSelected,
     isMobileSelectedDetailMode,

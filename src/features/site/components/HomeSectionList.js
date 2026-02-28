@@ -1,7 +1,6 @@
 import React from "react";
 import { Box, Button } from "@mui/material";
 import Section from "main/Section";
-import EducationSection from "main/Education";
 import { SECTION_LINKS } from "../constants/layout";
 
 const HomeSectionList = ({
@@ -79,8 +78,9 @@ const HomeSectionList = ({
         onSelect={onSelect}
         sectionId="section-about"
       />
-      <EducationSection
-        educationData={education}
+      <Section
+        sectionTitle="Education"
+        items={education}
         selectedId={selectedId}
         onSelect={onSelect}
         sectionId="section-education"

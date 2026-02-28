@@ -45,11 +45,7 @@ const DetailPane = ({
 
   const breadcrumbs = ["Home"];
   const detailCaption = selectedProject?.caption || selectedItem?.caption;
-  const detailTags =
-    selectedProject?.tags ||
-    selectedProject?.technologies ||
-    selectedItem?.tags ||
-    selectedItem?.technologies;
+  const detailTags = selectedProject?.tags || selectedItem?.tags;
   const detailGithubLink =
     selectedProject?.githubLink || selectedItem?.githubLink;
   const currentItemLabel =
