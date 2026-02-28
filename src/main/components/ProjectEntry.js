@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Box, Collapse, Typography } from "@mui/material";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForwardIos";
 import { alpha } from "@mui/material/styles";
-import { TechTagList } from "./TechTagList";
 import {
   IconCircle,
   getCardContainerSx,
@@ -12,13 +11,10 @@ import {
 export const ProjectEntry = React.memo(
   ({
     projectName,
-    caption,
-    technologies,
     onSelect,
     selected = false,
     id,
     children,
-    compact = true,
     nested = false,
     isFirst = false,
   }) => {
@@ -37,7 +33,7 @@ export const ProjectEntry = React.memo(
       <Box
         id={id}
         sx={
-          compact && nested
+          nested
             ? {
                 backgroundColor: "transparent",
                 borderTop: isFirst
@@ -48,61 +44,44 @@ export const ProjectEntry = React.memo(
                 },
               }
             : getCardContainerSx({
-                baseLight: (theme) => alpha(theme.palette.common.white, 0.4),
-                baseDark: (theme) => alpha(theme.palette.common.white, 0.06),
                 selectedLight: (theme) =>
                   alpha(theme.palette.common.white, 0.7),
                 selectedDark: (theme) =>
                   alpha(theme.palette.common.white, 0.16),
                 isHighlighted: selected,
-                margin: compact ? "0.2rem 0" : undefined,
-                compact,
+                margin: "0.2rem 0",
               })
         }
       >
         <Box
           onClick={handleClick}
           sx={(theme) => ({
-            padding:
-              compact && nested
-                ? "0.3rem 0.2rem 0.3rem 0.5rem"
-                : compact
-                ? "0.38rem 0.55rem"
-                : "0.5rem 1rem",
+            padding: nested ? "0.3rem 0.2rem 0.3rem 0.5rem" : "0.38rem 0.55rem",
             cursor: "pointer",
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
-            borderLeft:
-              compact && nested
-                ? `${selected ? 2 : 0}px solid ${theme.palette.text.primary}`
-                : "none",
+            borderLeft: nested
+              ? `${selected ? 2 : 0}px solid ${theme.palette.text.primary}`
+              : "none",
           })}
         >
           <Box>
             <Box sx={{ display: "flex", alignItems: "center" }}>
               <Typography
-                variant={
-                  compact && nested ? "body2" : compact ? "body1" : "subtitle1"
-                }
+                variant={nested ? "body2" : "body1"}
                 sx={{ mr: "1rem", fontWeight: 700, lineHeight: 1.3 }}
               >
                 {projectName}
               </Typography>
             </Box>
-            {!compact && caption && (
-              <Typography variant="body2" color="text.secondary">
-                {caption}
-              </Typography>
-            )}
-            {!compact && <TechTagList technologies={technologies} />}
           </Box>
           {isSelectionMode ? (
-            compact && nested ? null : (
-              <IconCircle sx={compact ? { p: 0 } : undefined}>
+            nested ? null : (
+              <IconCircle sx={{ p: 0 }}>
                 <ArrowForwardIcon
                   sx={{
-                    fontSize: compact ? "0.82rem" : "1rem",
+                    fontSize: "0.82rem",
                     color: (theme) => theme.palette.text.secondary,
                     opacity: selected ? 1 : 0.5,
                   }}

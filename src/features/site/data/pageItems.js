@@ -4,11 +4,10 @@ import {
   projects,
   volunteering,
 } from "content/site/siteData";
-import { buildPageItems } from "content/site/model/contentModel";
 
-export const pageItems = buildPageItems({
-  education,
-  experience,
-  volunteering,
-  projects,
-});
+export const pageItems = [
+  ...education,
+  ...experience,
+  ...volunteering,
+  ...projects,
+];

@@ -28,8 +28,6 @@ const SectionProjectItem = React.memo(
       <ProjectEntry
         id={projId}
         projectName={proj.projectName}
-        caption={proj.caption}
-        technologies={proj.tags}
         selected={selectedId === projId}
         onSelect={onSelect ? handleSelect : undefined}
         nested
@@ -106,10 +104,6 @@ const SectionItem = React.memo(
         date={item.dates}
         title={titleContent}
         company={companyContent}
-        caption={item.caption || ""}
-        technologies={item.tags}
-        logo={item.logo}
-        githubLink={item.githubLink}
         selected={isSelected}
         onSelect={onSelect ? handleParentSelect : undefined}
         isFolder={hasProjects}
