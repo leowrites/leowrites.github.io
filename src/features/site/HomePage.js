@@ -13,6 +13,7 @@ import { useContentMode } from "./hooks/useContentMode";
 import { useHomePageInteractions } from "./hooks/useHomePageInteractions";
 import { DESKTOP_PANE_HEIGHT } from "./constants/layout";
 import { generateId } from "main/utils";
+import { ContentRenderer } from "main/Components";
 import DetailPaneLoading from "./components/DetailPaneLoading";
 import HomeEmptyState from "./components/HomeEmptyState";
 import HomeSectionList from "./components/HomeSectionList";
@@ -28,7 +29,6 @@ const HomePage = () => {
   const location = useLocation();
 
   const {
-    selectedContent,
     selectedId,
     selectedProject,
     parentItem,
@@ -36,6 +36,14 @@ const HomePage = () => {
     handleSelect,
     parentByProjectId,
   } = useContentMode();
+
+  const selectedContent =
+    selectedItem &&
+    (selectedItem.content ||
+      selectedItem.contentKey ||
+      selectedItem.details) ? (
+      <ContentRenderer item={selectedItem} />
+    ) : null;
 
   const {
     activeSectionId,
@@ -49,7 +57,6 @@ const HomePage = () => {
     matches,
     location,
     selectedId,
-    selectedContent,
     selectedItem,
     handleSelect,
     parentByProjectId,

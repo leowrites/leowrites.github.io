@@ -1,6 +1,7 @@
 import React from "react";
 import { Box, Chip, Stack, Typography } from "@mui/material";
 import PersonalImageSlicesCard from "./PersonalImageSlicesCard";
+import { MarkdownRenderer } from "./Components";
 
 const SiteHeader = ({ personalInfo, variant = "default" }) => {
   const isDetailPane = variant === "detailPane";
@@ -43,15 +44,7 @@ const SiteHeader = ({ personalInfo, variant = "default" }) => {
         />
       </Box>
       {personalInfo.description.map((info, index) => {
-        return (
-          <Typography
-            key={index}
-            variant={isDetailPane ? "body1" : "h6"}
-            sx={{ mb: "0.5rem", color: "text.secondary" }}
-          >
-            {info}
-          </Typography>
-        );
+        return <MarkdownRenderer key={index} content={info} />;
       })}
       <PersonalImageSlicesCard />
       {personalInfo.now && (

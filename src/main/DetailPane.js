@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import GitHubIcon from "@mui/icons-material/GitHub";
-import { TechTagList } from "./Components";
+import { TechTagList, MarkdownRenderer } from "./Components";
 
 const fadeSlideUp = keyframes`
   from {
@@ -142,11 +142,7 @@ const DetailPane = ({
                 borderBottom: (theme) => `1px solid ${theme.palette.divider}`,
               }}
             >
-              {detailCaption && (
-                <Typography variant="body1" color="text.secondary">
-                  {detailCaption}
-                </Typography>
-              )}
+              {detailCaption && <MarkdownRenderer content={detailCaption} />}
               <Stack
                 direction="row"
                 alignItems="center"

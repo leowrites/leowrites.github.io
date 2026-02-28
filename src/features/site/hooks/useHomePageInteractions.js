@@ -8,7 +8,6 @@ export const useHomePageInteractions = ({
   matches,
   location,
   selectedId,
-  selectedContent,
   selectedItem,
   handleSelect,
   parentByProjectId,
@@ -33,10 +32,13 @@ export const useHomePageInteractions = ({
   }, [parentByProjectId]);
 
   const isAboutSelected = selectedId === "leo-liu";
+  const hasContent =
+    selectedItem &&
+    (selectedItem.content || selectedItem.contentKey || selectedItem.details);
   const isMobileSelectedDetailMode =
     !matches &&
     (isAboutSelected ||
-      (Boolean(selectedContent) && !selectedItem?.projects?.length));
+      (Boolean(hasContent) && !selectedItem?.projects?.length));
   const isMobileListMode = !matches && !isMobileSelectedDetailMode;
 
   const handleClose = React.useCallback(() => {

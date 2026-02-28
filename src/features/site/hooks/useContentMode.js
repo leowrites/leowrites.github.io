@@ -3,16 +3,11 @@ import { useNavigate, useParams } from "react-router-dom";
 import { pageItems } from "features/site/data/pageItems";
 import { projects } from "content/site/siteData";
 import { generateId } from "main/utils";
-import { ContentRenderer } from "main/Components";
 
 export const useContentMode = () => {
   const navigate = useNavigate();
   const { itemId } = useParams();
   const selectedId = itemId || null;
-
-  const renderContent = useCallback((item) => {
-    return <ContentRenderer item={item} />;
-  }, []);
 
   const {
     itemById,
@@ -57,19 +52,10 @@ export const useContentMode = () => {
     };
   }, []);
 
-  const selectedContent = useMemo(() => {
+  const selectedItem = useMemo(() => {
     if (!selectedId) return null;
-    const selectedItem = itemById.get(selectedId);
-    if (
-      !selectedItem ||
-      (!selectedItem.content &&
-        !selectedItem.contentKey &&
-        !selectedItem.details)
-    ) {
-      return null;
-    }
-    return renderContent(selectedItem);
-  }, [selectedId, itemById, renderContent]);
+    return itemById.get(selectedId) || null;
+  }, [selectedId, itemById]);
 
   const handleSelect = useCallback(
     (id, options = {}) => {
@@ -104,13 +90,7 @@ export const useContentMode = () => {
     return parentByProjectId.get(selectedId) || null;
   }, [selectedProject, selectedId, parentByProjectId, nestedProjectById]);
 
-  const selectedItem = useMemo(() => {
-    if (!selectedId) return null;
-    return itemById.get(selectedId) || null;
-  }, [selectedId, itemById]);
-
   return {
-    selectedContent,
     selectedId,
     selectedProject,
     parentItem,
