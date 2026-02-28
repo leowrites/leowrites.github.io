@@ -1,4 +1,6 @@
 export const generateId = (item) => {
+  if (item.id) return item.id;
+
   const parts = [];
   if (item.degree) parts.push(item.degree);
   if (item.institution) parts.push(item.institution);

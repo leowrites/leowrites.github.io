@@ -65,3 +65,4 @@ export const MarkdownRenderer = React.memo(({ content, contentKey }) => {
     </Suspense>
   );
 });
+MarkdownRenderer.displayName = "MarkdownRenderer";

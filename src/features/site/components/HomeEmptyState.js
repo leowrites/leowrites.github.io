@@ -1,6 +1,9 @@
 import React from "react";
 import { Box, Button, Typography } from "@mui/material";
 
+const EMPTY_STATE_IMAGE = "/photos/optimized/IMG_0206.jpg";
+const EMPTY_STATE_CAPTION = "Kelowna, BC";
+
 const HomeEmptyState = ({ latestExperienceId, onSelect }) => {
   return (
     <>
@@ -42,7 +45,7 @@ const HomeEmptyState = ({ latestExperienceId, onSelect }) => {
             width: "420px",
             maxWidth: "100%",
             height: "240px",
-            backgroundImage: "url(/photos/optimized/IMG_0206.jpg)",
+            backgroundImage: `url(${EMPTY_STATE_IMAGE})`,
             backgroundSize: "cover",
             backgroundPosition: "center",
             borderRadius: "1rem",
@@ -57,7 +60,7 @@ const HomeEmptyState = ({ latestExperienceId, onSelect }) => {
           textAlign="end"
           sx={{ mt: "0.5rem" }}
         >
-          Kelowna, BC
+          {EMPTY_STATE_CAPTION}
         </Typography>
       </Box>
     </>

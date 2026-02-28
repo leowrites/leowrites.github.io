@@ -150,3 +150,4 @@ export const EntryContainer = React.memo(
     );
   }
 );
+EntryContainer.displayName = "EntryContainer";

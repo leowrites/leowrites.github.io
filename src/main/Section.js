@@ -11,13 +11,7 @@ import {
 } from "./Components";
 
 const SectionProjectItem = React.memo(
-  ({ proj, item, selectedId, onSelect, isFirst = false }) => {
-    const projId = generateId({
-      ...proj,
-      title: proj.projectName,
-      organization: item.organization,
-    });
-
+  ({ proj, projId, item, selectedId, onSelect, isFirst = false }) => {
     const handleSelect = React.useCallback(() => {
       if (onSelect) {
         onSelect(projId, <ContentRenderer item={proj} />, proj, item);
@@ -38,11 +32,22 @@ const SectionProjectItem = React.memo(
     );
   }
 );
+SectionProjectItem.displayName = "SectionProjectItem";
 
 const SectionItem = React.memo(
-  ({ item, selectedId, onSelect, showOverviewInFolder }) => {
-    const id = generateId(item);
+  ({ item, itemId, selectedId, onSelect, showOverviewInFolder }) => {
     const hasProjects = item.projects && item.projects.length > 0;
+
+    const projectIds = React.useMemo(() => {
+      if (!hasProjects) return [];
+      return item.projects.map((proj) =>
+        generateId({
+          ...proj,
+          title: proj.projectName,
+          organization: item.organization,
+        })
+      );
+    }, [item, hasProjects]);
 
     const titleContent =
       item.url && !item.organization ? (
@@ -76,31 +81,23 @@ const SectionItem = React.memo(
     const handleParentSelect = React.useCallback(() => {
       if (onSelect) {
         onSelect(
-          id,
+          itemId,
           <MarkdownRenderer
             content={item.content}
             contentKey={item.contentKey}
           />
         );
       }
-    }, [onSelect, id, item.content, item.contentKey]);
+    }, [onSelect, itemId, item.content, item.contentKey]);
 
-    const isParentSelected = selectedId === id;
+    const isParentSelected = selectedId === itemId;
     const isChildSelected =
-      hasProjects &&
-      item.projects.some((p) => {
-        const pId = generateId({
-          ...p,
-          title: p.projectName,
-          organization: item.organization,
-        });
-        return pId === selectedId;
-      });
+      hasProjects && projectIds.some((pId) => pId === selectedId);
     const isSelected = isParentSelected || isChildSelected;
 
     return (
       <EntryContainer
-        id={id}
+        id={itemId}
         date={item.dates}
         title={titleContent}
         company={companyContent}
@@ -125,12 +122,9 @@ const SectionItem = React.memo(
             )}
             {item.projects.map((proj, index) => (
               <SectionProjectItem
-                key={generateId({
-                  ...proj,
-                  title: proj.projectName,
-                  organization: item.organization,
-                })}
+                key={projectIds[index]}
                 proj={proj}
+                projId={projectIds[index]}
                 item={item}
                 selectedId={selectedId}
                 onSelect={onSelect}
@@ -145,6 +139,7 @@ const SectionItem = React.memo(
     );
   }
 );
+SectionItem.displayName = "SectionItem";
 
 const Section = ({
   sectionTitle,
@@ -157,17 +152,22 @@ const Section = ({
   return (
     <Box id={sectionId} sx={{ scrollMarginTop: "4.5rem" }}>
       <SectionHeading>{sectionTitle}</SectionHeading>
-      {items.map((item) => (
-        <SectionItem
-          key={generateId(item)}
-          item={item}
-          selectedId={selectedId}
-          onSelect={onSelect}
-          showOverviewInFolder={showOverviewInFolder}
-        />
-      ))}
+      {items.map((item) => {
+        const id = generateId(item);
+        return (
+          <SectionItem
+            key={id}
+            itemId={id}
+            item={item}
+            selectedId={selectedId}
+            onSelect={onSelect}
+            showOverviewInFolder={showOverviewInFolder}
+          />
+        );
+      })}
     </Box>
   );
 };
 
+export { Section };
 export default Section;

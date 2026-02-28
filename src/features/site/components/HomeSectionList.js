@@ -1,7 +1,14 @@
 import React from "react";
 import { Box, Button } from "@mui/material";
 import Section from "main/Section";
-import { SECTION_LINKS } from "../constants/layout";
+import {
+  SECTION_LINKS,
+  SECTION_ABOUT_ID,
+  SECTION_EDUCATION_ID,
+  SECTION_EXPERIENCE_ID,
+  SECTION_LEADERSHIP_ID,
+  SECTION_PROJECTS_ID,
+} from "../constants/layout";
 
 const HomeSectionList = ({
   aboutItem,
@@ -76,14 +83,14 @@ const HomeSectionList = ({
         items={[aboutItem]}
         selectedId={selectedId}
         onSelect={onSelect}
-        sectionId="section-about"
+        sectionId={SECTION_ABOUT_ID}
       />
       <Section
         sectionTitle="Education"
         items={education}
         selectedId={selectedId}
         onSelect={onSelect}
-        sectionId="section-education"
+        sectionId={SECTION_EDUCATION_ID}
       />
       <Section
         sectionTitle="Experience"
@@ -91,7 +98,7 @@ const HomeSectionList = ({
         selectedId={selectedId}
         onSelect={onSelect}
         showOverviewInFolder={folderOverviewMode}
-        sectionId="section-experience"
+        sectionId={SECTION_EXPERIENCE_ID}
       />
       <Section
         sectionTitle="Leadership"
@@ -99,14 +106,14 @@ const HomeSectionList = ({
         selectedId={selectedId}
         onSelect={onSelect}
         showOverviewInFolder={folderOverviewMode}
-        sectionId="section-leadership"
+        sectionId={SECTION_LEADERSHIP_ID}
       />
       <Section
         sectionTitle="Projects"
         items={projects}
         selectedId={selectedId}
         onSelect={onSelect}
-        sectionId="section-projects"
+        sectionId={SECTION_PROJECTS_ID}
       />
     </>
   );

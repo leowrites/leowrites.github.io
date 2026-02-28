@@ -1,4 +1,4 @@
-import { useMemo, useCallback } from "react";
+import React, { useMemo, useCallback, useRef, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { pageItems } from "features/site/data/pageItems";
 import { projects } from "content/site/siteData";
@@ -57,18 +57,21 @@ export const useContentMode = () => {
     return itemById.get(selectedId) || null;
   }, [selectedId, itemById]);
 
+  const selectedIdRef = useRef(selectedId);
+  useEffect(() => {
+    selectedIdRef.current = selectedId;
+  }, [selectedId]);
+
   const handleSelect = useCallback(
     (id, options = {}) => {
       const { replace = false } = options;
-      if (id === null) {
-        navigate("/", { replace });
-      } else if (selectedId === id) {
+      if (id === null || id === selectedIdRef.current) {
         navigate("/", { replace });
       } else {
         navigate(`/item/${id}`, { replace });
       }
     },
-    [navigate, selectedId]
+    [navigate]
   );
 
   const selectedProject = useMemo(() => {
