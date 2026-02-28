@@ -17,6 +17,7 @@ export const EntryContainer = React.memo(
     selected = false,
     id,
     isFolder = false,
+    animationDelay,
   }) => {
     const [expanded, setExpanded] = useState(false);
     const suppressAutoExpandRef = useRef(false);
@@ -51,12 +52,19 @@ export const EntryContainer = React.memo(
     return (
       <Box
         id={id}
-        sx={getCardContainerSx({
-          selectedLight: (theme) => theme.palette.grey[200],
-          selectedDark: (theme) => alpha(theme.palette.common.white, 0.14),
-          isHighlighted,
-          margin: "0.25rem 0",
-        })}
+        sx={[
+          getCardContainerSx({
+            selectedLight: (theme) => theme.palette.grey[200],
+            selectedDark: (theme) => alpha(theme.palette.common.white, 0.14),
+            isHighlighted,
+            margin: "0.25rem 0",
+          }),
+          animationDelay !== undefined && {
+            animation:
+              "siteItemFadeIn 280ms cubic-bezier(0.22, 1, 0.36, 1) both",
+            animationDelay: `${animationDelay}ms`,
+          },
+        ]}
       >
         <Box
           onClick={handleCardClick}

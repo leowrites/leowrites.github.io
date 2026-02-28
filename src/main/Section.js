@@ -35,7 +35,7 @@ const SectionProjectItem = React.memo(
 SectionProjectItem.displayName = "SectionProjectItem";
 
 const SectionItem = React.memo(
-  ({ item, itemId, selectedId, onSelect, showOverviewInFolder }) => {
+  ({ item, itemId, selectedId, onSelect, showOverviewInFolder, index }) => {
     const hasProjects = item.projects && item.projects.length > 0;
 
     const projectIds = React.useMemo(() => {
@@ -98,6 +98,7 @@ const SectionItem = React.memo(
         selected={isSelected}
         onSelect={onSelect ? handleParentSelect : undefined}
         isFolder={hasProjects}
+        animationDelay={index !== undefined ? index * 35 : undefined}
       >
         {hasProjects ? (
           <Box
@@ -145,7 +146,7 @@ const Section = ({
   return (
     <Box id={sectionId} sx={{ scrollMarginTop: "4.5rem" }}>
       <SectionHeading>{sectionTitle}</SectionHeading>
-      {items.map((item) => {
+      {items.map((item, index) => {
         const id = generateId(item);
         return (
           <SectionItem
@@ -155,6 +156,7 @@ const Section = ({
             selectedId={selectedId}
             onSelect={onSelect}
             showOverviewInFolder={showOverviewInFolder}
+            index={index}
           />
         );
       })}

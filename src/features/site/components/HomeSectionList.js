@@ -70,6 +70,18 @@ const HomeSectionList = ({
                   fontWeight: activeSectionId === section.id ? 700 : 600,
                   whiteSpace: "nowrap",
                   opacity: activeSectionId === section.id ? 1 : 0.82,
+                  backgroundColor:
+                    activeSectionId === section.id
+                      ? "action.selected"
+                      : "transparent",
+                  transition: (theme) =>
+                    theme.transitions.create(
+                      ["background-color", "color", "opacity"],
+                      {
+                        duration: theme.transitions.duration.shorter,
+                        easing: theme.transitions.easing.easeInOut,
+                      }
+                    ),
                   "&:hover": {
                     backgroundColor: "action.hover",
                     opacity: 1,
