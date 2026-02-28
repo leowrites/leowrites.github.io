@@ -7,21 +7,30 @@ import ThemeContext from "theme";
 import { PostHogProvider } from "posthog-js/react";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
+
+const app = (
+  <ThemeContext>
+    <App />
+  </ThemeContext>
+);
+
 root.render(
   <React.StrictMode>
-    <PostHogProvider
-      apiKey={process.env.REACT_APP_POSTHOG_KEY}
-      options={{
-        api_host: process.env.REACT_APP_POSTHOG_HOST,
-        defaults: "2025-05-24",
-        capture_exceptions: true,
-        debug: process.env.NODE_ENV === "development",
-      }}
-    >
-      <ThemeContext>
-        <App />
-      </ThemeContext>
-    </PostHogProvider>
+    {process.env.REACT_APP_POSTHOG_KEY ? (
+      <PostHogProvider
+        apiKey={process.env.REACT_APP_POSTHOG_KEY}
+        options={{
+          api_host: process.env.REACT_APP_POSTHOG_HOST,
+          defaults: "2025-05-24",
+          capture_exceptions: true,
+          debug: process.env.NODE_ENV === "development",
+        }}
+      >
+        {app}
+      </PostHogProvider>
+    ) : (
+      app
+    )}
   </React.StrictMode>
 );
 
