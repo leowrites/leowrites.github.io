@@ -1,0 +1,253 @@
+name: Create Tech Debt Issues
+
+on:
+  workflow_dispatch:
+
+jobs:
+  create-issues:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      - name: Ensure tech-debt label exists
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh label create "tech-debt" \
+            --repo "${{ github.repository }}" \
+            --color "e4e669" \
+            --description "Technical debt identified in TECH_DEBT_AUDIT.md" \
+          || true
+
+      - name: Create issue — #9 JSX embedded in data definitions
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BODY: |
+            **File:** `src/main/data.js`
+
+            `data.js` imports `TooltipLink` and puts JSX directly into `personalInfo.description` and `experience[2].caption`. This makes the data non-serializable, untestable without React, and tightly couples content to UI components.
+
+            **Proposed fix:** Replace JSX values with plain Markdown strings and render them via `MarkdownRenderer`.
+
+            _Ref: TECH_DEBT_AUDIT.md — P2 item #9_
+        run: |
+          gh issue create \
+            --repo "${{ github.repository }}" \
+            --title "P2: JSX embedded in data definitions" \
+            --label "tech-debt" \
+            --body "$BODY"
+
+      - name: Create issue — #10 Inverted dependency siteData.js → data.js
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BODY: |
+            `siteData.js` (the content layer) re-exports from `main/data.js` (the UI layer). The dependency should flow the other direction — data should be defined in `content/` and consumed by `main/`.
+
+            **Proposed fix:** Move the raw data currently in `src/main/data.js` into `src/content/` and update all import paths accordingly.
+
+            _Ref: TECH_DEBT_AUDIT.md — P2 item #10_
+        run: |
+          gh issue create \
+            --repo "${{ github.repository }}" \
+            --title "P2: Inverted dependency — content/site/siteData.js imports from main/data.js" \
+            --label "tech-debt" \
+            --body "$BODY"
+
+      - name: Create issue — #11 Hook returns JSX
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BODY: |
+            **File:** `src/features/site/hooks/useContentMode.js` (lines 14–20)
+
+            `renderContent` returns `<MarkdownRenderer>` or `<StructuredDetails>` elements, making the hook tightly coupled to the view layer. Hooks should return data; the component should decide rendering.
+
+            **Proposed fix:** Return a content descriptor object (e.g. `{ type: 'markdown', src }` or `{ type: 'structured', data }`) from the hook and move the JSX into the consuming component.
+
+            _Ref: TECH_DEBT_AUDIT.md — P2 item #11_
+        run: |
+          gh issue create \
+            --repo "${{ github.repository }}" \
+            --title "P2: useContentMode hook returns JSX instead of data" \
+            --label "tech-debt" \
+            --body "$BODY"
+
+      - name: Create issue — #12 PersonalImageSlicesCard monolith
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BODY: |
+            **File:** `src/main/PersonalImageSlicesCard.js`
+
+            This single 631-line file handles photo data constants, collapsed slice animations, expanded clip-path transitions, a full-screen portal overlay with GSAP, image preloading, and dimension tracking — all in one place.
+
+            **Proposed decomposition:**
+            - Extract a `FullScreenImageViewer` component
+            - Extract a `useSliceAnimation` hook
+            - Move photo data to a separate data file
+
+            _Ref: TECH_DEBT_AUDIT.md — P2 item #12_
+        run: |
+          gh issue create \
+            --repo "${{ github.repository }}" \
+            --title "P2: Decompose PersonalImageSlicesCard.js (631-line monolith)" \
+            --label "tech-debt" \
+            --body "$BODY"
+
+      - name: Create issue — #13 Inconsistent default vs named exports
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BODY: |
+            `DetailPane`, `Section`, and `Education` use default exports while `EntryContainer`, `TechTagList`, and `StructuredDetails` use named exports. This makes imports unpredictable across the codebase.
+
+            **Proposed fix:** Adopt a consistent export style (e.g. named exports for all shared components) and update all import sites.
+
+            _Ref: TECH_DEBT_AUDIT.md — P3 item #13_
+        run: |
+          gh issue create \
+            --repo "${{ github.repository }}" \
+            --title "P3: Inconsistent default vs named exports across components" \
+            --label "tech-debt" \
+            --body "$BODY"
+
+      - name: Create issue — #14 Hardcoded magic string "leo-liu"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BODY: |
+            **File:** `src/features/site/hooks/useHomePageInteractions.js`
+
+            The string `"leo-liu"` appears in 3 places and is used as an ID. It should be derived from `generateId(ABOUT_ITEM)` rather than being a hardcoded literal.
+
+            **Proposed fix:** Replace all occurrences with a named constant:
+
+                const ABOUT_ID = generateId(ABOUT_ITEM);
+
+            _Ref: TECH_DEBT_AUDIT.md — P3 item #14_
+        run: |
+          gh issue create \
+            --repo "${{ github.repository }}" \
+            --title 'P3: Hardcoded magic string "leo-liu" in useHomePageInteractions' \
+            --label "tech-debt" \
+            --body "$BODY"
+
+      - name: Create issue — #15 Section IDs duplicated between constants and JSX
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BODY: |
+            `src/features/site/constants/layout.js` defines section IDs. `src/features/site/components/HomeSectionList.js` hardcodes the same strings as props. These can silently drift out of sync.
+
+            **Proposed fix:** Import and use the constants from `layout.js` directly in `HomeSectionList.js` instead of repeating the string literals.
+
+            _Ref: TECH_DEBT_AUDIT.md — P3 item #15_
+        run: |
+          gh issue create \
+            --repo "${{ github.repository }}" \
+            --title "P3: Section IDs duplicated between layout constants and HomeSectionList" \
+            --label "tech-debt" \
+            --body "$BODY"
+
+      - name: Create issue — #19 Storybook pinned to v6
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BODY: |
+            `package.json` has Storybook 6.5.x — two major versions behind the current release (v8). The stories are likely broken or unused.
+
+            **Proposed fix:** Either upgrade Storybook to v8 following the official migration guide, or remove Storybook entirely if it is not actively used.
+
+            _Ref: TECH_DEBT_AUDIT.md — P3 item #19_
+        run: |
+          gh issue create \
+            --repo "${{ github.repository }}" \
+            --title "P3: Storybook devDependencies pinned to v6 (two major versions behind)" \
+            --label "tech-debt" \
+            --body "$BODY"
+
+      - name: Create issue — #20 Missing displayName on React.memo wrappers
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BODY: |
+            `EducationItem`, `SectionProjectItem`, `SectionItem`, `EntryContainer`, `ProjectEntry`, and `MarkdownRenderer` are all wrapped in `React.memo` with anonymous functions. They appear as `"Anonymous"` in React DevTools, making debugging harder.
+
+            **Proposed fix:** Add a `displayName` to each memoized component, e.g.:
+
+                const MyComponent = React.memo(function MyComponent(props) { ... });
+                // or
+                MyComponent.displayName = 'MyComponent';
+
+            _Ref: TECH_DEBT_AUDIT.md — P3 item #20_
+        run: |
+          gh issue create \
+            --repo "${{ github.repository }}" \
+            --title "P3: Missing displayName on React.memo-wrapped components" \
+            --label "tech-debt" \
+            --body "$BODY"
+
+      - name: Create issue — #22 Hardcoded image path and caption in HomeEmptyState
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BODY: |
+            **File:** `src/features/site/components/HomeEmptyState.js`
+
+            The component hardcodes `backgroundImage: "url(/photos/optimized/IMG_0206.jpg)"` and the caption `"Kelowna, BC"` rather than sourcing them from the data layer.
+
+            **Proposed fix:** Move the empty-state photo and caption into the site content data (e.g. `siteData.js` or a dedicated config object) and pass them as props.
+
+            _Ref: TECH_DEBT_AUDIT.md — P3 item #22_
+        run: |
+          gh issue create \
+            --repo "${{ github.repository }}" \
+            --title "P3: Hardcoded image path and caption in HomeEmptyState" \
+            --label "tech-debt" \
+            --body "$BODY"
+
+      - name: Create issue — #23 Markdown cache without eviction or dedup
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BODY: |
+            **File:** `src/content/site/loaders/markdownContentLoader.js`
+
+            A module-scoped `Map` is used as a cache that grows unboundedly. It also does not deduplicate concurrent in-flight requests for the same key, so multiple network requests can be issued for the same URL before the first one resolves.
+
+            **Proposed fix:** Add in-flight request deduplication by storing the `Promise` (not just the resolved value) in the cache, and consider a simple size-bounded or LRU eviction strategy.
+
+            _Ref: TECH_DEBT_AUDIT.md — P3 item #23_
+        run: |
+          gh issue create \
+            --repo "${{ github.repository }}" \
+            --title "P3: Module-level markdown cache has no eviction or in-flight deduplication" \
+            --label "tech-debt" \
+            --body "$BODY"
+
+      - name: Create issue — #24 handleSelect recreated on every selection change
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BODY: |
+            **File:** `src/features/site/hooks/useContentMode.js` (lines 78–89)
+
+            `handleSelect` depends on `selectedId` for toggle behavior, so a new callback reference is created on every selection change. This triggers unnecessary re-renders in child components that receive it as a prop.
+
+            **Proposed fix:** Push the toggle logic into the caller so that `handleSelect` only needs a stable `setSelectedId` dispatch reference, allowing it to be memoized with an empty or minimal dependency array.
+
+            _Ref: TECH_DEBT_AUDIT.md — P3 item #24_
+        run: |
+          gh issue create \
+            --repo "${{ github.repository }}" \
+            --title "P3: handleSelect callback recreated on every selection change in useContentMode" \
+            --label "tech-debt" \
+            --body "$BODY"
+
+      - name: Create issue — #25 Redundant generateId calls in Section render path
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BODY: |
+            **File:** `src/main/Section.js`
+
+            `generateId` is called redundantly: once for the `key` prop, once inside the component body for `id`, and again inside `isChildSelected` for every project entry on every render. The ID should be computed once and passed down.
+
+            **Proposed fix:** Compute each item's ID outside the render loop (e.g. via `useMemo` or by preprocessing the data array), and pass the stable ID as a prop rather than recomputing it on every render.
+
+            _Ref: TECH_DEBT_AUDIT.md — P3 item #25_
+        run: |
+          gh issue create \
+            --repo "${{ github.repository }}" \
+            --title "P3: Redundant generateId calls on every render in Section.js" \
+            --label "tech-debt" \
+            --body "$BODY"
