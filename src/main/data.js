@@ -215,7 +215,6 @@ const projects = [
   {
     title: "Minicc Compiler",
     caption: "A toy compiler for minicc, a subset of C",
-    technologies: "C++, Antlr4, LLVM",
     contentKey: "projects/minicc-compiler",
     tags: ["Compiler", "C++", "LLVM"],
     githubLink: "https://github.com/leowrites/compiler",
@@ -224,14 +223,12 @@ const projects = [
     title: "Accelerating Particle Collision Simulation",
     caption:
       "Leveraging multi-threading and distributed computing for performance",
-    technologies: "C++, OpenMP, OpenMPI",
     contentKey: "projects/particle-collision-simulation",
     tags: ["C++", "OpenMP", "OpenMPI"],
   },
   {
     title: "Food Item Classifier",
     caption: "A machine learning experiment to classify food items",
-    technologies: "Python, sklearn",
     contentKey: "projects/food-item-classifier",
     tags: ["Machine Learning", "Python", "sklearn"],
     githubLink: "https://github.com/raftay/ML_Challenge",
@@ -240,7 +237,6 @@ const projects = [
     title: "Cloud-based Pandemic Simulation Service",
     caption:
       "Collaboration with morLab to build a cloud-based simulation service",
-    technologies: "Python, Django, AWS",
     dates: "2023",
     contentKey: "projects/cloud-pandemic-sim",
     tags: ["Backend", "Python", "Django", "AWS", "PostgreSQL"],
@@ -248,7 +244,6 @@ const projects = [
   {
     title: "MemoryViz & PythonTA",
     caption: "Visualizing Memory Management in Python",
-    technologies: "Python, TypeScript",
     contentKey: "projects/memoryviz-pythonta",
     tags: ["Python", "TypeScript", "React"],
     githubLink: "https://github.com/pyta-uoft/pyta",
@@ -257,7 +252,6 @@ const projects = [
     title: "Campfire",
     caption:
       "An internship review platform to connect recruiters and job-seekers",
-    technologies: "React, Java, SprintBoot, PostgreSQL",
     contentKey: "projects/campfire",
     tags: [
       "Fullstack",
@@ -274,17 +268,17 @@ const projects = [
   {
     title: "Model Rocket with Vectored Thrust",
     caption: "Engineering Project",
-    technologies: "Arduino, 3D Printing",
     dates: "2021",
     contentKey: "projects/model-rocket-vectored-thrust",
+    tags: ["Arduino", "3D Printing"],
     githubLink: "https://github.com/leowrites/R1_Main",
   },
   {
     title: "Pacman Game with AI",
     caption: "Computer Game with Custom AI Algorithms",
-    technologies: "Python, Pygame",
     dates: "2020",
     contentKey: "projects/pacman-ai",
+    tags: ["Python", "Pygame"],
     githubLink: "https://github.com/leowrites/Pacman",
   },
 ];

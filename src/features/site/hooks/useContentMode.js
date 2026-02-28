@@ -116,5 +116,6 @@ export const useContentMode = () => {
     parentItem,
     selectedItem,
     handleSelect,
+    parentByProjectId,
   };
 };

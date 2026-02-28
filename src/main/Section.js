@@ -29,7 +29,7 @@ const SectionProjectItem = React.memo(
         id={projId}
         projectName={proj.projectName}
         caption={proj.caption}
-        technologies={proj.tags || proj.technologies}
+        technologies={proj.tags}
         selected={selectedId === projId}
         onSelect={onSelect ? handleSelect : undefined}
         nested
@@ -71,6 +71,8 @@ const SectionItem = React.memo(
       ) : (
         item.organization
       )
+    ) : item.degree && item.institution ? (
+      `${item.degree}, ${item.institution}`
     ) : null;
 
     const handleParentSelect = React.useCallback(() => {
@@ -105,7 +107,7 @@ const SectionItem = React.memo(
         title={titleContent}
         company={companyContent}
         caption={item.caption || ""}
-        technologies={item.tags || item.technologies}
+        technologies={item.tags}
         logo={item.logo}
         githubLink={item.githubLink}
         selected={isSelected}

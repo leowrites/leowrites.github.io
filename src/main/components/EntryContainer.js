@@ -1,10 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Box, Collapse, Divider, Typography } from "@mui/material";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import { alpha } from "@mui/material/styles";
 import { TechTagList } from "./TechTagList";
-import { IconCircle, getCardContainerSx } from "./uiHelpers";
+import {
+  IconCircle,
+  getCardContainerSx,
+  RotatingExpandIcon,
+} from "./uiHelpers";
 
 export const EntryContainer = React.memo(
   ({
@@ -170,18 +173,7 @@ export const EntryContainer = React.memo(
                   },
                 }}
               >
-                <ExpandMoreIcon
-                  sx={{
-                    transform: expanded ? "rotate(180deg)" : "rotate(0deg)",
-                    transition: (theme) =>
-                      theme.transitions.create("transform", {
-                        duration: theme.transitions.duration.short,
-                        easing: theme.transitions.easing.easeInOut,
-                      }),
-                    color: (theme) => theme.palette.text.primary,
-                    fontSize: compact ? "1.05rem" : undefined,
-                  }}
-                />
+                <RotatingExpandIcon expanded={expanded} compact={compact} />
               </IconCircle>
             )}
           </Box>

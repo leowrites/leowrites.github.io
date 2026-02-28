@@ -1,4 +1,4 @@
-import React, { Suspense, lazy } from "react";
+import React, { Suspense, lazy, useMemo } from "react";
 import SiteHeader from "main/SiteHeader";
 import { Box, useMediaQuery, useTheme } from "@mui/material";
 import { useLocation } from "react-router-dom";
@@ -12,6 +12,7 @@ import {
 import { useContentMode } from "./hooks/useContentMode";
 import { useHomePageInteractions } from "./hooks/useHomePageInteractions";
 import { DESKTOP_PANE_HEIGHT } from "./constants/layout";
+import { generateId } from "main/utils";
 import DetailPaneLoading from "./components/DetailPaneLoading";
 import HomeEmptyState from "./components/HomeEmptyState";
 import HomeSectionList from "./components/HomeSectionList";
@@ -32,10 +33,17 @@ const HomePage = () => {
     parentItem,
     selectedItem,
     handleSelect,
+    parentByProjectId,
   } = useContentMode();
 
+  const latestExperienceId = useMemo(
+    () => generateId(experience[0]),
+    // experience is static data; this only needs to run once
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
+  );
+
   const {
-    latestExperienceId,
     activeSectionId,
     isAboutSelected,
     isMobileSelectedDetailMode,
@@ -50,8 +58,7 @@ const HomePage = () => {
     selectedContent,
     selectedItem,
     handleSelect,
-    experience,
-    volunteering,
+    parentByProjectId,
   });
 
   const detailPaneContent = isAboutSelected ? (
