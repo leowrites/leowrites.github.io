@@ -1,6 +1,6 @@
 import { generateId } from "./utils";
 import React from "react";
-import { Box } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import {
   SectionHeading,
   EntryContainer,
@@ -9,6 +9,8 @@ import {
   MarkdownRenderer,
   ContentRenderer,
 } from "./Components";
+
+const FOLDER_OVERVIEW_MAX_HEIGHT = "7rem";
 
 const SectionProjectItem = React.memo(
   ({ proj, projId, selectedId, onSelect, isFirst = false }) => {
@@ -37,6 +39,7 @@ SectionProjectItem.displayName = "SectionProjectItem";
 const SectionItem = React.memo(
   ({ item, itemId, selectedId, onSelect, showOverviewInFolder }) => {
     const hasProjects = item.projects && item.projects.length > 0;
+    const [showFullOverview, setShowFullOverview] = React.useState(false);
 
     const projectIds = React.useMemo(() => {
       if (!hasProjects) return [];
@@ -89,6 +92,9 @@ const SectionItem = React.memo(
       hasProjects && projectIds.some((pId) => pId === selectedId);
     const isSelected = isParentSelected || isChildSelected;
 
+    const hasOverview =
+      showOverviewInFolder && (item.content || item.contentKey);
+
     return (
       <EntryContainer
         id={itemId}
@@ -106,13 +112,54 @@ const SectionItem = React.memo(
               flexDirection: "column",
             }}
           >
-            {showOverviewInFolder && (item.content || item.contentKey) && (
-              <Box>
-                <MarkdownRenderer
-                  content={item.content}
-                  contentKey={item.contentKey}
-                />
-              </Box>
+            {hasOverview && (
+              <>
+                <Box
+                  sx={
+                    showFullOverview
+                      ? undefined
+                      : {
+                          maxHeight: FOLDER_OVERVIEW_MAX_HEIGHT,
+                          overflow: "hidden",
+                          maskImage:
+                            "linear-gradient(to bottom, black 30%, transparent 100%)",
+                          WebkitMaskImage:
+                            "linear-gradient(to bottom, black 30%, transparent 100%)",
+                        }
+                  }
+                >
+                  <MarkdownRenderer
+                    content={item.content}
+                    contentKey={item.contentKey}
+                  />
+                </Box>
+                <Button
+                  size="small"
+                  variant="text"
+                  disableRipple
+                  aria-expanded={showFullOverview}
+                  aria-label={
+                    showFullOverview
+                      ? "Show less of overview"
+                      : "Show more of overview"
+                  }
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setShowFullOverview((prev) => !prev);
+                  }}
+                  sx={{
+                    alignSelf: "flex-start",
+                    textTransform: "none",
+                    px: 0,
+                    minWidth: 0,
+                    color: "text.secondary",
+                    fontWeight: 600,
+                    mb: 0.5,
+                  }}
+                >
+                  {showFullOverview ? "Show less" : "Show more"}
+                </Button>
+              </>
             )}
             {item.projects.map((proj, index) => (
               <SectionProjectItem
