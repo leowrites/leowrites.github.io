@@ -1,5 +1,3 @@
-### Overview
-
 Matrix multiplication is one of the most expensive operations in machine learning. While GPUs are
 optimized for dense data, the new [Nvidia Sparse Tensor Cores](https://developer.nvidia.com/blog/structured-sparsity-in-the-nvidia-ampere-architecture-and-applications-in-search-engines/)
 exploits sparsity (zeros) can lead to massive speedups. As an undergraduate research assistant, I worked on
